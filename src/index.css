@@ -2,3 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply bg-slate-900;
+}
+
+.pg-container-theme-0 {
+    @apply text-black bg-white/30;
+}
+
+.pg-container-theme-1 {
+    @apply text-black bg-yellow-300/30;
+}
+
+.pg-container-theme-2 {
+    @apply text-black bg-emerald-400/30;
+}
+
+.pg-container-theme-3 {
+    @apply text-black bg-purple-400/30;
+}
+
+.pg-container-theme-4 {
+    @apply text-black bg-red-300/30;
+}
+
+.pg-container-theme-5 {
+    @apply bg-slate-700/30 text-white;
+}
+
+.pg-container-theme-5 .clock {
+    @apply text-gray-400;
+}
+
+
+.pg-bar-theme-0 {
+    @apply bg-white;
+}
+
+.pg-bar-theme-1 {
+    @apply bg-yellow-300;
+}
+
+.pg-bar-theme-2 {
+    @apply bg-emerald-400;
+}
+
+.pg-bar-theme-3 {
+    @apply bg-purple-400;
+}
+
+.pg-bar-theme-4 {
+    @apply bg-red-300;
+}
+
+.pg-bar-theme-5 {
+    @apply bg-slate-700;
+}
+
+.progress-title {
+
+    display: block;
+    /* Fallback for non-webkit */
+    display: -webkit-box;
+
+    /* Fallback for non-webkit, line-height * 2 */
+    -webkit-line-clamp: 1;
+    /* if you change this, make sure to change the fallback line-height and height */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
