@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Progress from './Progress'
 import RowsIcon from './icons/RowsIcon'
 import GridIcons from './icons/GridIcons'
+import MiniProgress from './MiniProgress'
 
 function Progresses() {
 
@@ -251,7 +252,7 @@ function Progresses() {
 
             <div className='mt-4 grid grid-cols-2 gap-3 pb-20'>
 
-                {progresses.map(pg => <Progress key={pg._id} progress={pg} />)}
+                {progresses.map(pg => <MiniProgress key={pg._id} progress={pg} />)}
 
             </div>
         </div>

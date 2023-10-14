@@ -5,7 +5,7 @@ import BottomBar from './components/BottomBar';
 
 function App() {
 	return (
-		<main className='h-screen font-mono relative'>
+		<main className='h-screen font-mono relative max-w-[600px] mx-auto'>
 
 			<Header />
 
