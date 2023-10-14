@@ -30,7 +30,8 @@ body {
     @apply bg-slate-700/30 text-white;
 }
 
-.pg-container-theme-5 .clock {
+.pg-container-theme-5 .clock,
+.progress-bar-base-theme-5 .clock {
     @apply text-gray-400;
 }
 
@@ -59,21 +60,6 @@ body {
     @apply bg-slate-700;
 }
 
-.progress-title {
-
-    display: block;
-    /* Fallback for non-webkit */
-    display: -webkit-box;
-
-    /* Fallback for non-webkit, line-height * 2 */
-    -webkit-line-clamp: 1;
-    /* if you change this, make sure to change the fallback line-height and height */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
 .progress-bar-base-theme-0 {
     @apply bg-gray-200;
 }
@@ -95,7 +81,7 @@ body {
 }
 
 .progress-bar-base-theme-5 {
-    @apply bg-slate-500;
+    @apply bg-slate-800 text-white;
 }
 
 .progress-bar-theme-0 {
@@ -119,29 +105,29 @@ body {
 }
 
 .progress-bar-theme-5 {
-    @apply stroke-slate-800;
+    @apply stroke-slate-400;
 }
 
 .progress-bar-percentage-theme-0 {
-    @apply fill-gray-500;
+    @apply text-gray-500;
 }
 
 .progress-bar-percentage-theme-1 {
-    @apply fill-yellow-500;
+    @apply text-yellow-500;
 }
 
 .progress-bar-percentage-theme-2 {
-    @apply fill-emerald-600;
+    @apply text-emerald-600;
 }
 
 .progress-bar-percentage-theme-3 {
-    @apply fill-purple-600;
+    @apply text-purple-600;
 }
 
 .progress-bar-percentage-theme-4 {
-    @apply fill-red-500;
+    @apply text-red-500;
 }
 
 .progress-bar-percentage-theme-5 {
-    @apply fill-slate-800;
+    @apply text-slate-400;
 }

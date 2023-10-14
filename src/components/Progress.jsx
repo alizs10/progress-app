@@ -20,7 +20,7 @@ function Progress({ progress }) {
             <div className='absolute inset-0 z-20 p-3 flex flex-col gap-y-1 h-32'>
                 <div className='flex justify-between items-start'>
                     <div className='flex flex-col gap-y-3'>
-                        <span className='font-bold text-2xl progress-title'>{progress.title}</span>
+                        <span className='font-bold text-2xl  line-clamp-1'>{progress.title}</span>
                         <div className='flex flex-col gap-y-1'>
 
                             <div className='flex flex-nowrap gap-x-1'>

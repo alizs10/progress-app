@@ -6,7 +6,7 @@ import MiniProgress from './MiniProgress'
 
 function Progresses() {
 
-    const [viewMode, setViewMode] = useState(0)
+    const [viewMode, setViewMode] = useState(1)
     const [progresses, setProgresses] = useState([
         {
             _id: 0,
@@ -252,7 +252,8 @@ function Progresses() {
 
             <div className='mt-4 grid grid-cols-2 gap-3 pb-20'>
 
-                {progresses.map(pg => <MiniProgress key={pg._id} progress={pg} />)}
+
+                {progresses.map(pg => viewMode === 1 ? <MiniProgress key={pg._id} progress={pg} /> : <Progress key={pg._id} progress={pg} />)}
 
             </div>
         </div>
