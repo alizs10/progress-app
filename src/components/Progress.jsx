@@ -83,7 +83,12 @@ function Progress({ progress }) {
                     </div>
                     <div className='flex flex-col gap-y-3'>
                         <span className='font-bold text-5xl'>{pg}<span className='ml-1 text-[14px]'>%</span></span>
-                        <span className='text-xs ml-auto'>{passedSteps.length}/{progress.steps.length}<span className='ml-1 text-[10px]'>steps</span></span>
+                        {passedSteps.length === progress.steps.length ? (
+                            <span className='text-xs ml-auto'>completed</span>
+                        ) : (
+                            <span className='text-xs ml-auto'>{passedSteps.length}/{progress.steps.length}<span className='ml-1 text-[10px]'>steps</span></span>
+                        )}
+
                     </div>
 
                 </div>

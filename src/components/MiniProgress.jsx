@@ -82,7 +82,11 @@ function MiniProgress({ progress }) {
 
                 <div className='mt-auto flex flex-col gap-0'>
                     <CircleProgressBar themeIndex={progress.theme} percentage={pg} />
-                    <span className='text-[10px] mx-auto'>{passedSteps.length}/{progress.steps.length}</span>
+                    {passedSteps.length === progress.steps.length ? (
+                        <span className='text-xs mx-auto'>done</span>
+                    ) : (
+                        <span className='text-[10px] mx-auto'>{passedSteps.length}/{progress.steps.length}</span>
+                    )}
 
                 </div>
 

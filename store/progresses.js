@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 const useProgressesStore = create((set) => ({
 
-    progresses: [
+    data: [
         {
             _id: 0,
             title: "Read Sofia's world book",
@@ -231,6 +231,33 @@ const useProgressesStore = create((set) => ({
             ]
         },
     ],
+
+    progresses: [],
+
+    // 0 => undone, 1 => all, 2 => done
+    showProgressesType: 0,
+
+    showAllProgresses: payload => set((state) => {
+        return { showProgressesType: 1, progresses: state.data }
+    }),
+
+    showDoneProgresses: payload => set((state) => {
+        let doneProgresses = state.data.filter(pg => {
+            let passedSteps = pg.steps.filter(st => st.status)
+            return passedSteps.length === pg.steps.length
+        })
+
+        return { showProgressesType: 2, progresses: doneProgresses }
+    }),
+
+    showUnDoneProgresses: payload => set((state) => {
+        let unDoneProgresses = state.data.filter(pg => {
+            let passedSteps = pg.steps.filter(st => st.status)
+            return passedSteps.length !== pg.steps.length
+        })
+
+        return { showProgressesType: 0, progresses: unDoneProgresses }
+    }),
 
     handleStepForward: payload => set((state) => {
 
