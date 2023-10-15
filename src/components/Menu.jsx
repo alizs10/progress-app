@@ -1,7 +1,7 @@
 import React from 'react'
 import SettingsIcon from './icons/SettingsIcon'
 import ListIcon from './icons/ListIcon'
-import useProgressesStore from '../../store/progresses'
+import useProgressesStore from '../../store/progresses-store'
 import { motion } from 'framer-motion'
 
 function Menu() {

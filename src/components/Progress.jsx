@@ -2,7 +2,7 @@ import React from 'react'
 import ClockIcon from './icons/ClockIcon'
 import ArrowUturnRightIcon from './icons/ArrowUturnRightIcon'
 import CheckIcon from './icons/CheckIcon'
-import useProgressesStore from '../../store/progresses'
+import useProgressesStore from '../../store/progresses-store'
 import { useSwipeable } from 'react-swipeable'
 import { configs } from '../../lib/swipeable'
 

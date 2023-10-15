@@ -5,7 +5,7 @@ import CheckIcon from './icons/CheckIcon'
 import CircleProgressBar from './CircleProgressBar'
 import { configs } from '../../lib/swipeable';
 import { useSwipeable } from 'react-swipeable'
-import useProgressesStore from '../../store/progresses'
+import useProgressesStore from '../../store/progresses-store'
 
 function MiniProgress({ progress }) {
 

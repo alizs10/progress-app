@@ -3,7 +3,7 @@ import Progress from './Progress'
 import RowsIcon from './icons/RowsIcon'
 import GridIcons from './icons/GridIcons'
 import MiniProgress from './MiniProgress'
-import useProgressesStore from '../../store/progresses'
+import useProgressesStore from '../../store/progresses-store'
 
 function Progresses() {
 

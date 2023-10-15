@@ -4,7 +4,7 @@ import BarsIcon from './icons/BarsIcon'
 import ProgressCheckIcon from './icons/ProgressCheckIcon'
 import ProgressClockIcon from './icons/ProgressClockIcon'
 import UserProfileIcon from './icons/UserProfileIcon'
-import useProgressesStore from '../../store/progresses'
+import useProgressesStore from '../../store/progresses-store'
 import Menu from './Menu'
 import { AnimatePresence } from 'framer-motion'
 
