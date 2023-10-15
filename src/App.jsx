@@ -10,10 +10,10 @@ function App() {
 			<Header />
 
 			<Progresses />
+
+
+
 			<BottomBar />
-
-
-
 
 		</main>
 	);

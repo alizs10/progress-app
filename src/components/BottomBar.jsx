@@ -5,12 +5,20 @@ import ProgressCheckIcon from './icons/ProgressCheckIcon'
 import ProgressClockIcon from './icons/ProgressClockIcon'
 import UserProfileIcon from './icons/UserProfileIcon'
 import useProgressesStore from '../../store/progresses'
+import Menu from './Menu'
+import { AnimatePresence } from 'framer-motion'
 
 function BottomBar() {
 
-    const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
-
     const { showUnDoneProgresses, showDoneProgresses, data, showProgressesType } = useProgressesStore()
+
+    const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    function toggleMenu() {
+        setIsMenuOpen(prevState => !prevState)
+    }
+
 
     useEffect(() => {
 
@@ -32,10 +40,12 @@ function BottomBar() {
     }, [data, showProgressesType])
 
     return (
-        <>
+        <section className='relative'>
             <NewProgressBtn />
-            <div className='fixed z-30 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
-                <button className='col-span-1 flex justify-center items-center text-white'>
+            <div className='fixed z-40 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
+                <button
+                    onClick={toggleMenu}
+                    className={`col-span-1 flex justify-center items-center text-white ${isMenuOpen && 'bg-gray-700'}`}>
                     <span className='fill-white'>
                         <BarsIcon />
                     </span>
@@ -68,7 +78,20 @@ function BottomBar() {
 
 
             </div>
-        </>
+
+
+
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <>
+                        <Menu />
+                        <div
+                            onClick={() => setIsMenuOpen(false)}
+                            className='fixed inset-0 z-20'></div>
+                    </>
+                )}
+            </AnimatePresence>
+        </section>
     )
 }
 
