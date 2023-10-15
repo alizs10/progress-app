@@ -9,7 +9,7 @@ function BottomBar() {
     return (
         <>
             <NewProgressBtn />
-            <div className='fixed z-30 inset-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
+            <div className='fixed z-30 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
                 <button className='col-span-1 flex justify-center items-center text-white'>
                     <span className='fill-white'>
                         <BarsIcon />

@@ -2,9 +2,28 @@ import React from 'react'
 import ClockIcon from './icons/ClockIcon'
 import ArrowUturnRightIcon from './icons/ArrowUturnRightIcon'
 import CheckIcon from './icons/CheckIcon'
-
+import useProgressesStore from '../../store/progresses'
+import { useSwipeable } from 'react-swipeable'
+import { configs } from '../../lib/swipeable'
 
 function Progress({ progress }) {
+
+    const { handleStepForward, handleStepBackward } = useProgressesStore()
+
+    // swipeable
+    const handlers = useSwipeable({
+        onSwipedRight: handleSwipeRight,
+        onSwipedLeft: handleSwipeLeft,
+        ...configs,
+    });
+
+    function handleSwipeRight() {
+        handleStepForward(progress._id)
+    }
+
+    function handleSwipeLeft() {
+        handleStepBackward(progress._id)
+    }
 
 
     let passedSteps = progress.steps.filter(st => st.status)
@@ -13,7 +32,7 @@ function Progress({ progress }) {
     let nextStep = progress.steps[passedSteps.length]
 
     return (
-        <div className={`col-span-2 relative rounded-xl h-32 p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme}`}>
+        <div {...handlers} className={`col-span-2 relative rounded-xl h-32 p-3 shadow-md overflow-hidden shadow-black/70 pg-container-theme-${progress.theme}`}>
             <div style={{ width: `${pg}%` }} className={`transition-all duration-300 absolute inset-0 z-10 right-auto h-32 pg-bar-theme-${progress.theme} rounded-xl`}></div>
 
 
