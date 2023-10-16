@@ -7,6 +7,7 @@ import UserProfileIcon from './icons/UserProfileIcon'
 import useProgressesStore from '../../store/progresses-store'
 import Menu from './Menu'
 import { AnimatePresence } from 'framer-motion'
+import Settings from './Settings'
 
 function BottomBar() {
 
@@ -14,10 +15,25 @@ function BottomBar() {
 
     const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [settingsVis, setSettingsVis] = useState(true)
 
     function toggleMenu() {
         setIsMenuOpen(prevState => !prevState)
     }
+
+    useEffect(() => {
+
+        if (settingsVis) {
+            setIsMenuOpen(false)
+        }
+    }, [settingsVis])
+
+    useEffect(() => {
+
+        if (isMenuOpen && showProgressesType === 1) {
+            setIsMenuOpen(false)
+        }
+    }, [showProgressesType])
 
 
     useEffect(() => {
@@ -84,9 +100,20 @@ function BottomBar() {
             <AnimatePresence>
                 {isMenuOpen && (
                     <>
-                        <Menu />
+                        <Menu handleOpenSettings={() => setSettingsVis(true)} />
                         <div
                             onClick={() => setIsMenuOpen(false)}
+                            className='fixed inset-0 z-20'></div>
+                    </>
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {settingsVis && (
+                    <>
+                        <Settings handleClose={() => setSettingsVis(false)} />
+                        <div
+                            onClick={() => setSettingsVis(false)}
                             className='fixed inset-0 z-20'></div>
                     </>
                 )}

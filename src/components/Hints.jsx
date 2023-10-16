@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LightBulbIcon from './icons/LightBulbIcon'
 import useAppStore from '../../store/app-store'
 
 function Hints() {
 
     const { closeHints } = useAppStore()
+
+
+    useEffect(() => {
+        // this will disable the scroll if our back page was scrollable
+        document.body.classList.add("overflow-hidden");
+        // when you close the modal, remove this class 
+        return () => {
+            document.body.classList.remove("overflow-hidden");
+        };
+    }, []);
 
     return (
         <div className='fixed inset-0 z-[999] backdrop-blur-sm'>
