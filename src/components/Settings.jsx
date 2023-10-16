@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import SettingsIcon from './icons/SettingsIcon'
 import CheckBox from './CheckBox';
-import MoonIcon from './icons/MoonIcon';
 import SunIcon from './icons/SunIcon';
+import Dropdown from './Dropdown';
+
 
 function Settings({ handleClose }) {
 
@@ -16,6 +17,13 @@ function Settings({ handleClose }) {
     }, []);
 
     const [darkMode, setDarkMode] = useState(true)
+    const [itemViewStyle, setItemViewStyle] = useState(0)
+    const itemViewOptions = ['List', 'Grid']
+
+
+    function handleChangeItemViewStyle(index) {
+        setItemViewStyle(index)
+    }
 
     function toggleDarkMode() {
         setDarkMode(prevState => !prevState)
@@ -48,7 +56,10 @@ function Settings({ handleClose }) {
                                 </span>
                                 <span>Items View Style</span>
                             </div>
-                            <span>List</span>
+                            <span className=''>
+                                <Dropdown options={itemViewOptions} value={itemViewStyle} handleChange={handleChangeItemViewStyle} />
+                            </span>
+
                         </li>
                         <li className='mt-4'>
                             <button className='px-3 py-2 rounded-full bg-red-600 text-white font-bold text-sm capitalize'>delete account</button>

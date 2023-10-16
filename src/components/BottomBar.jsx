@@ -33,8 +33,8 @@ function BottomBar() {
         if (isMenuOpen && showProgressesType === 1) {
             setIsMenuOpen(false)
         }
-    }, [showProgressesType])
 
+    }, [showProgressesType])
 
     useEffect(() => {
 
