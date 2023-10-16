@@ -3,8 +3,9 @@ import SettingsIcon from './icons/SettingsIcon'
 import ListIcon from './icons/ListIcon'
 import useProgressesStore from '../../store/progresses-store'
 import { motion } from 'framer-motion'
+import InfoIcon from './icons/InfoIcon'
 
-function Menu({ handleOpenSettings }) {
+function Menu({ handleOpenSettings, handleOpenAbout }) {
 
     const { showAllProgresses, showProgressesType } = useProgressesStore()
 
@@ -41,6 +42,14 @@ function Menu({ handleOpenSettings }) {
                         <SettingsIcon />
                     </span>
                     <span>Settings</span>
+                </li>
+                <li
+                    onClick={handleOpenAbout}
+                    className='px-7 py-5 text-white cursor-pointer select-none flex gap-x-3'>
+                    <span>
+                        <InfoIcon />
+                    </span>
+                    <span>About</span>
                 </li>
             </ul>
         </motion.div>

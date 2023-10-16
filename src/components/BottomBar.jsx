@@ -8,6 +8,7 @@ import useProgressesStore from '../../store/progresses-store'
 import Menu from './Menu'
 import { AnimatePresence } from 'framer-motion'
 import Settings from './Settings'
+import About from './About'
 
 function BottomBar() {
 
@@ -15,18 +16,18 @@ function BottomBar() {
 
     const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [settingsVis, setSettingsVis] = useState(true)
+    const [settingsVis, setSettingsVis] = useState(false)
+    const [aboutVis, setAboutVis] = useState(true)
 
     function toggleMenu() {
         setIsMenuOpen(prevState => !prevState)
     }
-
     useEffect(() => {
 
-        if (settingsVis) {
+        if (settingsVis || aboutVis) {
             setIsMenuOpen(false)
         }
-    }, [settingsVis])
+    }, [settingsVis, aboutVis])
 
     useEffect(() => {
 
@@ -100,7 +101,7 @@ function BottomBar() {
             <AnimatePresence>
                 {isMenuOpen && (
                     <>
-                        <Menu handleOpenSettings={() => setSettingsVis(true)} />
+                        <Menu handleOpenSettings={() => setSettingsVis(true)} handleOpenAbout={() => setAboutVis(true)} />
                         <div
                             onClick={() => setIsMenuOpen(false)}
                             className='fixed inset-0 z-20'></div>
@@ -114,6 +115,17 @@ function BottomBar() {
                         <Settings handleClose={() => setSettingsVis(false)} />
                         <div
                             onClick={() => setSettingsVis(false)}
+                            className='fixed inset-0 z-20'></div>
+                    </>
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {aboutVis && (
+                    <>
+                        <About handleClose={() => setAboutVis(false)} />
+                        <div
+                            onClick={() => setAboutVis(false)}
                             className='fixed inset-0 z-20'></div>
                     </>
                 )}

@@ -38,7 +38,7 @@ function Progresses() {
     return (
         <div className='p-3 rounded-lg'>
             <div className='mx-3 flex justify-between items-start'>
-                <span className='text-gray-500 text-xs'>{progressesTypeStr} <span className='text-red-600 text-[10px]'>({progresses.length})</span></span>
+                <span className='text-gray-300 text-sm'>{progressesTypeStr} <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>
                 <button onClick={() => setViewMode(prevState => prevState === 0 ? 1 : 0)} className='text-gray-500 text-xs fill-white flex justify-center items-center'>
                     {viewMode === 0 ? (
                         <GridIcons />
