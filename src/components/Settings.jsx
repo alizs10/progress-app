@@ -3,6 +3,7 @@ import SettingsIcon from './icons/SettingsIcon'
 import CheckBox from './CheckBox';
 import SunIcon from './icons/SunIcon';
 import Dropdown from './Dropdown';
+import GridIcon from './icons/GridIcon';
 
 
 function Settings({ handleClose }) {
@@ -51,8 +52,8 @@ function Settings({ handleClose }) {
                         </li>
                         <li className='flex justify-between items-center'>
                             <div className='flex gap-x-2'>
-                                <span className='w-6'>
-                                    <SunIcon />
+                                <span className='fill-white w-6'>
+                                    <GridIcon />
                                 </span>
                                 <span>Items View Style</span>
                             </div>
