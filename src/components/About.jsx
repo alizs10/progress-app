@@ -19,9 +19,13 @@ function About({ handleClose }) {
 
     return (
         <div className='fixed inset-0 z-[999] backdrop-blur-sm'>
-            <div className='fixed w-[80vw] flex flex-col top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 overflow-hidden rounded-xl bg-slate-800 shadow-md shadow-black'>
-                <div className='p-3'>
-                    <h1 className='text-xl text-white'>About us comp</h1>
+            <div className='fixed w-[80vw] max-w-[480px] flex flex-col top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 overflow-hidden rounded-xl bg-slate-800 shadow-md shadow-black'>
+                <div className='p-5 flex flex-col gap-y-4'>
+                    <h1 className='text-2xl text-white'>About App</h1>
+                    <p className='text-lg text-gray-200'>
+                        Developed by @alizs10 in october 2023
+                        version: 1.0.0
+                    </p>
 
                 </div>
 
