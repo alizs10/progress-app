@@ -5,6 +5,8 @@ import CheckIcon from './icons/CheckIcon'
 import useProgressesStore from '../../store/progresses-store'
 import { useSwipeable } from 'react-swipeable'
 import { configs } from '../../lib/swipeable'
+import moment from 'moment'
+import { deadlineToMoment } from '../../helpers/helpers'
 
 function Progress({ progress }) {
 
@@ -24,7 +26,6 @@ function Progress({ progress }) {
     function handleSwipeLeft() {
         handleStepBackward(progress._id)
     }
-
 
     let passedSteps = progress.steps.filter(st => st.status)
     let pg = Math.floor((passedSteps.length / progress.steps.length) * 100);
@@ -75,7 +76,7 @@ function Progress({ progress }) {
                                     <ClockIcon />
                                 </span>
                                 <span className='text-[10px]'>
-                                    {progress.deadline ? '' : "all the time in the world"}
+                                    {progress.deadline ? (moment(deadlineToMoment(progress.deadline)).toNow(true) + ' left') : "all the time in the world"}
                                 </span>
                             </div>
                         </div>
@@ -94,7 +95,7 @@ function Progress({ progress }) {
                 </div>
 
                 <div className='flex flex-nowrap gap-x-1 mt-auto'>
-                    {progress.steps.map(st => <div style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
+                    {progress.steps.map(st => <div key={st._id} style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
                 </div>
             </div>
         </div>

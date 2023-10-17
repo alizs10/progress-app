@@ -57,7 +57,7 @@ body {
 }
 
 .pg-bar-theme-5 {
-    @apply bg-slate-700;
+    @apply bg-slate-700 text-white;
 }
 
 .progress-bar-base-theme-0 {
@@ -130,4 +130,17 @@ body {
 
 .progress-bar-percentage-theme-5 {
     @apply text-slate-400;
+}
+
+.text-input {
+    @apply rounded-xl bg-slate-700 w-full p-2 text-lg text-gray-200 placeholder:text-gray-400 focus:outline-none placeholder:text-sm
+}
+
+input[type=number]::-webkit-outer-spin-button {
+    display: none;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
 }

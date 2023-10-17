@@ -6,6 +6,8 @@ import CircleProgressBar from './CircleProgressBar'
 import { configs } from '../../lib/swipeable';
 import { useSwipeable } from 'react-swipeable'
 import useProgressesStore from '../../store/progresses-store'
+import moment from 'moment'
+import { deadlineToMoment } from '../../helpers/helpers'
 
 function MiniProgress({ progress }) {
 
@@ -74,7 +76,7 @@ function MiniProgress({ progress }) {
                             <ClockIcon />
                         </span>
                         <span className='text-[10px]'>
-                            {progress.deadline ? '' : "not set"}
+                            {progress.deadline ? (moment(deadlineToMoment(progress.deadline)).toNow(true) + ' left') : "not set"}
                         </span>
                     </div>
 

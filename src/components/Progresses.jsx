@@ -8,7 +8,7 @@ import useProgressesStore from '../../store/progresses-store'
 function Progresses() {
 
     const [viewMode, setViewMode] = useState(0)
-    const { progresses, showUnDoneProgresses, showProgressesType } = useProgressesStore()
+    const { data, progresses, showUnDoneProgresses, showProgressesType } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -32,7 +32,7 @@ function Progresses() {
     useEffect(() => {
         showUnDoneProgresses()
 
-    }, [])
+    }, [data])
 
 
     return (

@@ -9,6 +9,7 @@ import Menu from './Menu'
 import { AnimatePresence } from 'framer-motion'
 import Settings from './Settings'
 import About from './About'
+import NewProgressWindow from './NewProgressWindow'
 
 function BottomBar() {
 
@@ -18,6 +19,7 @@ function BottomBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [settingsVis, setSettingsVis] = useState(false)
     const [aboutVis, setAboutVis] = useState(false)
+    const [newProgressWindowVis, setNewProgressWindowVis] = useState(false)
 
     function toggleMenu() {
         setIsMenuOpen(prevState => !prevState)
@@ -58,7 +60,7 @@ function BottomBar() {
 
     return (
         <section className='relative'>
-            <NewProgressBtn />
+            <NewProgressBtn handleClick={() => setNewProgressWindowVis(true)} />
 
             <div className='fixed z-40 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
                 <button
@@ -130,6 +132,14 @@ function BottomBar() {
                             onClick={() => setAboutVis(false)}
                             className='fixed inset-0 z-20'></div>
                     </>
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {newProgressWindowVis && (
+
+                    <NewProgressWindow handleClose={() => setNewProgressWindowVis(false)} />
+
                 )}
             </AnimatePresence>
         </section>
