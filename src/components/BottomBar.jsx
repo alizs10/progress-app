@@ -17,7 +17,7 @@ function BottomBar() {
     const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [settingsVis, setSettingsVis] = useState(false)
-    const [aboutVis, setAboutVis] = useState(true)
+    const [aboutVis, setAboutVis] = useState(false)
 
     function toggleMenu() {
         setIsMenuOpen(prevState => !prevState)
@@ -59,18 +59,20 @@ function BottomBar() {
     return (
         <section className='relative'>
             <NewProgressBtn />
+
             <div className='fixed z-40 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
                 <button
                     onClick={toggleMenu}
-                    className={`col-span-1 flex justify-center items-center text-white ${isMenuOpen && 'bg-gray-700'}`}>
+                    className={`col-span-1 flex z-40 justify-center items-center text-white ${isMenuOpen && 'bg-gray-700'}`}>
                     <span className='fill-white'>
                         <BarsIcon />
                     </span>
                 </button>
 
+
                 <button
                     onClick={showUnDoneProgresses}
-                    className={`col-span-1 flex justify-center items-center text-white ${showProgressesType === 0 && 'bg-gray-700'}`}>
+                    className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 0 && 'bg-gray-700'}`}>
                     <span className='fill-white relative'>
                         <ProgressClockIcon />
                         <div className='absolute -bottom-1 left-[75%] min-w-[1rem] px-1 rounded-full bg-yellow-500 text-black flex justify-center items-center text-[10px]'>{countData.inProgress}</div>
@@ -81,13 +83,13 @@ function BottomBar() {
 
                 <button
                     onClick={showDoneProgresses}
-                    className={`col-span-1 flex justify-center items-center text-white ${showProgressesType === 2 && 'bg-gray-700'}`}>
+                    className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 2 && 'bg-gray-700'}`}>
                     <span className='fill-white relative'>
                         <ProgressCheckIcon />
                         <div className='absolute -bottom-1 left-[75%]  min-w-[1rem] px-1 rounded-full bg-emerald-700 text-white flex justify-center items-center text-[10px]'>{countData.completed}</div>
                     </span>
                 </button>
-                <button className='col-span-1 flex justify-center items-center text-white'>
+                <button className='col-span-1 flex z-40 justify-center items-center text-white'>
                     <span className='w-7'>
                         <UserProfileIcon />
                     </span>
@@ -97,17 +99,17 @@ function BottomBar() {
             </div>
 
 
-
             <AnimatePresence>
                 {isMenuOpen && (
-                    <>
+                    <div
+                        onClick={() => setIsMenuOpen(false)}
+                        className='fixed inset-0 w-full left-1/2 -translate-x-1/2 max-w-[600px] z-30'>
                         <Menu handleOpenSettings={() => setSettingsVis(true)} handleOpenAbout={() => setAboutVis(true)} />
-                        <div
-                            onClick={() => setIsMenuOpen(false)}
-                            className='fixed inset-0 z-20'></div>
-                    </>
+
+                    </div>
                 )}
             </AnimatePresence>
+
 
             <AnimatePresence>
                 {settingsVis && (

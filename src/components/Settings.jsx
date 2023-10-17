@@ -30,8 +30,8 @@ function Settings({ handleClose }) {
         setDarkMode(prevState => !prevState)
     }
     return (
-        <div className='fixed inset-0 z-[999] backdrop-blur-sm'>
-            <div className='fixed w-[80vw] flex flex-col top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 overflow-hidden rounded-xl bg-slate-800 shadow-md shadow-black'>
+        <div className='fixed inset-0 backdrop-blur-sm z-40'>
+            <div className='fixed w-[80vw] max-w-[480px] flex flex-col top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 overflow-hidden rounded-xl bg-slate-800 shadow-md shadow-black'>
 
                 <div className='flex flex-nowrap items-start gap-x-2 p-3 mt-2 text-white text-lg'>
                     <span className='w-5'>
