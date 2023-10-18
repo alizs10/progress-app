@@ -5,3 +5,26 @@ export const deadlineToMoment = (deadline) => {
 
     return momentDateType;
 }
+
+export const zValidate = (schema, data) => {
+
+    let validationErrors = {};
+    let hasError = false;
+
+    let validationRes = schema.safeParse(data)
+
+    if (!validationRes.success) {
+        hasError = true;
+        let errors = validationRes.error.errors
+
+        for (let index in errors) {
+            let errorObj = errors[index];
+            validationErrors[errorObj.path[0]] = errorObj.message
+        }
+
+        return { hasError, errors: validationErrors }
+    }
+
+
+    return { hasError, values: validationRes.data, errors: validationErrors }
+}

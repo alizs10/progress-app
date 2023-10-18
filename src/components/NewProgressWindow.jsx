@@ -4,6 +4,8 @@ import CheckBox from './CheckBox';
 import InfoIcon from './icons/InfoIcon';
 import ThemeSelector from './ThemeSelector';
 import useProgressesStore from '../../store/progresses-store';
+import { z } from 'zod';
+import { zValidate } from '../../helpers/helpers';
 
 function NewProgressWindow({ handleClose }) {
 
@@ -22,6 +24,7 @@ function NewProgressWindow({ handleClose }) {
     const [progressTheme, setProgressTheme] = useState(0)
     const [themeSelectorVis, setThemeSelectorVis] = useState(false)
     const [hasDeadline, setHasDeadline] = useState(false)
+    const [errors, setErrors] = useState({})
 
     function toggleHasDeadline() {
         setHasDeadline(prevState => !prevState)
@@ -43,6 +46,15 @@ function NewProgressWindow({ handleClose }) {
         // _id, title, theme, deadline, steps
         // steps: _id, title, status
 
+        let newPgSchema = z.object({
+            _id: z.number(),
+            title: z.string().min(1, 'title is required!'),
+            theme: z.number().min(0).max(5),
+            deadline: z.string().min(1, 'deadline should be a valid date').or(z.boolean()),
+            steps: z.array(z.object({ _id: z.number(), title: z.string(), status: z.boolean() })).max(100, "steps limit: 100")
+        })
+
+
         let newPg = {
             _id: new Date().getTime(),
             title: titleRef.current.value,
@@ -55,9 +67,16 @@ function NewProgressWindow({ handleClose }) {
             newPg.steps.push({ _id: newPg._id + newPg.steps.length + 1, title: 'step ' + parseInt(newPg.steps.length + 1), status: false })
         }
 
+        const { hasError, errors } = zValidate(newPgSchema, newPg)
 
-        addProgress(newPg)
-        handleClose()
+        console.log(newPg);
+        if (!hasError) {
+            addProgress(newPg)
+            handleClose()
+        } else {
+            setErrors(errors)
+        }
+
     }
 
     let d = new Date;
@@ -92,11 +111,13 @@ function NewProgressWindow({ handleClose }) {
                 <div className='p-5 grid grid-cols-2 gap-y-2'>
                     <div className='col-span-2 flex flex-col gap-y-1'>
                         <label className='text-sm text-white'>Title</label>
-                        <input ref={titleRef} type="text" className='text-input' placeholder='Progress title' />
+                        <input ref={titleRef} type="text" className={`text-input ${errors?.title && 'outline outline-2 outline-red-600'}`} placeholder='Progress title' />
+                        {errors?.title && (<span className='text-xs text-red-600'>{errors.title}</span>)}
                     </div>
                     <div className='col-span-2 flex flex-col gap-y-1'>
                         <label className='text-sm text-white'>Steps</label>
-                        <input ref={stepsRef} type="number" className='text-input' placeholder='10' defaultValue={1} min={1} max={100} />
+                        <input ref={stepsRef} type="number" className={`text-input ${errors?.steps && 'outline outline-2 outline-red-600'}`} placeholder='10' defaultValue={1} min={1} max={100} />
+                        {errors?.steps && (<span className='text-xs text-red-600'>{errors.steps}</span>)}
                     </div>
                     <div className='mt-2 col-span-2 flex items-center justify-between'>
                         <label className='text-sm text-white'>Deadline</label>
@@ -105,7 +126,8 @@ function NewProgressWindow({ handleClose }) {
                     {hasDeadline && (
                         <div className='col-span-2 flex flex-col gap-y-1'>
                             <label className='text-sm text-white'>Steps</label>
-                            <input ref={deadlineRef} type="date" className='text-input' min={tomorrow} defaultValue={tomorrow} />
+                            <input ref={deadlineRef} type="date" className={`text-input ${errors?.deadline && 'outline outline-2 outline-red-600'}`} min={tomorrow} defaultValue={tomorrow} />
+                            {errors?.deadline && (<span className='text-xs text-red-600'>{errors.deadline}</span>)}
                         </div>
                     )}
                     <div className='mt-2 col-span-2 flex items-center justify-between'>
