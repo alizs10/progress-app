@@ -73,8 +73,17 @@ const useProgressesStore = create((set) => ({
         dataIns[updatableProgressIndex] = payload
 
         return { data: dataIns }
-    })
+    }),
 
+    deleteProgress: payload => set(state => {
+
+        let progressId = payload;
+
+        let dataIns = [...state.data]
+        let filteredData = dataIns.filter(pg => pg._id !== progressId)
+
+        return { data: filteredData }
+    }),
 
 
 }))
