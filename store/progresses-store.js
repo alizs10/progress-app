@@ -2,6 +2,8 @@ import { create } from 'zustand'
 
 const useProgressesStore = create((set) => ({
 
+    viewMode: 0,
+    toggleViewMode: payload => set((state) => ({ viewMode: state.viewMode === 1 ? 0 : 1 })),
 
     // 0 => undone, 1 => all, 2 => done
     showProgressesType: 0,
@@ -64,6 +66,9 @@ const useProgressesStore = create((set) => ({
 
     editingProgress: null,
     setEditingProgress: payload => set((state) => ({ editingProgress: payload })),
+
+    progressInFocus: null,
+    setProgressInFocus: payload => set((state) => ({ progressInFocus: payload })),
 
     updateProgress: payload => set((state) => {
 

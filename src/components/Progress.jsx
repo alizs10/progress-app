@@ -7,10 +7,12 @@ import { useSwipeable } from 'react-swipeable'
 import { configs } from '../../lib/swipeable'
 import moment from 'moment'
 import { deadlineToMoment } from '../../helpers/helpers'
+import ProgressOptions from './ProgressOptions'
+import { useLongPress } from 'use-long-press'
 
-function Progress({ progress }) {
+function Progress({ progress, index }) {
 
-    const { stepForward, stepBackward, setEditingProgress } = useProgressesStore()
+    const { stepForward, stepBackward, setEditingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
 
     // swipeable
     const handlers = useSwipeable({
@@ -29,18 +31,29 @@ function Progress({ progress }) {
     }
 
     function handleOpenEditor() {
+        if (progressInFocus) return
         setEditingProgress(progress)
     }
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
     let pg = Math.floor((passedSteps.length / progress.steps.length) * 100);
-    console.log(passedSteps)
     let lastStep = passedSteps[passedSteps.length - 1]
     let nextStep = reversedSteps[passedSteps.length]
 
+    const bind = useLongPress(() => {
+
+        setProgressInFocus(progress)
+
+    })
+
     return (
-        <div {...handlers} className={`col-span-2 relative rounded-xl h-32 p-3 shadow-md overflow-hidden shadow-black/70 pg-container-theme-${progress.theme}`}>
+        <div {...bind()} {...handlers} className={`col-span-2 select-none relative rounded-xl h-32 p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
+
+            {progressInFocus && progressInFocus._id === progress._id && (
+                <ProgressOptions progressIndex={index} />
+            )}
+
             <div style={{ width: `${pg}%` }} className={`transition-all duration-300 absolute inset-0 z-10 right-auto h-32 pg-bar-theme-${progress.theme} rounded-xl`}></div>
 
 

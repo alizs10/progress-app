@@ -132,6 +132,30 @@ body {
     @apply text-slate-400;
 }
 
+.outline-theme-0 {
+    @apply outline outline-4 outline-gray-500;
+}
+
+.outline-theme-1 {
+    @apply outline outline-4 outline-yellow-500;
+}
+
+.outline-theme-2 {
+    @apply outline outline-4 outline-emerald-600;
+}
+
+.outline-theme-3 {
+    @apply outline outline-4 outline-purple-600;
+}
+
+.outline-theme-4 {
+    @apply outline outline-4 outline-red-500;
+}
+
+.outline-theme-5 {
+    @apply outline outline-4 outline-slate-400;
+}
+
 .text-input {
     @apply rounded-xl bg-slate-700 w-full p-2 text-lg text-gray-200 placeholder:text-gray-400 focus:outline-none placeholder:text-sm
 }

@@ -5,11 +5,12 @@ import GridIcons from './icons/GridIcons'
 import MiniProgress from './MiniProgress'
 import useProgressesStore from '../../store/progresses-store'
 import ProgressEditor from './ProgressEditor'
+import FocusMode from './FocusMode'
 
 function Progresses() {
 
-    const [viewMode, setViewMode] = useState(0)
-    const { data, progresses, showUnDoneProgresses, showProgressesType, editingProgress } = useProgressesStore()
+
+    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -43,7 +44,7 @@ function Progresses() {
             )}
             <div className='mx-3 flex justify-between items-start'>
                 <span className='text-gray-300 text-sm'>{progressesTypeStr} <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>
-                <button onClick={() => setViewMode(prevState => prevState === 0 ? 1 : 0)} className='text-gray-500 text-xs fill-white flex justify-center items-center'>
+                <button onClick={toggleViewMode} className='text-gray-500 text-xs fill-white flex justify-center items-center'>
                     {viewMode === 0 ? (
                         <GridIcons />
                     ) : (
@@ -51,11 +52,12 @@ function Progresses() {
                     )}
                 </button>
             </div>
+            {progressInFocus && (<FocusMode />)}
 
             <div className='mt-4 grid grid-cols-2 gap-3 pb-20'>
 
 
-                {progresses.map(pg => viewMode === 1 ? <MiniProgress key={pg._id} progress={pg} /> : <Progress key={pg._id} progress={pg} />)}
+                {progresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
 
             </div>
         </div>

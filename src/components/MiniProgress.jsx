@@ -8,11 +8,13 @@ import { useSwipeable } from 'react-swipeable'
 import useProgressesStore from '../../store/progresses-store'
 import moment from 'moment'
 import { deadlineToMoment } from '../../helpers/helpers'
+import { useLongPress } from 'use-long-press'
+import ProgressOptions from './ProgressOptions'
 
-function MiniProgress({ progress }) {
+function MiniProgress({ progress, index }) {
 
 
-    const { stepForward, stepBackward, setEditingProgress } = useProgressesStore()
+    const { stepForward, stepBackward, setEditingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -26,6 +28,7 @@ function MiniProgress({ progress }) {
         onSwipedRight: handleSwipeRight,
         onSwipedLeft: handleSwipeLeft,
         onTap: handleOpenEditor,
+
         ...configs,
     });
 
@@ -38,13 +41,22 @@ function MiniProgress({ progress }) {
     }
 
     function handleOpenEditor() {
+        if (progressInFocus) return
         setEditingProgress(progress)
     }
 
+    const bind = useLongPress(() => {
+
+        setProgressInFocus(progress)
+
+    })
+
     return (
-        <div {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-3 shadow-md shadow-black/70 progress-bar-base-theme-${progress.theme} overflow-hidden`}>
+        <div {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-3 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
 
-
+            {progressInFocus && progressInFocus._id === progress._id && (
+                <ProgressOptions progressIndex={index} />
+            )}
             <div>
                 <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
             </div>
