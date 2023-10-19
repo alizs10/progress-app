@@ -4,11 +4,12 @@ import RowsIcon from './icons/RowsIcon'
 import GridIcons from './icons/GridIcons'
 import MiniProgress from './MiniProgress'
 import useProgressesStore from '../../store/progresses-store'
+import ProgressEditor from './ProgressEditor'
 
 function Progresses() {
 
     const [viewMode, setViewMode] = useState(0)
-    const { data, progresses, showUnDoneProgresses, showProgressesType } = useProgressesStore()
+    const { data, progresses, showUnDoneProgresses, showProgressesType, editingProgress } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -37,6 +38,9 @@ function Progresses() {
 
     return (
         <div className='p-3 rounded-lg'>
+            {editingProgress && (
+                <ProgressEditor />
+            )}
             <div className='mx-3 flex justify-between items-start'>
                 <span className='text-gray-300 text-sm'>{progressesTypeStr} <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>
                 <button onClick={() => setViewMode(prevState => prevState === 0 ? 1 : 0)} className='text-gray-500 text-xs fill-white flex justify-center items-center'>

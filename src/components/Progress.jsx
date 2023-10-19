@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ClockIcon from './icons/ClockIcon'
 import ArrowUturnRightIcon from './icons/ArrowUturnRightIcon'
 import CheckIcon from './icons/CheckIcon'
@@ -10,27 +10,34 @@ import { deadlineToMoment } from '../../helpers/helpers'
 
 function Progress({ progress }) {
 
-    const { handleStepForward, handleStepBackward } = useProgressesStore()
+    const { stepForward, stepBackward, setEditingProgress } = useProgressesStore()
 
     // swipeable
     const handlers = useSwipeable({
         onSwipedRight: handleSwipeRight,
         onSwipedLeft: handleSwipeLeft,
+        onTap: handleOpenEditor,
         ...configs,
     });
 
     function handleSwipeRight() {
-        handleStepForward(progress._id)
+        stepForward(progress._id)
     }
 
     function handleSwipeLeft() {
-        handleStepBackward(progress._id)
+        stepBackward(progress._id)
     }
 
-    let passedSteps = progress.steps.filter(st => st.status)
+    function handleOpenEditor() {
+        setEditingProgress(progress)
+    }
+
+    let reversedSteps = [...progress.steps].reverse()
+    let passedSteps = reversedSteps.filter(st => st.status)
     let pg = Math.floor((passedSteps.length / progress.steps.length) * 100);
+    console.log(passedSteps)
     let lastStep = passedSteps[passedSteps.length - 1]
-    let nextStep = progress.steps[passedSteps.length]
+    let nextStep = reversedSteps[passedSteps.length]
 
     return (
         <div {...handlers} className={`col-span-2 relative rounded-xl h-32 p-3 shadow-md overflow-hidden shadow-black/70 pg-container-theme-${progress.theme}`}>
@@ -95,7 +102,7 @@ function Progress({ progress }) {
                 </div>
 
                 <div className='flex flex-nowrap gap-x-1 mt-auto'>
-                    {progress.steps.map(st => <div key={st._id} style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
+                    {reversedSteps.map(st => <div key={st._id} style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
                 </div>
             </div>
         </div>

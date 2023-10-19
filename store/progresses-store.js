@@ -34,12 +34,12 @@ const useProgressesStore = create((set) => ({
         return { showProgressesType: 0, progresses: unDoneProgresses }
     }),
 
-    handleStepForward: payload => set((state) => {
+    stepForward: payload => set((state) => {
 
         let pgId = payload;
         let progressesIns = [...state.progresses];
         let pgIndex = progressesIns.findIndex(pg => pg._id === pgId)
-        let steps = [...progressesIns[pgIndex].steps]
+        let steps = [...progressesIns[pgIndex].steps].reverse()
         let passedSteps = steps.filter(st => st.status)
         let nextStep = steps[passedSteps.length]
         let nextStepIndex = steps.findIndex(st => st._id === nextStep._id)
@@ -48,26 +48,34 @@ const useProgressesStore = create((set) => ({
         return { progresses: progressesIns }
     }),
 
-
-    // true
-    // true
-    // true
-    // false
-    // false
-
-    handleStepBackward: payload => set((state) => {
+    stepBackward: payload => set((state) => {
 
         let pgId = payload;
         let progressesIns = [...state.progresses];
         let pgIndex = progressesIns.findIndex(pg => pg._id === pgId)
-        let steps = [...progressesIns[pgIndex].steps]
+        let steps = [...progressesIns[pgIndex].steps].reverse()
         let passedSteps = steps.filter(st => st.status)
         let lastPassedStep = passedSteps[passedSteps.length - 1]
         let lastPassedStepIndex = steps.findIndex(st => st._id === lastPassedStep._id)
         steps[lastPassedStepIndex].status = false;
 
         return { progresses: progressesIns }
+    }),
+
+    editingProgress: null,
+    setEditingProgress: payload => set((state) => ({ editingProgress: payload })),
+
+    updateProgress: payload => set((state) => {
+
+        let { _id: updatedProgressId } = payload;
+        let dataIns = [...state.data]
+        let updatableProgressIndex = dataIns.findIndex(pg => pg._id === updatedProgressId)
+        dataIns[updatableProgressIndex] = payload
+
+        return { data: dataIns }
     })
+
+
 
 }))
 

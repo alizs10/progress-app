@@ -6,6 +6,7 @@ import ThemeSelector from './ThemeSelector';
 import useProgressesStore from '../../store/progresses-store';
 import { z } from 'zod';
 import { zValidate } from '../../helpers/helpers';
+import { progressSchema } from '../../helpers/progressValidations';
 
 function NewProgressWindow({ handleClose }) {
 
@@ -43,17 +44,6 @@ function NewProgressWindow({ handleClose }) {
     }
 
     function handleCreateNewProgress() {
-        // _id, title, theme, deadline, steps
-        // steps: _id, title, status
-
-        let newPgSchema = z.object({
-            _id: z.number(),
-            title: z.string().min(1, 'title is required!'),
-            theme: z.number().min(0).max(5),
-            deadline: z.string().min(1, 'deadline should be a valid date').or(z.boolean()),
-            steps: z.array(z.object({ _id: z.number(), title: z.string(), status: z.boolean() })).max(100, "steps limit: 100")
-        })
-
 
         let newPg = {
             _id: new Date().getTime(),
@@ -64,17 +54,16 @@ function NewProgressWindow({ handleClose }) {
         }
 
         while (newPg.steps.length < stepsRef.current.value) {
-            newPg.steps.push({ _id: newPg._id + newPg.steps.length + 1, title: 'step ' + parseInt(newPg.steps.length + 1), status: false })
+            newPg.steps.push({ _id: newPg._id + newPg.steps.length + 1, title: 'step ' + parseInt(stepsRef.current.value - newPg.steps.length), status: false })
         }
 
-        const { hasError, errors } = zValidate(newPgSchema, newPg)
+        let { hasError, errors: validationErrors } = zValidate(progressSchema, newPg)
 
-        console.log(newPg);
         if (!hasError) {
             addProgress(newPg)
             handleClose()
         } else {
-            setErrors(errors)
+            setErrors(validationErrors)
         }
 
     }
@@ -125,7 +114,7 @@ function NewProgressWindow({ handleClose }) {
                     </div>
                     {hasDeadline && (
                         <div className='col-span-2 flex flex-col gap-y-1'>
-                            <label className='text-sm text-white'>Steps</label>
+                            <label className='text-sm text-white'>Deadline</label>
                             <input ref={deadlineRef} type="date" className={`text-input ${errors?.deadline && 'outline outline-2 outline-red-600'}`} min={tomorrow} defaultValue={tomorrow} />
                             {errors?.deadline && (<span className='text-xs text-red-600'>{errors.deadline}</span>)}
                         </div>

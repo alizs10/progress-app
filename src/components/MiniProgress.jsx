@@ -12,27 +12,33 @@ import { deadlineToMoment } from '../../helpers/helpers'
 function MiniProgress({ progress }) {
 
 
-    const { handleStepForward, handleStepBackward } = useProgressesStore()
+    const { stepForward, stepBackward, setEditingProgress } = useProgressesStore()
 
-    let passedSteps = progress.steps.filter(st => st.status)
+    let reversedSteps = [...progress.steps].reverse()
+    let passedSteps = reversedSteps.filter(st => st.status)
     let pg = Math.floor((passedSteps.length / progress.steps.length) * 100);
     let lastStep = passedSteps[passedSteps.length - 1]
-    let nextStep = progress.steps[passedSteps.length]
+    let nextStep = reversedSteps[passedSteps.length]
 
 
     // swipeable
     const handlers = useSwipeable({
         onSwipedRight: handleSwipeRight,
         onSwipedLeft: handleSwipeLeft,
+        onTap: handleOpenEditor,
         ...configs,
     });
 
     function handleSwipeRight() {
-        handleStepForward(progress._id)
+        stepForward(progress._id)
     }
 
     function handleSwipeLeft() {
-        handleStepBackward(progress._id)
+        stepBackward(progress._id)
+    }
+
+    function handleOpenEditor() {
+        setEditingProgress(progress)
     }
 
     return (
