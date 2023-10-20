@@ -51,7 +51,7 @@ function Progress({ progress, index }) {
         <div {...bind()} {...handlers} className={`col-span-2 select-none relative rounded-xl h-32 p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
 
             {progressInFocus && progressInFocus._id === progress._id && (
-                <ProgressOptions progressIndex={index} />
+                <ProgressOptions progress={progress} progressIndex={index} />
             )}
 
             <div style={{ width: `${pg}%` }} className={`transition-all duration-300 absolute inset-0 z-10 right-auto h-32 pg-bar-theme-${progress.theme} rounded-xl`}></div>

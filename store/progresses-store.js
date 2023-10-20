@@ -70,6 +70,9 @@ const useProgressesStore = create((set) => ({
     progressInFocus: null,
     setProgressInFocus: payload => set((state) => ({ progressInFocus: payload })),
 
+    deleteConfirmationVis: false,
+    setDeleteConfirmationVis: payload => set((state) => ({ deleteConfirmationVis: payload })),
+
     updateProgress: payload => set((state) => {
 
         let { _id: updatedProgressId } = payload;

@@ -19,7 +19,7 @@ function ProgressEditor() {
         };
     }, []);
 
-    const { editingProgress, setEditingProgress, updateProgress, deleteProgress } = useProgressesStore()
+    const { editingProgress, setEditingProgress, updateProgress, setDeleteConfirmationVis } = useProgressesStore()
 
     const themes = [0, 1, 2, 3, 4, 5]
     const [progressTheme, setProgressTheme] = useState(editingProgress.theme)
@@ -29,7 +29,6 @@ function ProgressEditor() {
     const [steps, setSteps] = useState(editingProgress.steps)
     const [errors, setErrors] = useState({})
     const [stepsCount, setStepsCount] = useState(editingProgress.steps.length)
-    const [deleteConfirmationVis, setDeleteConfirmationVis] = useState(false)
 
     let d = new Date;
     let tomorrow = `${d.getFullYear()}-${d.getMonth() + 1 < 10 ? '0' + d.getMonth() + 1 : d.getMonth() + 1}-${d.getDate() + 1}`
@@ -148,24 +147,13 @@ function ProgressEditor() {
         setDeleteConfirmationVis(true)
     }
 
-    function handleCancelDelete() {
-        setDeleteConfirmationVis(false)
-    }
-
-    function handleDeleteProgress() {
-        //delete pg
-        deleteProgress(editingProgress._id)
-        setEditingProgress(null)
-    }
-
     return (
         <div className='fixed w-full max-w-[600px] h-full left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-[99999] flex flex-col gap-y-2 bg-slate-800 p-5 overflow-y-scroll'>
             {themeSelectorVis && (
                 <ThemeSelector themes={themes} progressTheme={progressTheme} handleSelectTheme={handleSelectTheme} />
             )}
-            {deleteConfirmationVis && (
-                <DeleteProgressConfirmationWindow progress={editingProgress} handleCancel={handleCancelDelete} handleConfirm={handleDeleteProgress} />
-            )}
+
+
             <div className='flex justify-between items-center'>
                 <div className='flex gap-x-4 items-center'>
                     <button

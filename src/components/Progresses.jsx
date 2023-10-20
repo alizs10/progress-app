@@ -6,11 +6,12 @@ import MiniProgress from './MiniProgress'
 import useProgressesStore from '../../store/progresses-store'
 import ProgressEditor from './ProgressEditor'
 import FocusMode from './FocusMode'
+import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow'
 
 function Progresses() {
 
 
-    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus } = useProgressesStore()
+    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus, setProgressInFocus, deleteConfirmationVis } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -37,8 +38,14 @@ function Progresses() {
     }, [data])
 
 
+
+
+
+
     return (
         <div className='p-3 rounded-lg'>
+
+
             {editingProgress && (
                 <ProgressEditor />
             )}
@@ -52,7 +59,9 @@ function Progresses() {
                     )}
                 </button>
             </div>
+
             {progressInFocus && (<FocusMode />)}
+            {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
 
             <div className='mt-4 grid grid-cols-2 gap-3 pb-20'>
 

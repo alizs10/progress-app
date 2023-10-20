@@ -55,7 +55,7 @@ function MiniProgress({ progress, index }) {
         <div {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-3 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
 
             {progressInFocus && progressInFocus._id === progress._id && (
-                <ProgressOptions progressIndex={index} />
+                <ProgressOptions progress={progress} progressIndex={index} />
             )}
             <div>
                 <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
