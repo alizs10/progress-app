@@ -3,14 +3,20 @@ import PinIcon from './icons/PinIcon'
 import EditIcon from './icons/EditIcon'
 import TrashIcon from './icons/TrashIcon'
 import useProgressesStore from '../../store/progresses-store'
-import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow'
+import PinSlash from './icons/PinSlash'
 
 function ProgressOptions({ progress, progressIndex }) {
 
-    const { viewMode, setDeleteConfirmationVis, setProgressInFocus, setEditingProgress } = useProgressesStore()
+    const { viewMode, setDeleteConfirmationVis, setProgressInFocus, setEditingProgress, updateProgress } = useProgressesStore()
 
     function handleTogglePin() {
+        let updatableProgress = {
+            _id: progress._id,
+            pin: !progress.pin
+        }
 
+        updateProgress(updatableProgress)
+        setProgressInFocus(null)
     }
 
     function handleDeleteBtn() {
@@ -28,7 +34,7 @@ function ProgressOptions({ progress, progressIndex }) {
                 onClick={handleTogglePin}
                 className='w-fit p-3 flex gap-x-2 items-center rounded-full bg-gray-300 fill-gray-700 text-lg text-center'>
                 <div className='w-6'>
-                    <PinIcon />
+                    {progress.pin ? (<PinSlash />) : (<PinIcon />)}
                 </div>
             </button>
             <button

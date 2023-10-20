@@ -12,7 +12,7 @@ const useProgressesStore = create((set) => ({
 
     progresses: [],
 
-    addProgress: payload => set((state) => ({ data: [...state.data, payload] })),
+    addProgress: payload => set((state) => ({ data: [payload, ...state.data] })),
 
     showAllProgresses: payload => set((state) => {
         return { showProgressesType: 1, progresses: state.data }
@@ -78,7 +78,7 @@ const useProgressesStore = create((set) => ({
         let { _id: updatedProgressId } = payload;
         let dataIns = [...state.data]
         let updatableProgressIndex = dataIns.findIndex(pg => pg._id === updatedProgressId)
-        dataIns[updatableProgressIndex] = payload
+        dataIns[updatableProgressIndex] = { ...dataIns[updatableProgressIndex], ...payload }
 
         return { data: dataIns }
     }),

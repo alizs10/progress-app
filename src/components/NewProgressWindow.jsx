@@ -4,7 +4,6 @@ import CheckBox from './CheckBox';
 import InfoIcon from './icons/InfoIcon';
 import ThemeSelector from './ThemeSelector';
 import useProgressesStore from '../../store/progresses-store';
-import { z } from 'zod';
 import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
 
@@ -50,6 +49,7 @@ function NewProgressWindow({ handleClose }) {
             title: titleRef.current.value,
             steps: [],
             deadline: hasDeadline ? deadlineRef.current.value : false,
+            pin: false,
             theme: progressTheme
         }
 

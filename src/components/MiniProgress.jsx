@@ -10,6 +10,7 @@ import moment from 'moment'
 import { deadlineToMoment } from '../../helpers/helpers'
 import { useLongPress } from 'use-long-press'
 import ProgressOptions from './ProgressOptions'
+import PinIcon from './icons/PinIcon'
 
 function MiniProgress({ progress, index }) {
 
@@ -57,9 +58,20 @@ function MiniProgress({ progress, index }) {
             {progressInFocus && progressInFocus._id === progress._id && (
                 <ProgressOptions progress={progress} progressIndex={index} />
             )}
-            <div>
-                <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
-            </div>
+            {progress.pin ? (
+                <div className='flex justify-between items-start'>
+                    <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
+                    <div className='w-8 min-w-[2rem] bg-white aspect-square rounded-full flex justify-center items-center'>
+                        <div className='w-5 fill-black'>
+                            <PinIcon />
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className=''>
+                    <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
+                </div>
+            )}
 
             <div className='mt-auto flex justify-between items-center pl-1'>
 

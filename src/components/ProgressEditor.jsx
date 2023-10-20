@@ -120,6 +120,7 @@ function ProgressEditor() {
             title: titleRef.current.value,
             theme: progressTheme,
             deadline: hasDeadline ? deadlineRef.current.value : false,
+            pin: editingProgress.pin,
             steps: wantsDefineSteps ? steps : []
         }
 

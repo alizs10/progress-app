@@ -11,7 +11,7 @@ import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow
 function Progresses() {
 
 
-    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus, setProgressInFocus, deleteConfirmationVis } = useProgressesStore()
+    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus, deleteConfirmationVis } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -38,7 +38,8 @@ function Progresses() {
     }, [data])
 
 
-
+    let otherProgresses = progresses.filter(pg => !pg.pin)
+    let pinnedProgresses = progresses.filter(pg => pg.pin)
 
 
 
@@ -63,12 +64,24 @@ function Progresses() {
             {progressInFocus && (<FocusMode />)}
             {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
 
-            <div className='mt-4 grid grid-cols-2 gap-3 pb-20'>
+            {pinnedProgresses.length > 0 && (
 
+                <div className='mt-4 mx-3 flex flex-col gap-y-2'>
+                    <span className='text-gray-300 text-sm'>Pinned <span className='text-red-600 text-[12px]'>({pinnedProgresses.length})</span></span>
+                    <div className='grid grid-cols-2 gap-3'>
+                        {pinnedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                    </div>
+                </div>
+            )}
 
-                {progresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+            <div className='mt-4 mx-3 flex flex-col gap-y-2'>
+                <span className='text-gray-300 text-sm'>Others <span className='text-red-600 text-[12px]'>({otherProgresses.length})</span></span>
+                <div className='grid grid-cols-2 gap-3 pb-20'>
+                    {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
 
+                </div>
             </div>
+
         </div>
     )
 }

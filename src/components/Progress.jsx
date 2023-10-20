@@ -9,6 +9,7 @@ import moment from 'moment'
 import { deadlineToMoment } from '../../helpers/helpers'
 import ProgressOptions from './ProgressOptions'
 import { useLongPress } from 'use-long-press'
+import PinIcon from './icons/PinIcon'
 
 function Progress({ progress, index }) {
 
@@ -60,7 +61,16 @@ function Progress({ progress, index }) {
             <div className='absolute inset-0 z-20 p-3 flex flex-col gap-y-1 h-32'>
                 <div className='flex justify-between items-start'>
                     <div className='flex flex-col gap-y-3'>
-                        <span className='font-bold text-2xl  line-clamp-1'>{progress.title}</span>
+                        <div className='flex gap-x-2 items-center'>
+                            {progress.pin && (
+                                <div className='w-8 bg-white aspect-square rounded-full flex justify-center items-center'>
+                                    <div className='w-5 fill-black'>
+                                        <PinIcon />
+                                    </div>
+                                </div>
+                            )}
+                            <span className='font-bold text-2xl  line-clamp-1'>{progress.title}</span>
+                        </div>
                         <div className='flex flex-col gap-y-1'>
 
                             <div className='flex flex-nowrap gap-x-1'>
