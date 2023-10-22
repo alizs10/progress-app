@@ -7,11 +7,12 @@ import useProgressesStore from '../../store/progresses-store'
 import ProgressEditor from './ProgressEditor'
 import FocusMode from './FocusMode'
 import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow'
+import ProgressViewer from './ProgressViewer'
 
 function Progresses() {
 
 
-    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus, deleteConfirmationVis } = useProgressesStore()
+    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus, deleteConfirmationVis, viewingProgress } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -49,6 +50,10 @@ function Progresses() {
 
             {editingProgress && (
                 <ProgressEditor />
+            )}
+
+            {viewingProgress && (
+                <ProgressViewer />
             )}
             <div className='mx-3 flex justify-between items-start'>
                 <span className='text-gray-300 text-sm'>{progressesTypeStr} <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>

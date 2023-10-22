@@ -13,13 +13,13 @@ import PinIcon from './icons/PinIcon'
 
 function Progress({ progress, index }) {
 
-    const { stepForward, stepBackward, setEditingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
 
     // swipeable
     const handlers = useSwipeable({
         onSwipedRight: handleSwipeRight,
         onSwipedLeft: handleSwipeLeft,
-        onTap: handleOpenEditor,
+        onTap: handleOpenViewer,
         ...configs,
     });
 
@@ -31,9 +31,9 @@ function Progress({ progress, index }) {
         stepBackward(progress._id)
     }
 
-    function handleOpenEditor() {
+    function handleOpenViewer() {
         if (progressInFocus) return
-        setEditingProgress(progress)
+        setViewingProgress(progress)
     }
 
     let reversedSteps = [...progress.steps].reverse()
@@ -63,7 +63,7 @@ function Progress({ progress, index }) {
                     <div className='flex flex-col gap-y-3'>
                         <div className='flex gap-x-2 items-center'>
                             {progress.pin && (
-                                <div className='w-8 bg-white aspect-square rounded-full flex justify-center items-center'>
+                                <div className='w-8 p-1 bg-white aspect-square rounded-full flex justify-center items-center'>
                                     <div className='w-5 fill-black'>
                                         <PinIcon />
                                     </div>
@@ -127,7 +127,10 @@ function Progress({ progress, index }) {
                 <div className='flex flex-nowrap gap-x-1 mt-auto'>
                     {reversedSteps.map(st => <div key={st._id} style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
                 </div>
+
+
             </div>
+
         </div>
     )
 }

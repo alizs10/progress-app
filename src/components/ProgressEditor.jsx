@@ -6,7 +6,6 @@ import ThemeSelector from './ThemeSelector';
 import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
-import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow';
 
 function ProgressEditor() {
 

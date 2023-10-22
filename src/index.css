@@ -168,3 +168,101 @@ input[type=number] {
     -moz-appearance: textfield;
     /* Firefox */
 }
+
+.pg-viewer-text-theme-0 {
+    @apply text-gray-500;
+}
+
+.pg-viewer-text-theme-1 {
+    @apply text-yellow-500;
+}
+
+.pg-viewer-text-theme-2 {
+    @apply text-emerald-600;
+}
+
+.pg-viewer-text-theme-3 {
+    @apply text-purple-600;
+}
+
+.pg-viewer-text-theme-4 {
+    @apply text-red-500;
+}
+
+.pg-viewer-text-theme-5 {
+    @apply text-slate-400;
+}
+
+.pg-viewer-border-theme-0 {
+    @apply border-gray-500;
+}
+
+.pg-viewer-border-theme-1 {
+    @apply border-yellow-500;
+}
+
+.pg-viewer-border-theme-2 {
+    @apply border-emerald-600;
+}
+
+.pg-viewer-border-theme-3 {
+    @apply border-purple-600;
+}
+
+.pg-viewer-border-theme-4 {
+    @apply border-red-500;
+}
+
+.pg-viewer-border-theme-5 {
+    @apply border-slate-400;
+}
+
+
+
+.pg-viewer-outline-theme-0 {
+    @apply outline-gray-500;
+}
+
+.pg-viewer-outline-theme-1 {
+    @apply outline-yellow-500;
+}
+
+.pg-viewer-outline-theme-2 {
+    @apply outline-emerald-600;
+}
+
+.pg-viewer-outline-theme-3 {
+    @apply outline-purple-600;
+}
+
+.pg-viewer-outline-theme-4 {
+    @apply outline-red-500;
+}
+
+.pg-viewer-outline-theme-5 {
+    @apply outline-slate-400;
+}
+
+.pg-viewer-bg-theme-0 {
+    @apply bg-gray-500;
+}
+
+.pg-viewer-bg-theme-1 {
+    @apply bg-yellow-500;
+}
+
+.pg-viewer-bg-theme-2 {
+    @apply bg-emerald-600;
+}
+
+.pg-viewer-bg-theme-3 {
+    @apply bg-purple-600;
+}
+
+.pg-viewer-bg-theme-4 {
+    @apply bg-red-500;
+}
+
+.pg-viewer-bg-theme-5 {
+    @apply bg-slate-400;
+}

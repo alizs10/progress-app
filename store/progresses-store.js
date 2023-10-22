@@ -8,7 +8,27 @@ const useProgressesStore = create((set) => ({
     // 0 => undone, 1 => all, 2 => done
     showProgressesType: 0,
 
-    data: [],
+    data: [
+        {
+            _id: 1,
+            title: "Read Sofia's world book",
+            pin: true,
+            deadline: '2023-10-30',
+            theme: 2,
+            steps: [
+                {
+                    _id: 12,
+                    title: 'second step',
+                    status: false
+                },
+                {
+                    _id: 123,
+                    title: 'first step',
+                    status: true
+                },
+            ]
+        }
+    ],
 
     progresses: [],
 
@@ -66,6 +86,29 @@ const useProgressesStore = create((set) => ({
 
     editingProgress: null,
     setEditingProgress: payload => set((state) => ({ editingProgress: payload })),
+
+    viewingProgress: null,
+
+    // viewingProgress: {
+    //     _id: 1,
+    //     title: "Read Sofia's world book",
+    //     pin: true,
+    //     deadline: '2023-10-30',
+    //     theme: 5,
+    //     steps: [
+    //         {
+    //             _id: 12,
+    //             title: 'second step',
+    //             status: false
+    //         },
+    //         {
+    //             _id: 123,
+    //             title: 'first step',
+    //             status: true
+    //         },
+    //     ]
+    // },
+    setViewingProgress: payload => set((state) => ({ viewingProgress: payload })),
 
     progressInFocus: null,
     setProgressInFocus: payload => set((state) => ({ progressInFocus: payload })),

@@ -15,7 +15,7 @@ import PinIcon from './icons/PinIcon'
 function MiniProgress({ progress, index }) {
 
 
-    const { stepForward, stepBackward, setEditingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -28,7 +28,7 @@ function MiniProgress({ progress, index }) {
     const handlers = useSwipeable({
         onSwipedRight: handleSwipeRight,
         onSwipedLeft: handleSwipeLeft,
-        onTap: handleOpenEditor,
+        onTap: handleOpenViewer,
 
         ...configs,
     });
@@ -41,9 +41,9 @@ function MiniProgress({ progress, index }) {
         stepBackward(progress._id)
     }
 
-    function handleOpenEditor() {
+    function handleOpenViewer() {
         if (progressInFocus) return
-        setEditingProgress(progress)
+        setViewingProgress(progress)
     }
 
     const bind = useLongPress(() => {
@@ -53,7 +53,7 @@ function MiniProgress({ progress, index }) {
     })
 
     return (
-        <div {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-3 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
+        <div {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-2 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
 
             {progressInFocus && progressInFocus._id === progress._id && (
                 <ProgressOptions progress={progress} progressIndex={index} />
@@ -73,9 +73,9 @@ function MiniProgress({ progress, index }) {
                 </div>
             )}
 
-            <div className='mt-auto flex justify-between items-center pl-1'>
+            <div className='mt-auto w-full flex justify-between items-center pl-1'>
 
-                <div className='flex flex-col gap-y-1'>
+                <div className='flex flex-col gap-y-1 w-2/3'>
 
                     {lastStep && (
 
@@ -105,15 +105,17 @@ function MiniProgress({ progress, index }) {
                         <span className='w-[14px] clock'>
                             <ClockIcon />
                         </span>
-                        <span className='text-[10px]'>
+                        <span className='text-[10px] line-clamp-1'>
                             {progress.deadline ? (moment(deadlineToMoment(progress.deadline)).toNow(true) + ' left') : "not set"}
                         </span>
                     </div>
 
                 </div>
 
-                <div className='mt-auto flex flex-col gap-0'>
-                    <CircleProgressBar themeIndex={progress.theme} percentage={pg} />
+                <div className='w-1/3 mt-auto flex flex-col gap-0'>
+                    <div className='w-full'>
+                        <CircleProgressBar themeIndex={progress.theme} percentage={pg} />
+                    </div>
                     {passedSteps.length === progress.steps.length ? (
                         <span className='text-xs mx-auto'>done</span>
                     ) : (
