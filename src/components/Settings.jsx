@@ -19,7 +19,16 @@ function Settings({ handleClose }) {
 
     const [darkMode, setDarkMode] = useState(true)
     const [itemViewStyle, setItemViewStyle] = useState(0)
-    const itemViewOptions = ['List', 'Grid']
+    const itemViewOptions = [
+        {
+            name: 'List',
+            value: 0
+        },
+        {
+            name: 'Grid',
+            value: 1
+        }
+    ]
 
 
     function handleChangeItemViewStyle(index) {

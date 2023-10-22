@@ -13,7 +13,7 @@ import NewProgressWindow from './NewProgressWindow'
 
 function BottomBar() {
 
-    const { showUnDoneProgresses, showDoneProgresses, data, showProgressesType } = useProgressesStore()
+    const { selectedLabel, showProgresses, data, showProgressesType } = useProgressesStore()
 
     const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -73,7 +73,7 @@ function BottomBar() {
 
 
                 <button
-                    onClick={showUnDoneProgresses}
+                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 0 })}
                     className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 0 && 'bg-gray-700'}`}>
                     <span className='fill-white relative'>
                         <ProgressClockIcon />
@@ -84,7 +84,7 @@ function BottomBar() {
                 <div className='col-span-1'></div>
 
                 <button
-                    onClick={showDoneProgresses}
+                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 2 })}
                     className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 2 && 'bg-gray-700'}`}>
                     <span className='fill-white relative'>
                         <ProgressCheckIcon />

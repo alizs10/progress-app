@@ -6,6 +6,7 @@ import ThemeSelector from './ThemeSelector';
 import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
+import Dropdown from './Dropdown';
 
 function NewProgressWindow({ handleClose }) {
 
@@ -18,10 +19,15 @@ function NewProgressWindow({ handleClose }) {
         };
     }, []);
 
-    const { addProgress } = useProgressesStore()
+    const { addProgress, labels, importanceValues } = useProgressesStore()
+
+    let labelsOptions = labels.map(lb => ({ name: lb.name, value: lb._id }))
+    let importanceOptions = importanceValues.map(imp => ({ name: imp.name, value: imp._id }))
 
     const themes = [0, 1, 2, 3, 4, 5]
     const [progressTheme, setProgressTheme] = useState(0)
+    const [progressLabel, setProgressLabel] = useState(0)
+    const [progressImportance, setProgressImportance] = useState(0)
     const [themeSelectorVis, setThemeSelectorVis] = useState(false)
     const [hasDeadline, setHasDeadline] = useState(false)
     const [errors, setErrors] = useState({})
@@ -42,6 +48,13 @@ function NewProgressWindow({ handleClose }) {
         setThemeSelectorVis(false)
     }
 
+    function handleChangeLabel(labelId) {
+        setProgressLabel(labelId)
+    }
+    function handleChangeImportance(importanceId) {
+        setProgressImportance(importanceId)
+    }
+
     function handleCreateNewProgress() {
 
         let newPg = {
@@ -50,6 +63,8 @@ function NewProgressWindow({ handleClose }) {
             steps: [],
             deadline: hasDeadline ? deadlineRef.current.value : false,
             pin: false,
+            label: progressLabel,
+            importance: progressImportance,
             theme: progressTheme
         }
 
@@ -109,6 +124,18 @@ function NewProgressWindow({ handleClose }) {
                         {errors?.steps && (<span className='text-xs text-red-600'>{errors.steps}</span>)}
                     </div>
                     <div className='mt-2 col-span-2 flex items-center justify-between'>
+                        <label className='text-sm text-white'>Label</label>
+                        <div className='w-1/2'>
+                            <Dropdown options={labelsOptions} value={progressLabel} handleChange={handleChangeLabel} />
+                        </div>
+                    </div>
+                    <div className='mt-2 col-span-2 flex items-center justify-between'>
+                        <label className='text-sm text-white'>Importance</label>
+                        <div className='w-1/2'>
+                            <Dropdown options={importanceOptions} value={progressImportance} handleChange={handleChangeImportance} />
+                        </div>
+                    </div>
+                    <div className='mt-2 col-span-2 flex items-center justify-between'>
                         <label className='text-sm text-white'>Deadline</label>
                         <CheckBox handleToggle={toggleHasDeadline} value={hasDeadline} />
                     </div>
@@ -125,6 +152,7 @@ function NewProgressWindow({ handleClose }) {
                             onClick={handleOpenThemeSelector}
                             className={`w-8 aspect-square border-2 border-gray-500 pg-bar-theme-${progressTheme} rounded-full`}></div>
                     </div>
+
 
                     <div className='col-span-2 text-white text-xs flex items-center'>
                         <span className='w-5 text-gray-200 mr-2'>

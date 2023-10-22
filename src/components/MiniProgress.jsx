@@ -15,7 +15,7 @@ import PinIcon from './icons/PinIcon'
 function MiniProgress({ progress, index }) {
 
 
-    const { stepForward, stepBackward, setViewingProgress, progressInFocus, setProgressInFocus } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -23,6 +23,9 @@ function MiniProgress({ progress, index }) {
     let lastStep = passedSteps[passedSteps.length - 1]
     let nextStep = reversedSteps[passedSteps.length]
 
+
+    let progressLabel = labels.filter(lb => lb._id === progress.label)[0]
+    let progressImportance = importanceValues.filter(imp => imp._id === progress.importance)[0]
 
     // swipeable
     const handlers = useSwipeable({
@@ -60,7 +63,7 @@ function MiniProgress({ progress, index }) {
             )}
             {progress.pin ? (
                 <div className='flex justify-between items-start'>
-                    <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
+                    <h1 className='font-bold text-xl line-clamp-2'>{progress.title}</h1>
                     <div className='w-8 min-w-[2rem] bg-white aspect-square rounded-full flex justify-center items-center'>
                         <div className='w-5 fill-black'>
                             <PinIcon />
@@ -75,15 +78,15 @@ function MiniProgress({ progress, index }) {
 
             <div className='mt-auto w-full flex justify-between items-center pl-1'>
 
-                <div className='flex flex-col gap-y-1 w-2/3'>
+                <div className='flex flex-col gap-y-[2px] w-2/3'>
 
                     {lastStep && (
 
                         <div className='flex gap-x-1 items-center'>
-                            <span className='w-[14px] text-emerald-700'>
+                            <span className='w-4 text-emerald-700'>
                                 <CheckIcon />
                             </span>
-                            <span className='text-[12px]  line-clamp-1'>
+                            <span className='text-[10px] line-clamp-1'>
                                 {lastStep?.title}
                             </span>
                         </div>
@@ -92,10 +95,10 @@ function MiniProgress({ progress, index }) {
 
                     {nextStep && (
                         <div className='flex gap-x-1 items-center'>
-                            <span className='w-[14px] text-red-600'>
+                            <span className='w-4 text-red-600'>
                                 <ArrowUturnRightIcon />
                             </span>
-                            <span className='text-[12px] line-clamp-1'>
+                            <span className='text-[10px] line-clamp-1'>
                                 {nextStep?.title}
                             </span>
                         </div>
@@ -110,10 +113,15 @@ function MiniProgress({ progress, index }) {
                         </span>
                     </div>
 
+                    <div className='flex flex-nowrap gap-x-1'>
+                        <div className={`py-[1px] px-2 rounded-3xl bg-red-500 text-[10px] text-white`}>{progressImportance.short}</div>
+                        <div className={`py-[1px] px-2 rounded-3xl bg-gray-500 text-[10px] text-white`}>{progressLabel.name}</div>
+                    </div>
+
                 </div>
 
                 <div className='w-1/3 mt-auto flex flex-col gap-0'>
-                    <div className='w-full'>
+                    <div className='w-full text-xs'>
                         <CircleProgressBar themeIndex={progress.theme} percentage={pg} />
                     </div>
                     {passedSteps.length === progress.steps.length ? (

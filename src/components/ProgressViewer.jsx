@@ -19,7 +19,7 @@ function ProgressViewer() {
         };
     }, []);
 
-    const { viewingProgress, setViewingProgress } = useProgressesStore()
+    const { viewingProgress, setViewingProgress, labels, importanceValues } = useProgressesStore()
 
     let reversedSteps = [...viewingProgress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -27,6 +27,8 @@ function ProgressViewer() {
     let lastStep = passedSteps[passedSteps.length - 1]
     let nextStep = reversedSteps[passedSteps.length]
 
+    let progressLabel = labels.filter(lb => lb._id === viewingProgress.label)[0]
+    let progressImportance = importanceValues.filter(imp => imp._id === viewingProgress.importance)[0]
 
     function handleCloseViewer() {
         setViewingProgress(null)
@@ -46,11 +48,11 @@ function ProgressViewer() {
 
                         <div className='col-span-1 rounded-3xl p-5 border-2 border-red-300 relative'>
                             <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base text-red-300'>Importance</label>
-                            <div className='px-3 py-2 text-center text-sm font-bold text-white bg-red-600 rounded-3xl'>HIGH</div>
+                            <div className='px-3 py-2 text-center text-sm font-bold text-white bg-red-600 rounded-3xl'>{progressImportance.name}</div>
                         </div>
                         <div className='col-span-1 rounded-3xl p-5 border-2 border-gray-300 relative'>
                             <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base text-gray-300'>Label</label>
-                            <div className='px-3 py-2 text-center text-sm font-bold text-black bg-gray-300 rounded-3xl'>Work</div>
+                            <div className='px-3 py-2 text-center text-sm font-bold text-black bg-gray-300 rounded-3xl'>{progressLabel.name}</div>
                         </div>
                     </div>
 
@@ -64,7 +66,7 @@ function ProgressViewer() {
                                 </div>
                                 <p className={`font-bold text-lg`}>{moment(deadlineToMoment(viewingProgress.deadline)).toNow(true) + ' left'}</p>
                             </div>
-                        ) : (<p className='text-emerald-600 text-xl'>You've got all the time in the world</p>)}
+                        ) : (<p className={`text-xl pg-viewer-text-theme-${viewingProgress.theme}`}>You've got all the time in the world</p>)}
 
 
                     </div>
@@ -111,7 +113,11 @@ function ProgressViewer() {
                                 return (
                                     <>
                                         <div className='flex flex-nowrap gap-x-4 items-center'>
-                                            <div className={`w-5 h-5 aspect-square rounded-full bg-transparent outline outline-4 pg-viewer-outline-theme-${viewingProgress.theme}`}></div>
+                                            <div className={`w-5 h-5 relative aspect-square rounded-full bg-transparent outline outline-4 pg-viewer-outline-theme-${viewingProgress.theme}`}>
+                                                {st.status && (<div className={`absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 w-3 pg-viewer-text-theme-${viewingProgress.theme}`}>
+                                                    <CheckIcon />
+                                                </div>)}
+                                            </div>
                                             <p className='text-white text-base line-clamp-1'>{st.title}</p>
                                         </div>
                                         {index !== (reversedSteps.length - 1) && (

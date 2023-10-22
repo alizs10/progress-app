@@ -7,7 +7,7 @@ import InfoIcon from './icons/InfoIcon'
 
 function Menu({ handleOpenSettings, handleOpenAbout }) {
 
-    const { showAllProgresses, showProgressesType } = useProgressesStore()
+    const { showProgresses, selectedLabel, showProgressesType } = useProgressesStore()
 
 
     useEffect(() => {
@@ -28,7 +28,7 @@ function Menu({ handleOpenSettings, handleOpenAbout }) {
             className='fixed left-0 bottom-14 bg-gray-800 rounded-tr-xl overflow-hidden z-30'>
             <ul className='flex flex-col gap-0 text-base'>
                 <li
-                    onClick={showAllProgresses}
+                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 1 })}
                     className={`px-7 py-5 text-white cursor-pointer select-none flex gap-x-3 ${showProgressesType === 1 && 'bg-gray-700'}`}>
                     <span>
                         <ListIcon />

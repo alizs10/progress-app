@@ -15,6 +15,8 @@ const useProgressesStore = create((set) => ({
             pin: true,
             deadline: '2023-10-30',
             theme: 2,
+            importance: 0,
+            label: 1,
             steps: [
                 {
                     _id: 12,
@@ -56,6 +58,37 @@ const useProgressesStore = create((set) => ({
         return { showProgressesType: 0, progresses: unDoneProgresses }
     }),
 
+    showProgresses: payload => set(state => {
+
+        let { labelId, pgType } = payload;
+        // 0 => undone, 1 => all, 2 => done
+
+        let filteredProgresses;
+
+        if (pgType === 0) {
+            filteredProgresses = state.data.filter(pg => {
+                let passedSteps = pg.steps.filter(st => st.status)
+                return passedSteps.length !== pg.steps.length
+            })
+        }
+
+        if (pgType === 1) {
+            filteredProgresses = state.data;
+        }
+
+        if (pgType === 2) {
+            filteredProgresses = state.data.filter(pg => {
+                let passedSteps = pg.steps.filter(st => st.status)
+                return passedSteps.length === pg.steps.length
+            })
+        }
+
+        console.log(filteredProgresses)
+        let progresses = filteredProgresses.filter(pg => (pg.label === labelId || labelId === 0))
+
+        return { selectedLabel: labelId, showProgressesType: pgType, progresses }
+    }),
+
     stepForward: payload => set((state) => {
 
         let pgId = payload;
@@ -84,6 +117,45 @@ const useProgressesStore = create((set) => ({
         return { progresses: progressesIns }
     }),
 
+    importanceValues: [
+        {
+            _id: 0,
+            name: 'VERY HIGH',
+            short: 'VH'
+        },
+        {
+            _id: 1,
+            name: 'HIGH',
+            short: 'H'
+        },
+        {
+            _id: 2,
+            name: 'MEDIUM',
+            short: 'M'
+        },
+        {
+            _id: 3,
+            name: 'LOW',
+            short: 'L'
+        },
+    ],
+
+
+    labels: [
+        {
+            _id: 0,
+            name: 'All'
+        },
+        {
+            _id: 1,
+            name: 'Work'
+        }
+    ],
+
+    selectedLabel: 0,
+    selectLabel: payload => set(state => ({ selectedLabel: payload })),
+    addLabel: payload => set((state) => ({ labels: [...state.labels, payload] })),
+
     editingProgress: null,
     setEditingProgress: payload => set((state) => ({ editingProgress: payload })),
 
@@ -95,6 +167,8 @@ const useProgressesStore = create((set) => ({
     //     pin: true,
     //     deadline: '2023-10-30',
     //     theme: 5,
+    //     label: 0,
+    //     importance: 3,
     //     steps: [
     //         {
     //             _id: 12,

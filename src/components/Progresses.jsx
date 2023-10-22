@@ -8,11 +8,13 @@ import ProgressEditor from './ProgressEditor'
 import FocusMode from './FocusMode'
 import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow'
 import ProgressViewer from './ProgressViewer'
+import LabelsBar from './LabelsBar'
+import NewLabelWindow from './NewLabelWindow'
 
 function Progresses() {
 
 
-    const { viewMode, toggleViewMode, data, progresses, showUnDoneProgresses, showProgressesType, editingProgress, progressInFocus, deleteConfirmationVis, viewingProgress } = useProgressesStore()
+    const { viewMode, toggleViewMode, data, progresses, showProgresses, showProgressesType, editingProgress, progressInFocus, deleteConfirmationVis, viewingProgress, selectedLabel } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -34,7 +36,7 @@ function Progresses() {
 
 
     useEffect(() => {
-        showUnDoneProgresses()
+        showProgresses({ labelId: selectedLabel, pgType: showProgressesType })
 
     }, [data])
 
@@ -43,10 +45,13 @@ function Progresses() {
     let pinnedProgresses = progresses.filter(pg => pg.pin)
 
 
+    const [newLabelWindowVis, setNewLabelWindowVis] = useState(false)
 
     return (
-        <div className='p-3 rounded-lg'>
+        <div className='p-3 pt-0'>
 
+            <LabelsBar setNewLabelWindowVis={setNewLabelWindowVis} />
+            {newLabelWindowVis && (<NewLabelWindow handleClose={() => setNewLabelWindowVis(false)} />)}
 
             {editingProgress && (
                 <ProgressEditor />
