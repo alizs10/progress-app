@@ -10,6 +10,7 @@ import { AnimatePresence } from 'framer-motion'
 import Settings from './Settings'
 import About from './About'
 import NewProgressWindow from './NewProgressWindow'
+import { motion } from 'framer-motion'
 
 function BottomBar() {
 
@@ -119,9 +120,6 @@ function BottomBar() {
                 {settingsVis && (
                     <>
                         <Settings handleClose={() => setSettingsVis(false)} />
-                        <div
-                            onClick={() => setSettingsVis(false)}
-                            className='fixed inset-0 z-20'></div>
                     </>
                 )}
             </AnimatePresence>
@@ -130,9 +128,6 @@ function BottomBar() {
                 {aboutVis && (
                     <>
                         <About handleClose={() => setAboutVis(false)} />
-                        <div
-                            onClick={() => setAboutVis(false)}
-                            className='fixed inset-0 z-20'></div>
                     </>
                 )}
             </AnimatePresence>

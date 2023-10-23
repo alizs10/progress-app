@@ -20,11 +20,21 @@ const useProgressesStore = create((set) => ({
             steps: [
                 {
                     _id: 12,
-                    title: 'second step',
+                    title: 'forth step',
                     status: false
                 },
                 {
                     _id: 123,
+                    title: 'third step',
+                    status: true
+                },
+                {
+                    _id: 1234,
+                    title: 'second step',
+                    status: true
+                },
+                {
+                    _id: 1235,
                     title: 'first step',
                     status: true
                 },

@@ -4,7 +4,7 @@ import CheckBox from './CheckBox';
 import SunIcon from './icons/SunIcon';
 import Dropdown from './Dropdown';
 import GridIcon from './icons/GridIcon';
-
+import { motion } from 'framer-motion'
 
 function Settings({ handleClose }) {
 
@@ -39,8 +39,20 @@ function Settings({ handleClose }) {
         setDarkMode(prevState => !prevState)
     }
     return (
-        <div className='fixed inset-0 backdrop-blur-sm z-40'>
-            <div className='fixed w-[80vw] max-w-[480px] flex flex-col top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 overflow-hidden rounded-xl bg-slate-800 shadow-md shadow-black'>
+        <motion.div
+            initial={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            animate={{ backdropFilter: 'blur(4px) opacity(1)' }}
+            exit={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            transition={{ bounce: 'none', duration: '.3' }}
+            onClick={handleClose}
+            className='fixed inset-0 backdrop-blur-sm z-[99999]'>
+            <motion.div
+                initial={{ scale: 0, x: '-50%', y: '-50%' }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ bounce: 'none', duration: '.3' }}
+                onClick={e => e.stopPropagation()}
+                className='fixed w-[80vw] max-w-[480px] flex flex-col top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 overflow-hidden rounded-xl bg-slate-800 shadow-md shadow-black'>
 
                 <div className='flex flex-nowrap items-start gap-x-2 p-3 mt-2 text-white text-lg'>
                     <span className='w-5'>
@@ -84,8 +96,8 @@ function Settings({ handleClose }) {
                     Close
                 </button>
 
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
 
     )
 }
