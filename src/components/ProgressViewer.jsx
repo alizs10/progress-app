@@ -140,13 +140,19 @@ function ProgressViewer() {
                     </div>
                 </div>
             </motion.div>
-            <button
-                onClick={handleCloseViewer}
-                className='fixed z-[99999] shadow-md shadow-black bottom-10 right-8 w-14 flex justify-center items-center aspect-square rotate-45 rounded-md bg-gray-700'>
-                <span className='w-6 -rotate-45 text-white'>
-                    <ArrowUturnLeftIcon />
-                </span>
-            </button>
+            <div className='fixed inset-0 left-1/2 -translate-x-1/2 w-full z-[99999] max-w-[600px]'>
+                <motion.button
+                    initial={{ scale: 0, rotate: 45 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ bounce: 'none', duration: '.3' }}
+                    onClick={handleCloseViewer}
+                    className='fixed  shadow-md shadow-black bottom-10 right-8 w-14 flex justify-center items-center aspect-square rotate-45 rounded-md bg-gray-700'>
+                    <span className='w-6 -rotate-45 text-white'>
+                        <ArrowUturnLeftIcon />
+                    </span>
+                </motion.button>
+            </div>
         </section>
     )
 }
