@@ -14,7 +14,7 @@ const useProgressesStore = create((set) => ({
             title: "Read Sofia's world book",
             pin: true,
             deadline: '2023-10-30',
-            theme: 2,
+            theme: 4,
             importance: 3,
             label: 1,
             steps: [

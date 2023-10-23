@@ -23,7 +23,7 @@ body {
 }
 
 .pg-container-theme-4 {
-    @apply text-black bg-red-300/30;
+    @apply text-black bg-blue-400/30;
 }
 
 .pg-container-theme-5 {
@@ -53,7 +53,7 @@ body {
 }
 
 .pg-bar-theme-4 {
-    @apply bg-red-300;
+    @apply bg-blue-400;
 }
 
 .pg-bar-theme-5 {
@@ -77,7 +77,7 @@ body {
 }
 
 .progress-bar-base-theme-4 {
-    @apply bg-red-200;
+    @apply bg-blue-200;
 }
 
 .progress-bar-base-theme-5 {
@@ -101,7 +101,7 @@ body {
 }
 
 .progress-bar-theme-4 {
-    @apply stroke-red-500;
+    @apply stroke-blue-500;
 }
 
 .progress-bar-theme-5 {
@@ -125,7 +125,7 @@ body {
 }
 
 .progress-bar-percentage-theme-4 {
-    @apply text-red-500;
+    @apply text-blue-500;
 }
 
 .progress-bar-percentage-theme-5 {
@@ -149,7 +149,7 @@ body {
 }
 
 .outline-theme-4 {
-    @apply outline outline-4 outline-red-500;
+    @apply outline outline-4 outline-blue-500;
 }
 
 .outline-theme-5 {
@@ -186,7 +186,7 @@ input[type=number] {
 }
 
 .pg-viewer-text-theme-4 {
-    @apply text-red-500;
+    @apply text-blue-500;
 }
 
 .pg-viewer-text-theme-5 {
@@ -210,7 +210,7 @@ input[type=number] {
 }
 
 .pg-viewer-border-theme-4 {
-    @apply border-red-500;
+    @apply border-blue-500;
 }
 
 .pg-viewer-border-theme-5 {
@@ -236,7 +236,7 @@ input[type=number] {
 }
 
 .pg-viewer-outline-theme-4 {
-    @apply outline-red-500;
+    @apply outline-blue-500;
 }
 
 .pg-viewer-outline-theme-5 {
@@ -260,7 +260,7 @@ input[type=number] {
 }
 
 .pg-viewer-bg-theme-4 {
-    @apply bg-red-500;
+    @apply bg-blue-500;
 }
 
 .pg-viewer-bg-theme-5 {
