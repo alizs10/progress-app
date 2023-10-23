@@ -26,7 +26,7 @@ function FocusMode() {
             exit={{ backdropFilter: 'blur(4px) opacity(0)' }}
             transition={{ bounce: 'none', duration: '.3' }}
             onClick={handleLooseFocus}
-            className='fixed inset-0 w-full max-w-[600px] left-1/2 -translate-x-1/2 z-[9999]'>
+            className='fixed inset-0 w-full max-w-[600px] left-1/2 -translate-x-1/2 z-[99998]'>
         </motion.div>
     )
 }

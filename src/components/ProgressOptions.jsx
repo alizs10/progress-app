@@ -51,7 +51,7 @@ function ProgressOptions({ progress, progressIndex }) {
 
         <div
 
-            className={`absolute ${viewMode === 0 ? ('bottom-0 translate-y-[120%] left-1/2 -translate-x-1/2') : (progressIndex % 2 === 0 ? 'flex-col bottom-2 right-0 translate-x-[120%]' : 'flex-col bottom-2 left-0 -translate-x-[120%]')} z-[9999] flex  gap-2`}>
+            className={`absolute ${viewMode === 0 ? ('bottom-0 translate-y-[120%] left-1/2 -translate-x-1/2') : (progressIndex % 2 === 0 ? 'flex-col bottom-2 right-0 translate-x-[120%]' : 'flex-col bottom-2 left-0 -translate-x-[120%]')} z-[999999] flex gap-2`}>
             <motion.button
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

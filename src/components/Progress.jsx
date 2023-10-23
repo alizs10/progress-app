@@ -60,16 +60,16 @@ function Progress({ progress, index }) {
 
         <motion.div
             initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
+            animate={{ scale: focusMode && progressInFocus && progressInFocus._id === progress._id ? 1.03 : 1 }}
             exit={{ scale: 0 }}
             transition={{ bounce: 'none', duration: '.3' }}
-            className='relative col-span-2 h-32 z-[9999]'>
+            className={`relative col-span-2 h-32 ${focusMode && progressInFocus && progressInFocus._id === progress._id ? 'z-[99999]' : 'z-[9999]'}`}>
             <AnimatePresence>
                 {focusMode && progressInFocus && progressInFocus._id === progress._id && (
                     <ProgressOptions progress={progress} progressIndex={index} />
                 )}
             </AnimatePresence>
-            <div {...bind()} {...handlers} className={`select-none relative overflow-hidden transition-all duration-300 rounded-3xl h-full p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${focusMode && progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
+            <div {...bind()} {...handlers} className={`select-none relative overflow-hidden transition-all duration-300 rounded-3xl h-full p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${focusMode && progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme}`}`}>
 
 
 
