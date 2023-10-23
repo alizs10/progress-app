@@ -12,6 +12,7 @@ import { useLongPress } from 'use-long-press'
 import ProgressOptions from './ProgressOptions'
 import PinIcon from './icons/PinIcon'
 import { AnimatePresence, motion } from 'framer-motion'
+import ProgressImportance from './ProgressImportance'
 
 function MiniProgress({ progress, index }) {
 
@@ -123,7 +124,7 @@ function MiniProgress({ progress, index }) {
                     </div>
 
                     <div className='flex flex-nowrap gap-x-1'>
-                        <div className={`py-[1px] px-2 rounded-3xl bg-red-500 text-[10px] text-white`}>{progressImportance.short}</div>
+                        <ProgressImportance importance={progressImportance} />
                         <div className={`py-[1px] px-2 rounded-3xl bg-gray-500 text-[10px] text-white`}>{progressLabel.name}</div>
                     </div>
 
