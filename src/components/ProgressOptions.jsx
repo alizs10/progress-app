@@ -20,6 +20,7 @@ function ProgressOptions({ progress, progressIndex }) {
 
         updateProgress(updatableProgress)
         setProgressInFocus(null)
+        setFocusMode(false)
 
         let message = updatableProgress.pin ? 'progress pinned' : 'progress unpinned';
 
