@@ -7,6 +7,7 @@ import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
 import { useNotificationsStore } from '../../store/notification-store';
+import Dropdown from './Dropdown';
 
 function ProgressEditor() {
 
@@ -20,10 +21,15 @@ function ProgressEditor() {
     }, []);
 
     const { addNotification, removeNotification } = useNotificationsStore()
-    const { editingProgress, setEditingProgress, updateProgress, setDeleteConfirmationVis } = useProgressesStore()
+    const { editingProgress, setEditingProgress, updateProgress, setDeleteConfirmationVis, labels, importanceValues } = useProgressesStore()
+
+    let labelsOptions = labels.map(lb => ({ name: lb.name, value: lb._id }))
+    let importanceOptions = importanceValues.map(imp => ({ name: imp.name, value: imp._id }))
 
     const themes = [0, 1, 2, 3, 4, 5]
     const [progressTheme, setProgressTheme] = useState(editingProgress.theme)
+    const [progressLabel, setProgressLabel] = useState(editingProgress.label)
+    const [progressImportance, setProgressImportance] = useState(editingProgress.importance)
     const [themeSelectorVis, setThemeSelectorVis] = useState(false)
     const [hasDeadline, setHasDeadline] = useState(editingProgress.deadline ? true : false)
     const [wantsDefineSteps, setWantsDefineSteps] = useState(false)
@@ -87,6 +93,13 @@ function ProgressEditor() {
         setThemeSelectorVis(false)
     }
 
+    function handleChangeLabel(labelId) {
+        setProgressLabel(labelId)
+    }
+    function handleChangeImportance(importanceId) {
+        setProgressImportance(importanceId)
+    }
+
     function addStep() {
         let newSt = {
             _id: new Date().getTime(),
@@ -122,6 +135,8 @@ function ProgressEditor() {
             theme: progressTheme,
             deadline: hasDeadline ? deadlineRef.current.value : false,
             pin: editingProgress.pin,
+            label: progressLabel,
+            importance: progressImportance,
             steps: wantsDefineSteps ? steps : []
         }
 
@@ -214,6 +229,18 @@ function ProgressEditor() {
                         {errors?.deadline && (<span className='text-xs text-red-600'>{errors.deadline}</span>)}
                     </div>
                 )}
+                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                    <label className='text-sm text-white'>Label</label>
+                    <div className='w-1/2'>
+                        <Dropdown options={labelsOptions} value={progressLabel} handleChange={handleChangeLabel} />
+                    </div>
+                </div>
+                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                    <label className='text-sm text-white'>Importance</label>
+                    <div className='w-1/2'>
+                        <Dropdown options={importanceOptions} value={progressImportance} handleChange={handleChangeImportance} />
+                    </div>
+                </div>
                 <div className='mt-2 col-span-2 flex items-center justify-between'>
                     <label className='text-sm text-white'>Theme</label>
                     <div
