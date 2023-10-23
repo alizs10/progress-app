@@ -46,9 +46,9 @@ function Menu({ handleOpenSettings, handleOpenAbout }) {
                 <li
                     onClick={handleOpenAbout}
                     className='px-7 py-5 text-white cursor-pointer select-none flex gap-x-3'>
-                    <span>
+                    <div className='w-6'>
                         <InfoIcon />
-                    </span>
+                    </div>
                     <span>About</span>
                 </li>
             </ul>

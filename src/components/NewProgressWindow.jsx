@@ -7,6 +7,7 @@ import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
 import Dropdown from './Dropdown';
+import { useNotificationsStore } from '../../store/notification-store';
 
 function NewProgressWindow({ handleClose }) {
 
@@ -19,6 +20,7 @@ function NewProgressWindow({ handleClose }) {
         };
     }, []);
 
+    const { addNotification, removeNotification } = useNotificationsStore()
     const { addProgress, labels, importanceValues } = useProgressesStore()
 
     let labelsOptions = labels.map(lb => ({ name: lb.name, value: lb._id }))
@@ -77,8 +79,31 @@ function NewProgressWindow({ handleClose }) {
         if (!hasError) {
             addProgress(newPg)
             handleClose()
+
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: "progress created successfully",
+                status: 0
+            }
+            addNotification(newNotify)
+            setTimeout(() => {
+                removeNotification(newNotify._id)
+            }, 3000)
+
         } else {
             setErrors(validationErrors)
+
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: "error while creating progress",
+                status: 1
+            }
+            addNotification(newNotify)
+            setTimeout(() => {
+                removeNotification(newNotify._id)
+            }, 3000)
         }
 
     }

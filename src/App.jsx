@@ -4,6 +4,7 @@ import Progresses from './components/Progresses';
 import BottomBar from './components/BottomBar';
 import Hints from './components/Hints';
 import useAppStore from '../store/app-store';
+import Notifications from './components/Notification/Notifications';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
 			<Progresses />
 			<BottomBar />
 
+			<Notifications />
 		</main>
 	);
 }

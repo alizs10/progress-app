@@ -282,3 +282,37 @@ input[type=number] {
 .pg-imp-3 {
     @apply bg-blue-600;
 }
+
+
+.notification-style-part0-1 {
+    @apply bg-emerald-800 text-white;
+}
+
+.notification-style-part0-2 {
+    @apply bg-red-900 text-white;
+}
+
+.notification-style-part0-3 {
+    @apply bg-yellow-700 text-white;
+}
+
+.notification-style-part0-4 {
+    @apply dark:bg-gray-800 bg-gray-400 dark:text-white text-gray-900;
+}
+
+
+.notification-style-1 {
+    @apply bg-emerald-700 text-white;
+}
+
+.notification-style-2 {
+    @apply bg-red-800 text-white;
+}
+
+.notification-style-3 {
+    @apply bg-yellow-600 text-white;
+}
+
+.notification-style-4 {
+    @apply dark:bg-gray-700 bg-gray-300 dark:text-white text-gray-600;
+}

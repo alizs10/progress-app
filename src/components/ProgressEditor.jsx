@@ -6,6 +6,7 @@ import ThemeSelector from './ThemeSelector';
 import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
+import { useNotificationsStore } from '../../store/notification-store';
 
 function ProgressEditor() {
 
@@ -18,6 +19,7 @@ function ProgressEditor() {
         };
     }, []);
 
+    const { addNotification, removeNotification } = useNotificationsStore()
     const { editingProgress, setEditingProgress, updateProgress, setDeleteConfirmationVis } = useProgressesStore()
 
     const themes = [0, 1, 2, 3, 4, 5]
@@ -131,15 +133,37 @@ function ProgressEditor() {
 
         let { hasError, errors: validationErrors } = zValidate(progressSchema, updatedProgress)
 
-        if (hasError) {
-            setErrors(validationErrors)
-            return
-        }
-        setErrors({})
+        if (!hasError) {
+            updateProgress(updatedProgress)
+            handleCloseEditor()
 
-        // we should update progress
-        updateProgress(updatedProgress)
-        handleCloseEditor()
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: "progress updated successfully",
+                status: 0
+            }
+            addNotification(newNotify)
+            setTimeout(() => {
+                removeNotification(newNotify._id)
+            }, 3000)
+
+        } else {
+
+            setErrors(validationErrors)
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: "error while updating progress",
+                status: 1
+            }
+            addNotification(newNotify)
+            setTimeout(() => {
+                removeNotification(newNotify._id)
+            }, 3000)
+        }
+
+
     }
 
 

@@ -4,9 +4,11 @@ import EditIcon from './icons/EditIcon'
 import TrashIcon from './icons/TrashIcon'
 import useProgressesStore from '../../store/progresses-store'
 import PinSlash from './icons/PinSlash'
+import { useNotificationsStore } from '../../store/notification-store'
 
 function ProgressOptions({ progress, progressIndex }) {
 
+    const { addNotification, removeNotification } = useNotificationsStore()
     const { viewMode, setDeleteConfirmationVis, setProgressInFocus, setEditingProgress, updateProgress } = useProgressesStore()
 
     function handleTogglePin() {
@@ -17,6 +19,19 @@ function ProgressOptions({ progress, progressIndex }) {
 
         updateProgress(updatableProgress)
         setProgressInFocus(null)
+
+        let message = updatableProgress.pin ? 'progress pinned' : 'progress unpinned';
+
+        let newNotify = {
+            _id: Date.now(),
+            index: 0,
+            message,
+            status: 3
+        }
+        addNotification(newNotify)
+        setTimeout(() => {
+            removeNotification(newNotify._id)
+        }, 3000)
     }
 
     function handleDeleteBtn() {

@@ -3,6 +3,7 @@ import XIcon from './icons/XIcon';
 import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { labelSchema } from '../../helpers/labelValidations';
+import { useNotificationsStore } from '../../store/notification-store';
 
 function NewLabelWindow({ handleClose }) {
 
@@ -16,6 +17,7 @@ function NewLabelWindow({ handleClose }) {
     }, []);
 
     const { addLabel } = useProgressesStore()
+    const { addNotification, removeNotification } = useNotificationsStore()
     const [errors, setErrors] = useState({})
 
 
@@ -31,8 +33,30 @@ function NewLabelWindow({ handleClose }) {
         if (!hasError) {
             addLabel(newLabel)
             handleClose()
+
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: "label created successfully",
+                status: 0
+            }
+            addNotification(newNotify)
+            setTimeout(() => {
+                removeNotification(newNotify._id)
+            }, 3000)
+
         } else {
             setErrors(validationErrors)
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: "error while creating label",
+                status: 1
+            }
+            addNotification(newNotify)
+            setTimeout(() => {
+                removeNotification(newNotify._id)
+            }, 3000)
         }
 
     }

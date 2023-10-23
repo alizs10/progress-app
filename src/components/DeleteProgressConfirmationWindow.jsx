@@ -1,8 +1,10 @@
 import React from 'react'
 import useProgressesStore from '../../store/progresses-store'
+import { useNotificationsStore } from '../../store/notification-store'
 
 function DeleteProgressConfirmationWindow() {
 
+    const { addNotification, removeNotification } = useNotificationsStore()
     const { setDeleteConfirmationVis, progressInFocus, editingProgress, setEditingProgress, setProgressInFocus, deleteProgress } = useProgressesStore()
 
     let progress = editingProgress ? editingProgress : progressInFocus
@@ -11,6 +13,17 @@ function DeleteProgressConfirmationWindow() {
         deleteProgress(progress._id)
         editingProgress ? setEditingProgress(null) : setProgressInFocus(null)
         setDeleteConfirmationVis(false)
+
+        let newNotify = {
+            _id: Date.now(),
+            index: 0,
+            message: 'progress deleted permanently!',
+            status: 1
+        }
+        addNotification(newNotify)
+        setTimeout(() => {
+            removeNotification(newNotify._id)
+        }, 3000)
     }
 
     function handleCancel() {
