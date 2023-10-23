@@ -137,13 +137,14 @@ function ProgressEditor() {
             pin: editingProgress.pin,
             label: progressLabel,
             importance: progressImportance,
-            steps: wantsDefineSteps ? steps : []
         }
 
-        if (!wantsDefineSteps) {
+        if (!wantsDefineSteps && editingProgress.steps.length !== stepsCount) {
             while (updatedProgress.steps.length < stepsCount) {
                 updatedProgress.steps.push({ _id: updatedProgress._id + updatedProgress.steps.length + 1, title: 'step ' + parseInt(stepsCount - updatedProgress.steps.length), status: false })
             }
+        } else {
+            updatedProgress.steps = steps
         }
 
         let { hasError, errors: validationErrors } = zValidate(progressSchema, updatedProgress)
