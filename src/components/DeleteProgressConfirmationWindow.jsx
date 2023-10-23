@@ -6,14 +6,17 @@ import { motion } from 'framer-motion'
 function DeleteProgressConfirmationWindow() {
 
     const { addNotification, removeNotification } = useNotificationsStore()
-    const { setDeleteConfirmationVis, progressInFocus, editingProgress, setEditingProgress, setProgressInFocus, deleteProgress } = useProgressesStore()
+    const { setDeleteConfirmationVis, progressInFocus, editingProgress, setFocusMode, deleteProgress, setEditingProgressVis } = useProgressesStore()
 
     let progress = editingProgress ? editingProgress : progressInFocus
 
     function handleConfirm() {
         deleteProgress(progress._id)
-        editingProgress ? setEditingProgress(null) : setProgressInFocus(null)
+        if (editingProgress) {
+            setEditingProgressVis(false)
+        }
         setDeleteConfirmationVis(false)
+        setFocusMode(false)
 
         let newNotify = {
             _id: Date.now(),

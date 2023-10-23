@@ -168,8 +168,10 @@ const useProgressesStore = create((set) => ({
 
     editingProgressVis: false,
     viewingProgressVis: false,
+    focusMode: false,
     setEditingProgressVis: payload => set((state) => ({ editingProgressVis: payload })),
     setViewingProgressVis: payload => set((state) => ({ viewingProgressVis: payload })),
+    setFocusMode: payload => set((state) => ({ focusMode: payload })),
 
 
     editingProgress: null,

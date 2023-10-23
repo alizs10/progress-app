@@ -15,7 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 function Progress({ progress, index }) {
 
-    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, focusMode, setFocusMode, labels, importanceValues } = useProgressesStore()
 
     // swipeable
     const handlers = useSwipeable({
@@ -51,6 +51,7 @@ function Progress({ progress, index }) {
     const bind = useLongPress(() => {
 
         setProgressInFocus(progress)
+        setFocusMode(true)
 
     })
 
@@ -64,11 +65,11 @@ function Progress({ progress, index }) {
             transition={{ bounce: 'none', duration: '.3' }}
             className='relative col-span-2 h-32 z-[9999]'>
             <AnimatePresence>
-                {progressInFocus && progressInFocus._id === progress._id && (
+                {focusMode && progressInFocus && progressInFocus._id === progress._id && (
                     <ProgressOptions progress={progress} progressIndex={index} />
                 )}
             </AnimatePresence>
-            <div {...bind()} {...handlers} className={`select-none relative overflow-hidden transition-all duration-300 rounded-3xl h-full p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
+            <div {...bind()} {...handlers} className={`select-none relative overflow-hidden transition-all duration-300 rounded-3xl h-full p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${focusMode && progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
 
 
 

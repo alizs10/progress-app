@@ -13,10 +13,10 @@ function FocusMode() {
         };
     }, []);
 
-    const { setProgressInFocus } = useProgressesStore()
+    const { setFocusMode } = useProgressesStore()
 
     function handleLooseFocus() {
-        setProgressInFocus(null)
+        setFocusMode(false)
     }
 
     return (

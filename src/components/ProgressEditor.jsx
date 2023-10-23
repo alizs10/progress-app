@@ -298,7 +298,7 @@ function ProgressEditor() {
                 ) : (
                     <div className='mt-2 flex flex-col gap-y-1'>
                         <label className='text-sm text-white'>Steps</label>
-                        <input type="number" value={stepsCount} onChange={e => setStepsCount(e.target.value)} className={`text-input ${errors?.steps && 'outline outline-2 outline-red-600'}`} placeholder='10' defaultValue={steps.length} min={1} max={100} />
+                        <input type="number" value={stepsCount} onChange={e => setStepsCount(e.target.value)} className={`text-input ${errors?.steps && 'outline outline-2 outline-red-600'}`} placeholder='10' min={1} max={100} />
                         {errors?.steps && (<span className='text-xs text-red-600'>{errors.steps}</span>)}
                     </div>
                 )}

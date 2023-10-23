@@ -10,7 +10,7 @@ import { motion } from 'framer-motion'
 function ProgressOptions({ progress, progressIndex }) {
 
     const { addNotification, removeNotification } = useNotificationsStore()
-    const { viewMode, setDeleteConfirmationVis, setProgressInFocus, setEditingProgress, setEditingProgressVis, updateProgress } = useProgressesStore()
+    const { viewMode, setDeleteConfirmationVis, setProgressInFocus, setFocusMode, setEditingProgress, setEditingProgressVis, updateProgress } = useProgressesStore()
 
     function handleTogglePin() {
         let updatableProgress = {
@@ -42,6 +42,7 @@ function ProgressOptions({ progress, progressIndex }) {
     function handleEditProgress() {
         setEditingProgress(progress)
         setEditingProgressVis(true)
+        setFocusMode(false)
         setProgressInFocus(null)
     }
 

@@ -50,9 +50,9 @@ function ProgressViewer() {
 
                     <div className='mt-2 grid grid-cols-2 gap-4'>
 
-                        <div className='col-span-1 rounded-3xl p-5 border-2 border-red-300 relative'>
-                            <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base text-red-300'>Importance</label>
-                            <div className='px-3 py-2 text-center text-sm font-bold text-white bg-red-600 rounded-3xl'>{progressImportance.name}</div>
+                        <div className={`col-span-1 rounded-3xl p-5 border-2 pg-imp-border-${progressImportance._id} relative`}>
+                            <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base'>Importance</label>
+                            <div className={`px-3 py-2 text-center text-sm font-bold text-white pg-imp-${progressImportance._id} rounded-3xl`}>{progressImportance.name}</div>
                         </div>
                         <div className='col-span-1 rounded-3xl p-5 border-2 border-gray-300 relative'>
                             <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base text-gray-300'>Label</label>
@@ -112,10 +112,8 @@ function ProgressViewer() {
                         <div className='mt-4 flex flex-col'>
 
                             {reversedSteps.map((st, index) => {
-
-
                                 return (
-                                    <>
+                                    <div key={st._id}>
                                         <div className='flex flex-nowrap gap-x-4 items-center'>
                                             <div className={`w-5 h-5 relative aspect-square rounded-full bg-transparent outline outline-4 pg-viewer-outline-theme-${viewingProgress.theme}`}>
                                                 {st.status && (<div className={`absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 w-3 pg-viewer-text-theme-${viewingProgress.theme}`}>
@@ -127,7 +125,7 @@ function ProgressViewer() {
                                         {index !== (reversedSteps.length - 1) && (
                                             <div className={`w-1 h-10 ml-[0.5rem] pg-viewer-bg-theme-${viewingProgress.theme}`}></div>
                                         )}
-                                    </>
+                                    </div>
                                 )
 
 
@@ -140,14 +138,14 @@ function ProgressViewer() {
                     </div>
                 </div>
             </motion.div>
-            <div className='fixed inset-0 left-1/2 -translate-x-1/2 w-full z-[99999] max-w-[600px]'>
+            <div className='fixed inset-0 left-1/2 -translate-x-1/2 w-full z-[99999] pointer-events-none max-w-[600px]'>
                 <motion.button
                     initial={{ scale: 0, rotate: 45 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
                     transition={{ bounce: 'none', duration: '.3' }}
                     onClick={handleCloseViewer}
-                    className='fixed  shadow-md shadow-black bottom-10 right-8 w-14 flex justify-center items-center aspect-square rotate-45 rounded-md bg-gray-700'>
+                    className='fixed z-[99999] shadow-md shadow-black pointer-events-auto bottom-10 right-8 w-14 flex justify-center items-center aspect-square rotate-45 rounded-md bg-gray-700'>
                     <span className='w-6 -rotate-45 text-white'>
                         <ArrowUturnLeftIcon />
                     </span>

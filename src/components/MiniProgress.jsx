@@ -16,7 +16,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 function MiniProgress({ progress, index }) {
 
 
-    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, focusMode, setFocusMode, setProgressInFocus, labels, importanceValues } = useProgressesStore()
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -54,19 +54,19 @@ function MiniProgress({ progress, index }) {
     const bind = useLongPress(() => {
 
         setProgressInFocus(progress)
-
+        setFocusMode(true)
     })
 
     return (
         <motion.div
             initial={{ scale: 0 }}
-            animate={{ scale: progressInFocus && progressInFocus._id === progress._id ? 1.03 : 1 }}
+            animate={{ scale: focusMode && progressInFocus && progressInFocus._id === progress._id ? 1.03 : 1 }}
             exit={{ scale: 0 }}
             transition={{ bounce: 'none', duration: '.3' }}
-            {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-2 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999]`}`}>
+            {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-2 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${focusMode && progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999]`}`}>
 
             <AnimatePresence>
-                {progressInFocus && progressInFocus._id === progress._id && (
+                {focusMode && progressInFocus && progressInFocus._id === progress._id && (
                     <ProgressOptions progress={progress} progressIndex={index} />
                 )}
             </AnimatePresence>

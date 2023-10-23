@@ -15,7 +15,7 @@ import { AnimatePresence } from 'framer-motion'
 function Progresses() {
 
 
-    const { viewMode, toggleViewMode, data, progresses, showProgresses, showProgressesType, editingProgressVis, progressInFocus, deleteConfirmationVis, viewingProgressVis, selectedLabel } = useProgressesStore()
+    const { viewMode, toggleViewMode, data, progresses, showProgresses, showProgressesType, editingProgressVis, progressInFocus, focusMode, deleteConfirmationVis, viewingProgressVis, selectedLabel } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -80,7 +80,7 @@ function Progresses() {
                 </button>
             </div>
             <AnimatePresence>
-                {progressInFocus && (<FocusMode />)}
+                {focusMode && (<FocusMode />)}
             </AnimatePresence>
             <AnimatePresence>
                 {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
