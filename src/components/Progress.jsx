@@ -10,6 +10,7 @@ import { deadlineToMoment } from '../../helpers/helpers'
 import ProgressOptions from './ProgressOptions'
 import { useLongPress } from 'use-long-press'
 import PinIcon from './icons/PinIcon'
+import ProgressImportance from './ProgressImportance'
 
 function Progress({ progress, index }) {
 
@@ -125,7 +126,7 @@ function Progress({ progress, index }) {
                                 <span className='text-xs ml-auto'>{passedSteps.length}/{progress.steps.length}<span className='ml-1 text-[10px]'>steps</span></span>
                             )}
                             <div className='ml-auto flex flex-nowrap gap-x-1'>
-                                <div className={`py-[1px] px-2 rounded-3xl bg-red-500 text-[10px] text-white`}>{progressImportance.short}</div>
+                                <ProgressImportance importance={progressImportance} />
                                 <div className={`py-[1px] px-2 rounded-3xl bg-gray-500 text-[10px] text-white`}>{progressLabel.name}</div>
                             </div>
                         </div>

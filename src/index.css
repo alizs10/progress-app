@@ -266,3 +266,19 @@ input[type=number] {
 .pg-viewer-bg-theme-5 {
     @apply bg-slate-400;
 }
+
+.pg-imp-0 {
+    @apply bg-red-600;
+}
+
+.pg-imp-1 {
+    @apply bg-red-400;
+}
+
+.pg-imp-2 {
+    @apply bg-green-600;
+}
+
+.pg-imp-3 {
+    @apply bg-blue-600;
+}

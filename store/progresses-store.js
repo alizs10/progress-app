@@ -15,7 +15,7 @@ const useProgressesStore = create((set) => ({
             pin: true,
             deadline: '2023-10-30',
             theme: 2,
-            importance: 0,
+            importance: 3,
             label: 1,
             steps: [
                 {
