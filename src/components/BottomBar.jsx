@@ -60,7 +60,9 @@ function BottomBar() {
 
     return (
         <section className='relative'>
-            <NewProgressBtn handleClick={() => setNewProgressWindowVis(true)} />
+            <AnimatePresence>
+                <NewProgressBtn handleClick={() => setNewProgressWindowVis(true)} />
+            </AnimatePresence>
 
             <div className='fixed z-40 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
                 <button

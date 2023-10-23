@@ -11,10 +11,11 @@ import ProgressOptions from './ProgressOptions'
 import { useLongPress } from 'use-long-press'
 import PinIcon from './icons/PinIcon'
 import ProgressImportance from './ProgressImportance'
+import { AnimatePresence, motion } from 'framer-motion'
 
 function Progress({ progress, index }) {
 
-    const { stepForward, stepBackward, setViewingProgress, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
 
     // swipeable
     const handlers = useSwipeable({
@@ -35,6 +36,7 @@ function Progress({ progress, index }) {
     function handleOpenViewer() {
         if (progressInFocus) return
         setViewingProgress(progress)
+        setViewingProgressVis(true)
     }
 
     let reversedSteps = [...progress.steps].reverse()
@@ -53,11 +55,20 @@ function Progress({ progress, index }) {
     })
 
     return (
-        <div className='relative col-span-2 h-32'>
-            {progressInFocus && progressInFocus._id === progress._id && (
-                <ProgressOptions progress={progress} progressIndex={index} />
-            )}
-            <div {...bind()} {...handlers} className={` select-none relative overflow-hidden rounded-3xl h-full p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
+
+
+        <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            transition={{ bounce: 'none', duration: '.3' }}
+            className='relative col-span-2 h-32 z-[9999]'>
+            <AnimatePresence>
+                {progressInFocus && progressInFocus._id === progress._id && (
+                    <ProgressOptions progress={progress} progressIndex={index} />
+                )}
+            </AnimatePresence>
+            <div {...bind()} {...handlers} className={`select-none relative overflow-hidden transition-all duration-300 rounded-3xl h-full p-3 shadow-md shadow-black/70 pg-container-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
 
 
 
@@ -141,7 +152,7 @@ function Progress({ progress, index }) {
                 </div>
 
             </div>
-        </div>
+        </motion.div>
     )
 }
 

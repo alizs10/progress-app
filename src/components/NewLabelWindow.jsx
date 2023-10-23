@@ -4,7 +4,7 @@ import useProgressesStore from '../../store/progresses-store';
 import { zValidate } from '../../helpers/helpers';
 import { labelSchema } from '../../helpers/labelValidations';
 import { useNotificationsStore } from '../../store/notification-store';
-
+import { motion } from 'framer-motion'
 function NewLabelWindow({ handleClose }) {
 
     useEffect(() => {
@@ -65,11 +65,19 @@ function NewLabelWindow({ handleClose }) {
     const nameRef = useRef()
 
     return (
-        <div
+        <motion.div
+            initial={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            animate={{ backdropFilter: 'blur(4px) opacity(1)' }}
+            exit={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            transition={{ bounce: 'none', duration: '.3' }}
             onClick={handleClose}
-            className='fixed inset-0 z-[900] backdrop-blur-sm'>
+            className='fixed inset-0 z-[99999] backdrop-blur-sm'>
 
-            <div
+            <motion.div
+                initial={{ scale: 0, x: "-50%", y: '-50%' }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ bounce: 'none', duration: '.3' }}
                 onClick={e => e.stopPropagation()}
                 className='fixed flex flex-col gap-y-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl overflow-hidden shadow-md shadow-black w-[80vw] bg-slate-800 max-w-[480px]'>
                 <div className='p-5 pb-0 flex justify-between items-center'>
@@ -100,9 +108,9 @@ function NewLabelWindow({ handleClose }) {
                     Add
                 </button>
 
-            </div>
+            </motion.div>
 
-        </div >
+        </motion.div >
     )
 }
 

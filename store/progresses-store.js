@@ -156,6 +156,12 @@ const useProgressesStore = create((set) => ({
     selectLabel: payload => set(state => ({ selectedLabel: payload })),
     addLabel: payload => set((state) => ({ labels: [...state.labels, payload] })),
 
+    editingProgressVis: false,
+    viewingProgressVis: false,
+    setEditingProgressVis: payload => set((state) => ({ editingProgressVis: payload })),
+    setViewingProgressVis: payload => set((state) => ({ viewingProgressVis: payload })),
+
+
     editingProgress: null,
     setEditingProgress: payload => set((state) => ({ editingProgress: payload })),
 

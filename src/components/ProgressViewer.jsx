@@ -7,6 +7,7 @@ import CheckIcon from './icons/CheckIcon';
 import moment from 'moment';
 import ArrowUturnLeftIcon from './icons/ArrowUturnLeftIcon';
 import ChevronDoubleRightIcon from './icons/ChevronDoubleRightIcon';
+import { motion } from 'framer-motion'
 
 function ProgressViewer() {
 
@@ -19,7 +20,7 @@ function ProgressViewer() {
         };
     }, []);
 
-    const { viewingProgress, setViewingProgress, labels, importanceValues } = useProgressesStore()
+    const { viewingProgress, setViewingProgressVis, labels, importanceValues } = useProgressesStore()
 
     let reversedSteps = [...viewingProgress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -31,13 +32,16 @@ function ProgressViewer() {
     let progressImportance = importanceValues.filter(imp => imp._id === viewingProgress.importance)[0]
 
     function handleCloseViewer() {
-        setViewingProgress(null)
+        setViewingProgressVis(false)
     }
     return (
         <section className='relative'>
-            <div className={`fixed w-full max-w-[600px] h-full overflow-y-scroll left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-[99999] flex flex-col gap-y-2 bg-slate-900 p-5`}>
-
-
+            <motion.div
+                initial={{ x: '100%', y: '-50%', opacity: 0 }}
+                animate={{ x: '-50%', opacity: 1 }}
+                exit={{ x: '100%', opacity: 0 }}
+                transition={{ bounce: 'none', duration: '.3' }}
+                className={`fixed w-full max-w-[600px] h-full z-[99999] overflow-y-scroll left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex flex-col gap-y-2 bg-slate-900 p-5`}>
                 <div className='flex flex-col gap-y-8'>
 
                     <div className='flex'>
@@ -135,7 +139,7 @@ function ProgressViewer() {
 
                     </div>
                 </div>
-            </div>
+            </motion.div>
             <button
                 onClick={handleCloseViewer}
                 className='fixed z-[99999] shadow-md shadow-black bottom-10 right-8 w-14 flex justify-center items-center aspect-square rotate-45 rounded-md bg-gray-700'>

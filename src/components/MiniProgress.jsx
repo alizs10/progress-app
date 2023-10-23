@@ -11,11 +11,12 @@ import { deadlineToMoment } from '../../helpers/helpers'
 import { useLongPress } from 'use-long-press'
 import ProgressOptions from './ProgressOptions'
 import PinIcon from './icons/PinIcon'
+import { AnimatePresence, motion } from 'framer-motion'
 
 function MiniProgress({ progress, index }) {
 
 
-    const { stepForward, stepBackward, setViewingProgress, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, labels, importanceValues } = useProgressesStore()
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -47,6 +48,7 @@ function MiniProgress({ progress, index }) {
     function handleOpenViewer() {
         if (progressInFocus) return
         setViewingProgress(progress)
+        setViewingProgressVis(true)
     }
 
     const bind = useLongPress(() => {
@@ -56,11 +58,18 @@ function MiniProgress({ progress, index }) {
     })
 
     return (
-        <div {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-2 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999] scale-[103%]`}`}>
+        <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: progressInFocus && progressInFocus._id === progress._id ? 1.03 : 1 }}
+            exit={{ scale: 0 }}
+            transition={{ bounce: 'none', duration: '.3' }}
+            {...bind()} {...handlers} className={`col-span-1 aspect-square flex flex-col gap-0 relative rounded-xl p-2 shadow-md shadow-black/70 select-none progress-bar-base-theme-${progress.theme} ${progressInFocus && progressInFocus._id === progress._id && `outline-theme-${progress.theme} z-[99999]`}`}>
 
-            {progressInFocus && progressInFocus._id === progress._id && (
-                <ProgressOptions progress={progress} progressIndex={index} />
-            )}
+            <AnimatePresence>
+                {progressInFocus && progressInFocus._id === progress._id && (
+                    <ProgressOptions progress={progress} progressIndex={index} />
+                )}
+            </AnimatePresence>
             {progress.pin ? (
                 <div className='flex justify-between items-start'>
                     <h1 className='font-bold text-xl line-clamp-2'>{progress.title}</h1>
@@ -135,7 +144,7 @@ function MiniProgress({ progress, index }) {
             </div>
 
 
-        </div>
+        </motion.div>
     )
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import useProgressesStore from '../../store/progresses-store'
+import { motion } from 'framer-motion'
 
 function FocusMode() {
 
@@ -19,10 +20,14 @@ function FocusMode() {
     }
 
     return (
-        <div
+        <motion.div
+            initial={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            animate={{ backdropFilter: 'blur(4px) opacity(1)' }}
+            exit={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            transition={{ bounce: 'none', duration: '.3' }}
             onClick={handleLooseFocus}
-            className='fixed inset-0 w-full max-w-[600px] left-1/2 -translate-x-1/2 backdrop-blur-sm z-[9999]'>
-        </div>
+            className='fixed inset-0 w-full max-w-[600px] left-1/2 -translate-x-1/2 z-[9999]'>
+        </motion.div>
     )
 }
 

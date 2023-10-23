@@ -8,6 +8,7 @@ import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
 import Dropdown from './Dropdown';
 import { useNotificationsStore } from '../../store/notification-store';
+import { motion } from 'framer-motion'
 
 function NewProgressWindow({ handleClose }) {
 
@@ -117,15 +118,23 @@ function NewProgressWindow({ handleClose }) {
     const deadlineRef = useRef()
 
     return (
-        <div
+        <motion.div
+            initial={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            animate={{ backdropFilter: 'blur(4px) opacity(1)' }}
+            exit={{ backdropFilter: 'blur(4px) opacity(0)' }}
+            transition={{ bounce: 'none', duration: '.3' }}
             onClick={handleClose}
-            className='fixed inset-0 z-[900] backdrop-blur-sm'>
+            className='fixed inset-0 z-[9999] flex justify-center items-center'>
             {themeSelectorVis && (
                 <ThemeSelector themes={themes} progressTheme={progressTheme} handleSelectTheme={handleSelectTheme} />
             )}
-            <div
+            <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ bounce: 'none', duration: '.3' }}
                 onClick={e => e.stopPropagation()}
-                className='fixed flex flex-col gap-y-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl overflow-hidden shadow-md shadow-black w-[80vw] bg-slate-800 max-w-[480px]'>
+                className='flex flex-col gap-y-4 rounded-xl overflow-hidden shadow-md shadow-black w-[80vw] bg-slate-800 max-w-[480px]'>
                 <div className='p-5 pb-0 flex justify-between items-center'>
                     <h1 className='text-white text-xl font-bold'>New Progress</h1>
                     <div className='w-fit cursor-pointer bg-red-600 rounded-full p-1'>
@@ -195,9 +204,9 @@ function NewProgressWindow({ handleClose }) {
                     Create
                 </button>
 
-            </div>
+            </motion.div>
 
-        </div >
+        </motion.div>
     )
 }
 

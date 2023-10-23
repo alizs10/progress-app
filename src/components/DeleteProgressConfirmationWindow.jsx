@@ -1,6 +1,7 @@
 import React from 'react'
 import useProgressesStore from '../../store/progresses-store'
 import { useNotificationsStore } from '../../store/notification-store'
+import { motion } from 'framer-motion'
 
 function DeleteProgressConfirmationWindow() {
 
@@ -31,7 +32,11 @@ function DeleteProgressConfirmationWindow() {
     }
 
     return (
-        <div
+        <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            transition={{ bounce: 'none', duration: '.3' }}
             onClick={handleCancel}
             className='fixed inset-0 flex justify-center items-center z-[9999999]'>
 
@@ -48,7 +53,7 @@ function DeleteProgressConfirmationWindow() {
                         className='col-span-1 text-center py-2 text-base text-white font-bold bg-gray-500 rounded-full'>Cancel</button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

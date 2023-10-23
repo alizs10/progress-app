@@ -8,6 +8,7 @@ import { zValidate } from '../../helpers/helpers';
 import { progressSchema } from '../../helpers/progressValidations';
 import { useNotificationsStore } from '../../store/notification-store';
 import Dropdown from './Dropdown';
+import { motion } from 'framer-motion'
 
 function ProgressEditor() {
 
@@ -21,7 +22,7 @@ function ProgressEditor() {
     }, []);
 
     const { addNotification, removeNotification } = useNotificationsStore()
-    const { editingProgress, setEditingProgress, updateProgress, setDeleteConfirmationVis, labels, importanceValues } = useProgressesStore()
+    const { editingProgress, setEditingProgressVis, updateProgress, setDeleteConfirmationVis, labels, importanceValues } = useProgressesStore()
 
     let labelsOptions = labels.map(lb => ({ name: lb.name, value: lb._id }))
     let importanceOptions = importanceValues.map(imp => ({ name: imp.name, value: imp._id }))
@@ -125,7 +126,7 @@ function ProgressEditor() {
     }
 
     function handleCloseEditor() {
-        setEditingProgress(null)
+        setEditingProgressVis(false)
     }
 
     function handleSaveProgress() {
@@ -188,7 +189,12 @@ function ProgressEditor() {
     }
 
     return (
-        <div className='fixed w-full max-w-[600px] h-full left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-[99999] flex flex-col gap-y-2 bg-slate-800 p-5 overflow-y-scroll'>
+        <motion.div
+            initial={{ x: '100%', y: '-50%', opacity: 0 }}
+            animate={{ x: '-50%', opacity: 1 }}
+            exit={{ x: '100%', opacity: 0 }}
+            transition={{ bounce: 'none', duration: '.3' }}
+            className='fixed w-full max-w-[600px] h-full left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-[99999] flex flex-col gap-y-2 bg-slate-800 p-5 overflow-y-scroll'>
             {themeSelectorVis && (
                 <ThemeSelector themes={themes} progressTheme={progressTheme} handleSelectTheme={handleSelectTheme} />
             )}
@@ -299,7 +305,7 @@ function ProgressEditor() {
 
             </div>
 
-        </div>
+        </motion.div>
     )
 }
 

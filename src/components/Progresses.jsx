@@ -10,11 +10,12 @@ import DeleteProgressConfirmationWindow from './DeleteProgressConfirmationWindow
 import ProgressViewer from './ProgressViewer'
 import LabelsBar from './LabelsBar'
 import NewLabelWindow from './NewLabelWindow'
+import { AnimatePresence } from 'framer-motion'
 
 function Progresses() {
 
 
-    const { viewMode, toggleViewMode, data, progresses, showProgresses, showProgressesType, editingProgress, progressInFocus, deleteConfirmationVis, viewingProgress, selectedLabel } = useProgressesStore()
+    const { viewMode, toggleViewMode, data, progresses, showProgresses, showProgressesType, editingProgressVis, progressInFocus, deleteConfirmationVis, viewingProgressVis, selectedLabel } = useProgressesStore()
 
     let progressesTypeStr;
 
@@ -51,15 +52,23 @@ function Progresses() {
         <div className='p-3 pt-0'>
 
             <LabelsBar setNewLabelWindowVis={setNewLabelWindowVis} />
-            {newLabelWindowVis && (<NewLabelWindow handleClose={() => setNewLabelWindowVis(false)} />)}
+            <AnimatePresence>
+                {newLabelWindowVis && (<NewLabelWindow handleClose={() => setNewLabelWindowVis(false)} />)}
+            </AnimatePresence>
 
-            {editingProgress && (
-                <ProgressEditor />
-            )}
+            <AnimatePresence>
+                {editingProgressVis && (
+                    <ProgressEditor />
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {viewingProgressVis && (
+                    <ProgressViewer />
+                )}
+            </AnimatePresence>
 
-            {viewingProgress && (
-                <ProgressViewer />
-            )}
+
+
             <div className='mx-3 flex justify-between items-start'>
                 <span className='text-gray-300 text-sm'>{progressesTypeStr} <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>
                 <button onClick={toggleViewMode} className='text-gray-500 text-xs fill-white flex justify-center items-center'>
@@ -70,25 +79,30 @@ function Progresses() {
                     )}
                 </button>
             </div>
+            <AnimatePresence>
+                {progressInFocus && (<FocusMode />)}
+            </AnimatePresence>
+            <AnimatePresence>
+                {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
+            </AnimatePresence>
+            <AnimatePresence>
+                {pinnedProgresses.length > 0 && (
 
-            {progressInFocus && (<FocusMode />)}
-            {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
-
-            {pinnedProgresses.length > 0 && (
-
-                <div className='mt-4 mx-3 flex flex-col gap-y-2'>
-                    <span className='text-gray-300 text-sm'>Pinned <span className='text-red-600 text-[12px]'>({pinnedProgresses.length})</span></span>
-                    <div className='grid grid-cols-2 gap-3'>
-                        {pinnedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                    <div className='mt-4 mx-3 flex flex-col gap-y-2'>
+                        <span className='text-gray-300 text-sm'>Pinned <span className='text-red-600 text-[12px]'>({pinnedProgresses.length})</span></span>
+                        <div className='grid grid-cols-2 gap-3'>
+                            {pinnedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </AnimatePresence>
 
             <div className='mt-4 mx-3 flex flex-col gap-y-2'>
                 <span className='text-gray-300 text-sm'>Others <span className='text-red-600 text-[12px]'>({otherProgresses.length})</span></span>
                 <div className='grid grid-cols-2 gap-3 pb-20'>
-                    {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
-
+                    <AnimatePresence>
+                        {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                    </AnimatePresence>
                 </div>
             </div>
 
