@@ -46,7 +46,7 @@ function MiniProgress({ progress, index }) {
     }
 
     function handleOpenViewer() {
-        if (progressInFocus) return
+        if (focusMode) return
         setViewingProgress(progress)
         setViewingProgressVis(true)
     }

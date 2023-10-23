@@ -5,6 +5,7 @@ import BottomBar from './components/BottomBar';
 import Hints from './components/Hints';
 import useAppStore from '../store/app-store';
 import Notifications from './components/Notification/Notifications';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
 
@@ -13,9 +14,11 @@ function App() {
 	return (
 		<main className='h-screen font-mono relative max-w-[600px] mx-auto'>
 
-			{userHints && (
-				<Hints />
-			)}
+			<AnimatePresence>
+				{userHints && (
+					<Hints />
+				)}
+			</AnimatePresence>
 
 
 			<Header />
