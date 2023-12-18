@@ -6,10 +6,12 @@ import Hints from './components/Hints';
 import useAppStore from '../store/app-store';
 import Notifications from './components/Notification/Notifications';
 import { AnimatePresence } from 'framer-motion';
+import Rewards from './components/Rewards/Rewards';
+
 
 function App() {
 
-	const { userHints } = useAppStore()
+	const { userHints, rewardsVis } = useAppStore()
 
 	return (
 		<main className='h-screen font-mono relative max-w-[600px] mx-auto'>
@@ -24,6 +26,12 @@ function App() {
 			<Header />
 			<Progresses />
 			<BottomBar />
+
+			<AnimatePresence>
+				{rewardsVis && (
+					<Rewards />
+				)}
+			</AnimatePresence>
 
 			<Notifications />
 		</main>

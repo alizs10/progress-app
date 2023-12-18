@@ -3,9 +3,10 @@ import { create } from 'zustand'
 
 const useAppStore = create((set) => ({
 
-    userHints: true,
+    userHints: false,
     closeHints: payload => set(() => ({ userHints: false })),
 
+    rewardsVis: true,
 
 
 

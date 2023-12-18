@@ -2,10 +2,15 @@ import React from 'react'
 import RewardIcon from './icons/RewardIcon'
 
 function Header() {
+
+    function handleGoalsBtn() {
+
+    }
+
     return (
         <div className='h-12 flex justify-between items-center p-3 m-3 bg-slate-800 rounded-xl'>
             <h1 className='text-xl font-bold text-white'>Progresses</h1>
-            <button className='fill-yellow-400'>
+            <button onClick={handleGoalsBtn} className='fill-yellow-400'>
                 <RewardIcon />
             </button>
         </div>
