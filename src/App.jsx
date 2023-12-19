@@ -13,6 +13,7 @@ function App() {
 
 	const { userHints, rewardsVis } = useAppStore()
 
+
 	return (
 		<main className='h-screen font-mono relative max-w-[600px] mx-auto'>
 

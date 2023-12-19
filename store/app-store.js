@@ -7,6 +7,8 @@ const useAppStore = create((set) => ({
     closeHints: payload => set(() => ({ userHints: false })),
 
     rewardsVis: true,
+    openRewards: payload => set(() => ({ rewardsVis: true })),
+    closeRewards: payload => set(() => ({ rewardsVis: false })),
 
 
 

@@ -38,8 +38,41 @@ const useProgressesStore = create((set) => ({
                     title: 'first step',
                     status: true
                 },
-            ]
-        }
+            ],
+            status: true
+        },
+        {
+            _id: 2,
+            title: "Be Healthy",
+            pin: false,
+            deadline: '2023-12-30',
+            theme: 2,
+            importance: 1,
+            label: 1,
+            steps: [
+                {
+                    _id: 12,
+                    title: 'forth step',
+                    status: false
+                },
+                {
+                    _id: 123,
+                    title: 'third step',
+                    status: false
+                },
+                {
+                    _id: 1234,
+                    title: 'second step',
+                    status: false
+                },
+                {
+                    _id: 1235,
+                    title: 'first step',
+                    status: true
+                },
+            ],
+            status: true
+        },
     ],
 
     progresses: [],
@@ -228,7 +261,12 @@ const useProgressesStore = create((set) => ({
         return { data: filteredData }
     }),
 
+    // goals and rewards
 
+    goals: [],
+    addGoal: payload => set((state) => ({ goals: [payload, ...state.goals] })),
+
+    prizes: [],
 }))
 
 

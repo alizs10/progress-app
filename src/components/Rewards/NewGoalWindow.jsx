@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import XIcon from '../icons/XIcon'
 import CheckboxInput from '../ui/CheckboxInput'
+import useProgressesStore from '../../../store/progresses-store'
 
 function NewGoalWindow({ handleClose, handleCreateNewGoal }) {
     const [errors, setErrors] = useState({})
@@ -18,6 +19,25 @@ function NewGoalWindow({ handleClose, handleCreateNewGoal }) {
                 return prevState.filter(id => itemId !== id)
             }
         })
+    }
+
+    const { data: progresses, addGoal } = useProgressesStore()
+
+    function handleCreateNewGoal() {
+        let newGoalObj = {
+            _id: new Date().getTime(),
+            title: titleRef.current.value,
+            prize: prizeRef.current.value,
+            isPrized: false
+        }
+
+        let selectedProgresses = progresses.filter(pg => checkedItems.includes(pg._id))
+
+        newGoalObj.targets = selectedProgresses
+
+        addGoal(newGoalObj)
+        handleClose()
+
     }
 
     return (
@@ -59,11 +79,15 @@ function NewGoalWindow({ handleClose, handleCreateNewGoal }) {
                     <div className="col-span-2 flex flex-col gap-y-2">
                         <h2 className='text-md text-gray-400'>List of progresses</h2>
 
-                        <div className="flex items-center gap-x-2">
-                            <CheckboxInput handleToggle={() => toggleCheckbox(1)} value={checkedItems.includes(1)} />
-                            <label onClick={() => toggleCheckbox(1)} className="select-none text-lg text-white flex gap-x-2 items-center">
-                                Read Sofia's world book</label>
-                        </div>
+                        {progresses.map(pg => (
+                            <div key={pg._id} className="flex items-center gap-x-2">
+                                <CheckboxInput handleToggle={() => toggleCheckbox(pg._id)} value={checkedItems.includes(pg._id)} />
+                                <label onClick={() => toggleCheckbox(pg._id)} className="select-none text-lg text-white flex gap-x-2 items-center">
+                                    {pg.title}
+                                </label>
+                            </div>
+                        ))}
+
 
 
                     </div>
