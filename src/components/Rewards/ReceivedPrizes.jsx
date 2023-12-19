@@ -14,7 +14,7 @@ function ReceivedPrizes() {
 
             {prizes.length > 0 ? (
                 <div className='flex flex-col gap-y-3'>
-
+                    {prizes.map(prize => <ReceivedPrize prize={prize} />)}
 
                 </div>
             ) : (

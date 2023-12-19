@@ -263,10 +263,93 @@ const useProgressesStore = create((set) => ({
 
     // goals and rewards
 
-    goals: [],
+    goals: [
+        {
+            _id: 1703016699315,
+            title: "test",
+            prize: "test",
+            isPrized: false,
+            targets: [
+                {
+                    "_id": 1,
+                    "title": "Read Sofia's world book",
+                    "pin": true,
+                    "deadline": "2023-10-30",
+                    "theme": 4,
+                    "importance": 3,
+                    "label": 1,
+                    "steps": [
+                        {
+                            "_id": 12,
+                            "title": "forth step",
+                            "status": false
+                        },
+                        {
+                            "_id": 123,
+                            "title": "third step",
+                            "status": true
+                        },
+                        {
+                            "_id": 1234,
+                            "title": "second step",
+                            "status": true
+                        },
+                        {
+                            "_id": 1235,
+                            "title": "first step",
+                            "status": true
+                        }
+                    ],
+                    "status": true
+                },
+                {
+                    "_id": 2,
+                    "title": "Be Healthy",
+                    "pin": false,
+                    "deadline": "2023-12-30",
+                    "theme": 2,
+                    "importance": 1,
+                    "label": 1,
+                    "steps": [
+                        {
+                            "_id": 12,
+                            "title": "forth step",
+                            "status": false
+                        },
+                        {
+                            "_id": 123,
+                            "title": "third step",
+                            "status": false
+                        },
+                        {
+                            "_id": 1234,
+                            "title": "second step",
+                            "status": false
+                        },
+                        {
+                            "_id": 1235,
+                            "title": "first step",
+                            "status": true
+                        }
+                    ],
+                    "status": true
+                }
+            ],
+            status: true
+        }
+    ],
     addGoal: payload => set((state) => ({ goals: [payload, ...state.goals] })),
+    updateGoal: payload => set((state) => {
 
+        let { _id: updatedGoalId } = payload;
+        let goalsIns = [...state.goals]
+        let updatableGoalIndex = goalsIns.findIndex(pg => pg._id === updatedGoalId)
+        goalsIns[updatableGoalIndex] = { ...goalsIns[updatableGoalIndex], ...payload }
+
+        return { goals: goalsIns }
+    }),
     prizes: [],
+    addPrize: payload => set((state) => ({ prizes: [payload, ...state.prizes] })),
 }))
 
 
