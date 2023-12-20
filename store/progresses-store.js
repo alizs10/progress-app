@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { useNotificationsStore } from './notification-store'
 
 const useProgressesStore = create((set) => ({
 
@@ -39,7 +40,7 @@ const useProgressesStore = create((set) => ({
                     status: true
                 },
             ],
-            status: true
+            status: false
         },
         {
             _id: 2,
@@ -71,7 +72,7 @@ const useProgressesStore = create((set) => ({
                     status: true
                 },
             ],
-            status: true
+            status: false
         },
     ],
 
@@ -137,11 +138,27 @@ const useProgressesStore = create((set) => ({
         let pgId = payload;
         let progressesIns = [...state.progresses];
         let pgIndex = progressesIns.findIndex(pg => pg._id === pgId)
+        let updatableProgress = progressesIns[pgIndex]
         let steps = [...progressesIns[pgIndex].steps].reverse()
         let passedSteps = steps.filter(st => st.status)
         let nextStep = steps[passedSteps.length]
         let nextStepIndex = steps.findIndex(st => st._id === nextStep._id)
         steps[nextStepIndex].status = true;
+
+        let unDoneProgresses = steps.filter(st => !st.status)
+        if (unDoneProgresses.length === 0) {
+            updatableProgress.status = true
+            let newNotify = {
+                _id: Date.now(),
+                index: 0,
+                message: 'Progress completed!',
+                status: 0
+            }
+            useNotificationsStore.getState().addNotification(newNotify)
+            setTimeout(() => {
+                useNotificationsStore.getState().removeNotification(newNotify._id)
+            }, 3000)
+        }
 
         return { progresses: progressesIns }
     }),
@@ -151,12 +168,15 @@ const useProgressesStore = create((set) => ({
         let pgId = payload;
         let progressesIns = [...state.progresses];
         let pgIndex = progressesIns.findIndex(pg => pg._id === pgId)
+        let updatableProgress = progressesIns[pgIndex]
         let steps = [...progressesIns[pgIndex].steps].reverse()
         let passedSteps = steps.filter(st => st.status)
         let lastPassedStep = passedSteps[passedSteps.length - 1]
         let lastPassedStepIndex = steps.findIndex(st => st._id === lastPassedStep._id)
         steps[lastPassedStepIndex].status = false;
+        updatableProgress.status = false;
 
+        console.log(updatableProgress)
         return { progresses: progressesIns }
     }),
 
@@ -212,27 +232,6 @@ const useProgressesStore = create((set) => ({
 
     viewingProgress: null,
 
-    // viewingProgress: {
-    //     _id: 1,
-    //     title: "Read Sofia's world book",
-    //     pin: true,
-    //     deadline: '2023-10-30',
-    //     theme: 5,
-    //     label: 0,
-    //     importance: 3,
-    //     steps: [
-    //         {
-    //             _id: 12,
-    //             title: 'second step',
-    //             status: false
-    //         },
-    //         {
-    //             _id: 123,
-    //             title: 'first step',
-    //             status: true
-    //         },
-    //     ]
-    // },
     setViewingProgress: payload => set((state) => ({ viewingProgress: payload })),
 
     progressInFocus: null,
@@ -263,81 +262,7 @@ const useProgressesStore = create((set) => ({
 
     // goals and rewards
 
-    goals: [
-        {
-            _id: 1703016699315,
-            title: "test",
-            prize: "test",
-            isPrized: false,
-            targets: [
-                {
-                    "_id": 1,
-                    "title": "Read Sofia's world book",
-                    "pin": true,
-                    "deadline": "2023-10-30",
-                    "theme": 4,
-                    "importance": 3,
-                    "label": 1,
-                    "steps": [
-                        {
-                            "_id": 12,
-                            "title": "forth step",
-                            "status": false
-                        },
-                        {
-                            "_id": 123,
-                            "title": "third step",
-                            "status": true
-                        },
-                        {
-                            "_id": 1234,
-                            "title": "second step",
-                            "status": true
-                        },
-                        {
-                            "_id": 1235,
-                            "title": "first step",
-                            "status": true
-                        }
-                    ],
-                    "status": true
-                },
-                {
-                    "_id": 2,
-                    "title": "Be Healthy",
-                    "pin": false,
-                    "deadline": "2023-12-30",
-                    "theme": 2,
-                    "importance": 1,
-                    "label": 1,
-                    "steps": [
-                        {
-                            "_id": 12,
-                            "title": "forth step",
-                            "status": false
-                        },
-                        {
-                            "_id": 123,
-                            "title": "third step",
-                            "status": false
-                        },
-                        {
-                            "_id": 1234,
-                            "title": "second step",
-                            "status": false
-                        },
-                        {
-                            "_id": 1235,
-                            "title": "first step",
-                            "status": true
-                        }
-                    ],
-                    "status": true
-                }
-            ],
-            status: true
-        }
-    ],
+    goals: [],
     addGoal: payload => set((state) => ({ goals: [payload, ...state.goals] })),
     updateGoal: payload => set((state) => {
 
@@ -348,6 +273,65 @@ const useProgressesStore = create((set) => ({
 
         return { goals: goalsIns }
     }),
+
+    updatePossibleTarget: (payload) => set(state => {
+
+        let possibleTarget = payload;
+        let goalsIns = [...state.goals]
+        let undoneGoals = goalsIns.filter(goal => !goal.status)
+
+        console.log(undoneGoals)
+
+        // if (undoneGoals.length > 0) {
+        //     for (let index = 0; index < undoneGoals.length; index++) {
+        //         let undoneGoal = undoneGoals[index];
+        //         let targetsIds = undoneGoal.targets.map(target => target._id)
+        //         let unreachedTargetsCount = 0;
+        //         undoneGoal.targets.map(target => {
+        //             console.log(target.status)
+        //             !target.status && unreachedTargetsCount++;
+        //         })
+        //         console.log(unreachedTargetsCount)
+        //         if (targetsIds.includes(possibleTarget._id)) {
+        //             let undoneGoaIndex = goalsIns.findIndex(goal => goal._id === undoneGoal._id)
+        //             let targetIndex = undoneGoal.targets.findIndex(target => target._id === possibleTarget._id)
+        //             goalsIns[undoneGoaIndex].targets[targetIndex] = possibleTarget;
+        //             if (unreachedTargetsCount === 1) {
+        //                 goalsIns[undoneGoaIndex].status = true;
+        //                 console.log("goal reached")
+        //             }
+        //         }
+
+        //     }
+        // }
+        if (undoneGoals.length > 0) {
+            for (let index = 0; index < undoneGoals.length; index++) {
+                let undoneGoal = undoneGoals[index];
+                let unreachedTargetsCount = 0;
+                undoneGoal.targets.map(target => {
+                    console.log(target.status)
+                    !target.status && unreachedTargetsCount++;
+                })
+                let undoneGoaIndex = goalsIns.findIndex(goal => goal._id === undoneGoal._id)
+                if (unreachedTargetsCount === 0) {
+                    goalsIns[undoneGoaIndex].status = true;
+                    let newNotify = {
+                        _id: Date.now(),
+                        index: 0,
+                        message: 'You reached your goal!',
+                        status: 0
+                    }
+                    useNotificationsStore.getState().addNotification(newNotify)
+                    setTimeout(() => {
+                        useNotificationsStore.getState().removeNotification(newNotify._id)
+                    }, 3000)
+                }
+            }
+        }
+
+        return { goals: goalsIns }
+    }),
+
     prizes: [],
     addPrize: payload => set((state) => ({ prizes: [payload, ...state.prizes] })),
 }))

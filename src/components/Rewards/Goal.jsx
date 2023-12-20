@@ -25,6 +25,8 @@ function Goal({ goal }) {
     function handleCloseCongratsWindow() {
         setCongratsVis(false)
     }
+
+
     return (
         <div className='p-3 rounded-3xl shadow-sm shadow-black from-blue-950 via-violet-950 from-10% via-50% to-90% to-transparent bg-gradient-to-r flex flex-col gap-y-6'>
 

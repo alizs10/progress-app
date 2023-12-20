@@ -15,7 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 function Progress({ progress, index }) {
 
-    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, focusMode, setFocusMode, labels, importanceValues } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, setProgressInFocus, focusMode, setFocusMode, labels, importanceValues, updatePossibleTarget } = useProgressesStore()
 
     // swipeable
     const handlers = useSwipeable({
@@ -54,6 +54,14 @@ function Progress({ progress, index }) {
         setFocusMode(true)
 
     })
+
+    useEffect(() => {
+
+        if (progress.status) {
+            updatePossibleTarget(progress)
+        }
+
+    }, [progress.status])
 
     return (
 
