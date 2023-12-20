@@ -332,3 +332,15 @@ input[type=number] {
 .notification-style-4 {
     @apply dark:bg-gray-700 bg-gray-300 dark:text-white text-gray-600;
 }
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
