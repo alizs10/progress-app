@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ClockIcon from './icons/ClockIcon'
 import ArrowUturnRightIcon from './icons/ArrowUturnRightIcon'
 import CheckIcon from './icons/CheckIcon'
@@ -17,7 +17,7 @@ import ProgressImportance from './ProgressImportance'
 function MiniProgress({ progress, index }) {
 
 
-    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, focusMode, setFocusMode, setProgressInFocus, labels, importanceValues } = useProgressesStore()
+    const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, focusMode, setFocusMode, setProgressInFocus, labels, importanceValues, updatePossibleTarget } = useProgressesStore()
 
     let reversedSteps = [...progress.steps].reverse()
     let passedSteps = reversedSteps.filter(st => st.status)
@@ -57,6 +57,15 @@ function MiniProgress({ progress, index }) {
         setProgressInFocus(progress)
         setFocusMode(true)
     })
+
+    useEffect(() => {
+
+        if (progress.status) {
+            updatePossibleTarget(progress)
+        }
+
+    }, [progress.status])
+
 
     return (
         <motion.div
