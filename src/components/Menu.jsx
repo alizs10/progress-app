@@ -29,7 +29,7 @@ function Menu({ handleOpenSettings, handleOpenAbout }) {
             className='fixed inset-0 top-auto px-10 pb-10 bg-gray-800 rounded-t-3xl overflow-hidden z-[99999999999]'>
             <div className="mt-2 mb-10 w-1/5 h-1 bg-gray-600 rounded-full self-center mx-auto"></div>
             <ul className='grid grid-cols-2 gap-2 text-base'>
-
+                {/* 
                 <li
                     onClick={handleOpenSettings}
                     className='col-span-1 flex-col justify-center items-center text-xl rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex gap-x-3  hover:bg-gray-700 transition-all duration-300'>
@@ -37,6 +37,14 @@ function Menu({ handleOpenSettings, handleOpenAbout }) {
                         <SettingsIcon />
                     </div>
                     <span>Settings</span>
+                </li> */}
+                <li
+                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 1 })}
+                    className={`col-span-1 justify-center items-center border-2 border-gray-700 text-xl rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex flex-col gap-x-3 hover:bg-gray-700 transition-all duration-300`}>
+                    <div className='w-10'>
+                        <MoonIcon />
+                    </div>
+                    <span>Lights off</span>
                 </li>
                 <li
                     onClick={handleOpenAbout}
@@ -46,14 +54,7 @@ function Menu({ handleOpenSettings, handleOpenAbout }) {
                     </div>
                     <span>About</span>
                 </li>
-                <li
-                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 1 })}
-                    className={`col-span-2 justify-center items-center border-2 border-gray-700 text-xl rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex gap-x-3 hover:bg-gray-700 transition-all duration-300`}>
-                    <div className='w-7'>
-                        <MoonIcon />
-                    </div>
-                    <span>Lights off</span>
-                </li>
+
 
                 <li className='text-gray-600 text-xs col-span-2 mt-10 text-center'>
                     <p>Designed by @alizs10 - version: 1.0.0</p>
