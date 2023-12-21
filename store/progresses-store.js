@@ -7,7 +7,7 @@ const useProgressesStore = create((set) => ({
     toggleViewMode: payload => set((state) => ({ viewMode: state.viewMode === 1 ? 0 : 1 })),
 
     // 0 => undone, 1 => all, 2 => done
-    showProgressesType: 0,
+    showProgressesType: 1,
 
     data: [
         {
@@ -147,6 +147,7 @@ const useProgressesStore = create((set) => ({
         let unDoneProgresses = steps.filter(st => !st.status)
         if (unDoneProgresses.length === 0) {
             updatableProgress.status = true
+            updatableProgress.pin = false
             let newNotify = {
                 _id: Date.now(),
                 index: 0,

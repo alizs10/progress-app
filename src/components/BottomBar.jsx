@@ -1,44 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import NewProgressBtn from './NewProgressBtn'
-import BarsIcon from './icons/BarsIcon'
 import ProgressCheckIcon from './icons/ProgressCheckIcon'
 import ProgressClockIcon from './icons/ProgressClockIcon'
-import UserProfileIcon from './icons/UserProfileIcon'
 import useProgressesStore from '../../store/progresses-store'
-import Menu from './Menu'
 import { AnimatePresence } from 'framer-motion'
-import Settings from './Settings'
-import About from './About'
 import NewProgressWindow from './NewProgressWindow'
-import { motion } from 'framer-motion'
+import ListIcon from './icons/ListIcon'
 
 function BottomBar() {
 
     const { selectedLabel, showProgresses, data, showProgressesType } = useProgressesStore()
 
     const [countData, setCountData] = useState({ inProgress: 0, completed: 0 })
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [settingsVis, setSettingsVis] = useState(false)
-    const [aboutVis, setAboutVis] = useState(false)
+
     const [newProgressWindowVis, setNewProgressWindowVis] = useState(false)
-
-    function toggleMenu() {
-        setIsMenuOpen(prevState => !prevState)
-    }
-    useEffect(() => {
-
-        if (settingsVis || aboutVis) {
-            setIsMenuOpen(false)
-        }
-    }, [settingsVis, aboutVis])
-
-    useEffect(() => {
-
-        if (isMenuOpen && showProgressesType === 1) {
-            setIsMenuOpen(false)
-        }
-
-    }, [showProgressesType])
 
     useEffect(() => {
 
@@ -55,7 +30,7 @@ function BottomBar() {
 
         undoneCount = allCount - doneCount;
 
-        setCountData({ inProgress: undoneCount, completed: doneCount })
+        setCountData({ inProgress: undoneCount, completed: doneCount, all: allCount })
 
     }, [data, showProgressesType])
 
@@ -65,16 +40,18 @@ function BottomBar() {
                 <NewProgressBtn handleClick={() => setNewProgressWindowVis(true)} />
             </AnimatePresence>
 
-            <div className='fixed z-40 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-5 gap-0'>
+            <div className='fixed z-40 max-w-[600px] w-full left-1/2 -translate-x-1/2 bottom-0 top-auto h-14 bg-slate-800 grid grid-cols-4 gap-0'>
+
+
+
                 <button
-                    onClick={toggleMenu}
-                    className={`col-span-1 flex z-40 justify-center items-center text-white ${isMenuOpen && 'bg-gray-700'}`}>
-                    <span className='fill-white'>
-                        <BarsIcon />
+                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 1 })}
+                    className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 1 && 'bg-gray-700'}`}>
+                    <span className='w-6 fill-white relative'>
+                        <ListIcon />
+                        <div className='absolute -bottom-1 left-[75%] min-w-[1rem] px-1 rounded-full bg-blue-600 text-white flex justify-center items-center text-[10px]'>{countData.all}</div>
                     </span>
                 </button>
-
-
                 <button
                     onClick={() => showProgresses({ labelId: selectedLabel, pgType: 0 })}
                     className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 0 && 'bg-gray-700'}`}>
@@ -84,7 +61,6 @@ function BottomBar() {
                     </span>
                 </button>
 
-                <div className='col-span-1'></div>
 
                 <button
                     onClick={() => showProgresses({ labelId: selectedLabel, pgType: 2 })}
@@ -94,43 +70,19 @@ function BottomBar() {
                         <div className='absolute -bottom-1 left-[75%]  min-w-[1rem] px-1 rounded-full bg-emerald-700 text-white flex justify-center items-center text-[10px]'>{countData.completed}</div>
                     </span>
                 </button>
-                <button className='col-span-1 flex z-40 justify-center items-center text-white'>
-                    <span className='w-7'>
-                        <UserProfileIcon />
+
+                <button
+                    onClick={() => showProgresses({ labelId: selectedLabel, pgType: 2 })}
+                    className={`col-span-1 flex z-40 justify-center items-center text-white ${showProgressesType === 2 && 'bg-gray-700'}`}>
+                    <span className='fill-white relative'>
+                        <ProgressCheckIcon />
+                        <div className='absolute -bottom-1 left-[75%]  min-w-[1rem] px-1 rounded-full bg-emerald-700 text-white flex justify-center items-center text-[10px]'>{countData.completed}</div>
                     </span>
                 </button>
 
 
+
             </div>
-
-
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <div
-                        onClick={() => setIsMenuOpen(false)}
-                        className='fixed inset-0 w-full left-1/2 -translate-x-1/2 max-w-[600px] z-30'>
-                        <Menu handleOpenSettings={() => setSettingsVis(true)} handleOpenAbout={() => setAboutVis(true)} />
-
-                    </div>
-                )}
-            </AnimatePresence>
-
-
-            <AnimatePresence>
-                {settingsVis && (
-                    <>
-                        <Settings handleClose={() => setSettingsVis(false)} />
-                    </>
-                )}
-            </AnimatePresence>
-
-            <AnimatePresence>
-                {aboutVis && (
-                    <>
-                        <About handleClose={() => setAboutVis(false)} />
-                    </>
-                )}
-            </AnimatePresence>
 
             <AnimatePresence>
                 {newProgressWindowVis && (

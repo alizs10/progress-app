@@ -42,8 +42,9 @@ function Progresses() {
     }, [data])
 
 
-    let otherProgresses = progresses.filter(pg => !pg.pin)
-    let pinnedProgresses = progresses.filter(pg => pg.pin)
+    let otherProgresses = progresses.filter(pg => !pg.pin && !pg.status)
+    let pinnedProgresses = progresses.filter(pg => pg.pin && !pg.status)
+    let completedProgresses = progresses.filter(pg => pg.status)
 
 
     const [newLabelWindowVis, setNewLabelWindowVis] = useState(false)
@@ -85,6 +86,7 @@ function Progresses() {
             <AnimatePresence>
                 {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
             </AnimatePresence>
+
             <AnimatePresence>
                 {pinnedProgresses.length > 0 && (
 
@@ -96,15 +98,41 @@ function Progresses() {
                     </div>
                 )}
             </AnimatePresence>
+            <AnimatePresence>
+                {showProgressesType === 2 && completedProgresses.length > 0 && (
 
-            <div className='mt-4 mx-3 flex flex-col gap-y-2'>
-                <span className='text-gray-300 text-sm'>Others <span className='text-red-600 text-[12px]'>({otherProgresses.length})</span></span>
-                <div className='grid grid-cols-2 gap-3 pb-20'>
-                    <AnimatePresence>
-                        {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
-                    </AnimatePresence>
-                </div>
-            </div>
+                    <div className='mt-4 mx-3 flex flex-col gap-y-2'>
+                        <div className='grid grid-cols-2 gap-3'>
+                            {completedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                        </div>
+                    </div>
+                )}
+            </AnimatePresence>
+            <AnimatePresence>
+                {showProgressesType !== 2 &&
+                    (
+                        <div className='mt-4 mx-3 flex flex-col gap-y-2'>
+                            <span className='text-gray-300 text-sm'>Others <span className='text-red-600 text-[12px]'>({otherProgresses.length})</span></span>
+                            <div className='grid grid-cols-2 gap-3'>
+                                <AnimatePresence>
+                                    {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                                </AnimatePresence>
+                            </div>
+                        </div>
+                    )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {showProgressesType === 1 && (
+
+                    <div className='mt-4 mx-3 flex flex-col gap-y-2'>
+                        <span className='text-gray-300 text-sm'>Completed <span className='text-red-600 text-[12px]'>({completedProgresses.length})</span></span>
+                        <div className='grid grid-cols-2 gap-3'>
+                            {completedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                        </div>
+                    </div>
+                )}
+            </AnimatePresence>
 
         </div>
     )

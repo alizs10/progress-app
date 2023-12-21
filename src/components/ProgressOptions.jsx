@@ -52,28 +52,33 @@ function ProgressOptions({ progress, progressIndex }) {
         <div
 
             className={`absolute ${viewMode === 0 ? ('bottom-0 translate-y-[120%] left-1/2 -translate-x-1/2') : (progressIndex % 2 === 0 ? 'flex-col bottom-2 right-0 translate-x-[120%]' : 'flex-col bottom-2 left-0 -translate-x-[120%]')} z-[999999] flex gap-2`}>
-            <motion.button
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-                transition={{ bounce: 'none', duration: '.3' }}
-                onClick={handleTogglePin}
-                className='w-fit p-3 flex gap-x-2 items-center rounded-full bg-gray-300 fill-gray-700 text-lg text-center'>
-                <div className='w-6'>
-                    {progress.pin ? (<PinSlash />) : (<PinIcon />)}
-                </div>
-            </motion.button>
-            <motion.button
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-                transition={{ bounce: 'none', duration: '.3' }}
-                onClick={handleEditProgress}
-                className='w-fit p-3 flex gap-x-2 items-center rounded-full bg-yellow-100 text-yellow-600 text-lg text-center'>
-                <div className='w-6'>
-                    <EditIcon />
-                </div>
-            </motion.button>
+            {!progress.status && (
+
+                <motion.button
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ bounce: 'none', duration: '.3' }}
+                    onClick={handleTogglePin}
+                    className='w-fit p-3 flex gap-x-2 items-center rounded-full bg-gray-300 fill-gray-700 text-lg text-center'>
+                    <div className='w-6'>
+                        {progress.pin ? (<PinSlash />) : (<PinIcon />)}
+                    </div>
+                </motion.button>
+            )}
+            {!progress.status && (
+                <motion.button
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ bounce: 'none', duration: '.3' }}
+                    onClick={handleEditProgress}
+                    className='w-fit p-3 flex gap-x-2 items-center rounded-full bg-yellow-100 text-yellow-600 text-lg text-center'>
+                    <div className='w-6'>
+                        <EditIcon />
+                    </div>
+                </motion.button>
+            )}
             <motion.button
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
