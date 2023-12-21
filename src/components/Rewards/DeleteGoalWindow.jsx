@@ -18,7 +18,7 @@ function DeleteGoalWindow({ goal, handleCancel, handleConfirm }) {
             <div
                 onClick={e => e.stopPropagation()}
                 className='p-5 w-[70vw] max-w-[420px] bg-slate-800 shadow-md shadow-black rounded-xl flex flex-col gap-4'>
-                <h1 className='text-xl text-white font-bold'>Delete "{goal.title}"?</h1>
+                <h1 className='text-xl text-white font-bold'>Delete "{goal.title}"? achieved prize will remove too!</h1>
                 <div className='grid grid-cols-2 gap-x-2'>
                     <button
                         onClick={handleConfirm}

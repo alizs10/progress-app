@@ -382,9 +382,10 @@ const useProgressesStore = create((set) => ({
         let goalId = payload;
 
         let goalsIns = [...state.goals]
+        let prizesIns = [...state.prizes]
         let filteredGoals = goalsIns.filter(goal => goal._id !== goalId)
-
-        return { goals: filteredGoals }
+        let filteredPrizes = prizesIns.filter(prize => prize.goal._id !== goalId)
+        return { goals: filteredGoals, prizes: filteredPrizes }
     }),
 
     prizes: [],

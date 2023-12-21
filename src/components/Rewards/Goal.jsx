@@ -49,6 +49,10 @@ function Goal({ goal }) {
         setIsExpanded(false)
     }
 
+    function toggleExpandGoal() {
+        setIsExpanded(prevState => !prevState)
+    }
+
     function onSwipedRight() {
         setOptionsVis(false)
     }
@@ -56,17 +60,19 @@ function Goal({ goal }) {
         setOptionsVis(true)
     }
 
-    function onTap({ event }) {
-        if (event.target !== getPrizeBtnRef.current) {
-            isExpanded ? shrinkGoal() : expandGoal()
+    function onTap(e) {
+        if (e.target !== getPrizeBtnRef.current) {
+            toggleExpandGoal()
         }
+        // isExpanded ? shrinkGoal() : expandGoal()
+        // expandGoal()
     }
 
     // swipeable
     const handlers = useSwipeable({
         onSwipedLeft,
         onSwipedRight,
-        onTap,
+
         ...configs,
     });
 
@@ -116,9 +122,11 @@ function Goal({ goal }) {
                         exit={{ x: '100%' }}
                         transition={{ bounce: 'none' }}
                         className="absolute inset-0 left-[70%] z-0 flex justify-end items-center gap-x-2">
-                        <button onClick={() => setEditGoalWindowVis(true)} className="rounded-full p-2 shadow-lg shadow-black bg-yellow-50 hover:bg-yellow-100 transition-all duration-300">
-                            <div className="w-6 h-6 text-yellow-600"><EditIcon /></div>
-                        </button>
+                        {!goal.status && (
+                            <button onClick={() => setEditGoalWindowVis(true)} className="rounded-full p-2 shadow-lg shadow-black bg-yellow-50 hover:bg-yellow-100 transition-all duration-300">
+                                <div className="w-6 h-6 text-yellow-600"><EditIcon /></div>
+                            </button>
+                        )}
                         <button onClick={() => setDeleteGoalWindowVis(true)} className="rounded-full p-2 shadow-lg shadow-black bg-red-50 hover:bg-red-100 transition-all duration-300">
                             <div className="w-6 h-6 text-red-600"><TrashIcon /></div>
                         </button>
@@ -129,7 +137,7 @@ function Goal({ goal }) {
                 animate={{ x: optionsVis ? '-30%' : '0' }}
                 transition={{ bounce: 'none' }}
                 {...handlers}
-
+                onClick={onTap}
                 className='p-3 z-20 rounded-3xl select-none shadow-sm shadow-black from-blue-950 via-violet-950 from-10% via-50% to-90% to-transparent bg-gradient-to-r flex flex-col'>
 
                 <div className="flex justify-between item-start my-2">

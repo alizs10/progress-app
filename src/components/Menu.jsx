@@ -40,15 +40,15 @@ function Menu({ handleOpenSettings, handleOpenAbout }) {
                 </li> */}
                 <li
                     onClick={() => showProgresses({ labelId: selectedLabel, pgType: 1 })}
-                    className={`col-span-1 justify-center items-center border-2 border-gray-700 text-xl rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex flex-col gap-x-3 hover:bg-gray-700 transition-all duration-300`}>
+                    className={`col-span-1 justify-center items-center border-2 border-gray-700 text-xs rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex flex-col gap-x-3 hover:bg-gray-700 transition-all duration-300`}>
                     <div className='w-10'>
                         <MoonIcon />
                     </div>
-                    <span>Lights off</span>
+                    <span className='line-clamp-1'>Lights off</span>
                 </li>
                 <li
                     onClick={handleOpenAbout}
-                    className='col-span-1 flex-col justify-center items-center text-xl rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex gap-x-3  hover:bg-gray-700 transition-all duration-300'>
+                    className='col-span-1 flex-col justify-center items-center text-xs rounded-xl gap-y-2 px-7 py-5 text-white cursor-pointer select-none flex gap-x-3  hover:bg-gray-700 transition-all duration-300'>
                     <div className='w-10'>
                         <InfoIcon />
                     </div>

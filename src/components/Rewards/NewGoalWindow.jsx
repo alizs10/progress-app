@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import XIcon from '../icons/XIcon'
 import CheckboxInput from '../ui/CheckboxInput'
 import useProgressesStore from '../../../store/progresses-store'
+import { useNotificationsStore } from '../../../store/notification-store'
 
 function NewGoalWindow({ handleClose, handleCreateNewGoal }) {
     const [errors, setErrors] = useState({})
@@ -22,6 +23,7 @@ function NewGoalWindow({ handleClose, handleCreateNewGoal }) {
     }
 
     const { data: progresses, addGoal } = useProgressesStore()
+    const { addNotification, removeNotification } = useNotificationsStore()
 
     function handleCreateNewGoal() {
         let newGoalObj = {
@@ -36,6 +38,16 @@ function NewGoalWindow({ handleClose, handleCreateNewGoal }) {
         newGoalObj.targets = selectedProgresses
 
         addGoal(newGoalObj)
+        let newNotify = {
+            _id: Date.now(),
+            index: 0,
+            message: "goal created successfully",
+            status: 0
+        }
+        addNotification(newNotify)
+        setTimeout(() => {
+            removeNotification(newNotify._id)
+        }, 3000)
         handleClose()
 
     }
