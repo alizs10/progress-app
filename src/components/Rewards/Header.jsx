@@ -22,9 +22,9 @@ function Header({ handleOpenNewGoalWindow }) {
                 </h1>
 
             </div>
-            <button className='px-2 py-1 text-white rounded-xl bg-emerald-600 flex gap-x-2'>
+            <button onClick={handleNewGoalBtn} className='px-2 py-1 text-white rounded-xl bg-emerald-600 flex gap-x-2'>
 
-                <div onClick={handleNewGoalBtn} className='w-6'><PlusIcon /></div>
+                <div className='w-6'><PlusIcon /></div>
 
             </button>
         </div>

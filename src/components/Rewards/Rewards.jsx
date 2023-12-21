@@ -25,7 +25,7 @@ function Rewards() {
             animate={{ x: '0' }}
             exit={{ x: '100%' }}
             transition={{ bounce: "none", duration: .2 }}
-            className='max-w-[600px] mx-auto fixed inset-0 bg-slate-900 z-[999999] overflow-y-scroll'>
+            className='max-w-[600px] mx-auto no-scrollbar fixed inset-0 bg-slate-900 z-[999999] overflow-y-scroll'>
             <Header handleOpenNewGoalWindow={handleOpenNewGoalWindow} />
             <Goals />
             <ReceivedPrizes />
