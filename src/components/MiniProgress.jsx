@@ -19,7 +19,7 @@ function MiniProgress({ progress, index }) {
 
     const { stepForward, stepBackward, setViewingProgress, setViewingProgressVis, progressInFocus, focusMode, setFocusMode, setProgressInFocus, labels, importanceValues, updatePossibleTarget } = useProgressesStore()
 
-    let reversedSteps = [...progress.steps].reverse()
+    let reversedSteps = [...progress.steps].sort((a, b) => a.number - b.number)
     let passedSteps = reversedSteps.filter(st => st.status)
     let pg = Math.floor((passedSteps.length / progress.steps.length) * 100);
     let lastStep = passedSteps[passedSteps.length - 1]
@@ -81,8 +81,8 @@ function MiniProgress({ progress, index }) {
                 )}
             </AnimatePresence>
             {progress.pin ? (
-                <div className='flex justify-between items-start'>
-                    <h1 className='font-bold text-xl line-clamp-2'>{progress.title}</h1>
+                <div className='flex items-start justify-between'>
+                    <h1 className='text-xl font-bold line-clamp-2'>{progress.title}</h1>
                     <div className='w-8 min-w-[2rem] bg-white aspect-square rounded-full flex justify-center items-center'>
                         <div className='w-5 fill-black'>
                             <PinIcon />
@@ -91,39 +91,39 @@ function MiniProgress({ progress, index }) {
                 </div>
             ) : (
                 <div className=''>
-                    <h1 className='font-bold text-2xl line-clamp-2'>{progress.title}</h1>
+                    <h1 className='text-2xl font-bold line-clamp-2'>{progress.title}</h1>
                 </div>
             )}
 
-            <div className='mt-auto w-full flex justify-between items-center pl-1'>
+            <div className='flex items-center justify-between w-full pl-1 mt-auto'>
 
                 <div className='flex flex-col gap-y-[2px] w-2/3'>
 
                     {lastStep && (
 
-                        <div className='flex gap-x-1 items-center'>
+                        <div className='flex items-center gap-x-1'>
                             <span className='w-4 text-emerald-700'>
                                 <CheckIcon />
                             </span>
                             <span className='text-[10px] line-clamp-1'>
-                                {lastStep?.title}
+                                {lastStep.title !== '' ? lastStep.title : `step ${lastStep.number}`}
                             </span>
                         </div>
 
                     )}
 
                     {nextStep && (
-                        <div className='flex gap-x-1 items-center'>
+                        <div className='flex items-center gap-x-1'>
                             <span className='w-4 text-red-600'>
                                 <ArrowUturnRightIcon />
                             </span>
                             <span className='text-[10px] line-clamp-1'>
-                                {nextStep?.title}
+                                {nextStep.title !== '' ? nextStep.title : `step ${nextStep.number}`}
                             </span>
                         </div>
                     )}
 
-                    <div className='flex gap-x-1 items-center'>
+                    <div className='flex items-center gap-x-1'>
                         <span className='w-[14px] clock'>
                             <ClockIcon />
                         </span>
@@ -139,12 +139,12 @@ function MiniProgress({ progress, index }) {
 
                 </div>
 
-                <div className='w-1/3 mt-auto flex flex-col gap-0'>
+                <div className='flex flex-col w-1/3 gap-0 mt-auto'>
                     <div className='w-full text-xs'>
                         <CircleProgressBar themeIndex={progress.theme} percentage={pg} />
                     </div>
                     {passedSteps.length === progress.steps.length ? (
-                        <span className='text-xs mx-auto'>done</span>
+                        <span className='mx-auto text-xs'>done</span>
                     ) : (
                         <span className='text-[10px] mx-auto'>{passedSteps.length}/{progress.steps.length}</span>
                     )}

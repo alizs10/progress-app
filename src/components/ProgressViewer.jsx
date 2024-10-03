@@ -22,7 +22,7 @@ function ProgressViewer() {
 
     const { viewingProgress, setViewingProgressVis, labels, importanceValues } = useProgressesStore()
 
-    let reversedSteps = [...viewingProgress.steps].reverse()
+    let reversedSteps = [...viewingProgress.steps].sort((a, b) => a.number - b.number)
     let passedSteps = reversedSteps.filter(st => st.status)
     let pg = Math.floor((passedSteps.length / viewingProgress.steps.length) * 100);
     let lastStep = passedSteps[passedSteps.length - 1]
@@ -48,15 +48,15 @@ function ProgressViewer() {
                         <h1 className='text-3xl font-bold leading-relaxed text-white'>{viewingProgress.title}</h1>
                     </div>
 
-                    <div className='mt-2 grid grid-cols-2 gap-4'>
+                    <div className='grid grid-cols-2 gap-4 mt-2'>
 
                         <div className={`col-span-1 rounded-3xl p-5 border-2 pg-imp-border-${progressImportance._id} relative`}>
-                            <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base'>Importance</label>
+                            <label className='absolute top-0 px-3 text-base -translate-x-1/2 -translate-y-1/2 left-1/2 bg-slate-900'>Importance</label>
                             <div className={`px-3 py-2 text-center text-sm font-bold text-white pg-imp-${progressImportance._id} rounded-3xl`}>{progressImportance.name}</div>
                         </div>
-                        <div className='col-span-1 rounded-3xl p-5 border-2 border-gray-300 relative'>
-                            <label className='absolute top-0 left-1/2 -translate-x-1/2 px-3 -translate-y-1/2 bg-slate-900 text-base text-gray-300'>Label</label>
-                            <div className='px-3 py-2 text-center text-sm font-bold text-black bg-gray-300 rounded-3xl'>{progressLabel.name}</div>
+                        <div className='relative col-span-1 p-5 border-2 border-gray-300 rounded-3xl'>
+                            <label className='absolute top-0 px-3 text-base text-gray-300 -translate-x-1/2 -translate-y-1/2 left-1/2 bg-slate-900'>Label</label>
+                            <div className='px-3 py-2 text-sm font-bold text-center text-black bg-gray-300 rounded-3xl'>{progressLabel.name}</div>
                         </div>
                     </div>
 
@@ -76,25 +76,25 @@ function ProgressViewer() {
                     </div>
 
 
-                    <div className='flex justify-between items-start bg-slate-800 rounded-3xl p-2  pl-4'>
-                        <div className='self-center flex flex-col gap-y-2 text-white'>
+                    <div className='flex items-start justify-between p-2 pl-4 bg-slate-800 rounded-3xl'>
+                        <div className='flex flex-col self-center text-white gap-y-2'>
 
                             {lastStep && (
-                                <div className='flex gap-x-2 items-center text-emerald-600'>
+                                <div className='flex items-center gap-x-2 text-emerald-600'>
                                     <span className='w-6 '>
                                         <CheckIcon />
                                     </span>
                                     <span className='text-lg line-clamp-1'>
-                                        {lastStep.title}
+                                        {lastStep.title !== '' ? lastStep.title : `step ${lastStep.number}`}
                                     </span>
                                 </div>)}
                             {nextStep && (
-                                <div className='flex gap-x-2 items-center text-red-600'>
+                                <div className='flex items-center text-red-600 gap-x-2'>
                                     <span className='w-6'>
                                         <ArrowUturnRightIcon />
                                     </span>
                                     <span className='text-lg line-clamp-1'>
-                                        {nextStep.title}
+                                        {nextStep.title !== '' ? nextStep.title : `step ${nextStep.number}`}
                                     </span>
                                 </div>
                             )}
@@ -106,21 +106,21 @@ function ProgressViewer() {
                     </div>
 
 
-                    <div className='flex flex-col gap-y-2 pb-10'>
+                    <div className='flex flex-col pb-10 gap-y-2'>
                         <h1 className='text-2xl text-white'>Steps <span className={`text-lg font-bold pg-viewer-text-theme-${viewingProgress.theme}`}>{reversedSteps.length}</span></h1>
 
-                        <div className='mt-4 flex flex-col'>
+                        <div className='flex flex-col mt-4'>
 
                             {reversedSteps.map((st, index) => {
                                 return (
                                     <div key={st._id}>
-                                        <div className='flex flex-nowrap gap-x-4 items-center'>
+                                        <div className='flex items-center flex-nowrap gap-x-4'>
                                             <div className={`w-5 h-5 relative aspect-square rounded-full bg-transparent outline outline-4 pg-viewer-outline-theme-${viewingProgress.theme}`}>
                                                 {st.status && (<div className={`absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2 w-3 pg-viewer-text-theme-${viewingProgress.theme}`}>
                                                     <CheckIcon />
                                                 </div>)}
                                             </div>
-                                            <p className='text-white text-base line-clamp-1'>{st.title}</p>
+                                            <p className='text-base text-white line-clamp-1'>{st.title !== '' ? st.title : `step ${st.number}`}</p>
                                         </div>
                                         {index !== (reversedSteps.length - 1) && (
                                             <div className={`w-1 h-10 ml-[0.5rem] pg-viewer-bg-theme-${viewingProgress.theme}`}></div>
@@ -146,7 +146,7 @@ function ProgressViewer() {
                     transition={{ bounce: 'none', duration: '.3' }}
                     onClick={handleCloseViewer}
                     className='fixed z-[99999] shadow-md shadow-black pointer-events-auto bottom-10 right-8 w-14 flex justify-center items-center aspect-square rotate-45 rounded-md bg-gray-700'>
-                    <span className='w-6 -rotate-45 text-white'>
+                    <span className='w-6 text-white -rotate-45'>
                         <ArrowUturnLeftIcon />
                     </span>
                 </motion.button>

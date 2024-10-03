@@ -105,6 +105,7 @@ function ProgressEditor() {
         let newSt = {
             _id: new Date().getTime(),
             title: '',
+            number: stepsCount + 1,
             status: false
         }
 
@@ -142,7 +143,7 @@ function ProgressEditor() {
 
         if (!wantsDefineSteps && editingProgress.steps.length !== stepsCount) {
             while (updatedProgress.steps.length < stepsCount) {
-                updatedProgress.steps.push({ _id: updatedProgress._id + updatedProgress.steps.length + 1, title: 'step ' + parseInt(stepsCount - updatedProgress.steps.length), status: false })
+                updatedProgress.steps.push({ _id: updatedProgress._id + updatedProgress.steps.length + 1, title: '', number: parseInt(stepsCount - updatedProgress.steps.length), status: false })
             }
         } else {
             updatedProgress.steps = steps
@@ -200,14 +201,14 @@ function ProgressEditor() {
             )}
 
 
-            <div className='flex justify-between items-center'>
-                <div className='flex gap-x-4 items-center'>
+            <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-x-4'>
                     <button
                         onClick={handleCloseEditor}
                         className='px-3 py-1 text-sm text-white bg-gray-700 rounded-full'>back</button>
-                    <h1 className='text-xl text-white font-bold'>Editor</h1>
+                    <h1 className='text-xl font-bold text-white'>Editor</h1>
                 </div>
-                <div className='flex gap-x-2 items-center'>
+                <div className='flex items-center gap-x-2'>
 
                     <button
                         onClick={handleDeleteBtn}
@@ -216,74 +217,74 @@ function ProgressEditor() {
                     </button>
                     <button
                         onClick={handleSaveProgress}
-                        className='px-3 py-1 text-sm text-white font-bold bg-emerald-600 rounded-full'>save</button>
+                        className='px-3 py-1 text-sm font-bold text-white rounded-full bg-emerald-600'>save</button>
                 </div>
             </div>
 
-            <div className='mt-8 flex flex-col gap-y-2'>
-                <div className='col-span-2 flex flex-col gap-y-1'>
+            <div className='flex flex-col mt-8 gap-y-2'>
+                <div className='flex flex-col col-span-2 gap-y-1'>
                     <input ref={titleRef} defaultValue={editingProgress.title} type="text" className={`text-input ${errors?.title && 'outline outline-2 outline-red-600'}`} placeholder='Progress title' />
                     {errors?.title && (<span className='text-xs text-red-600'>{errors.title}</span>)}
                 </div>
 
-                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                <div className='flex items-center justify-between col-span-2 mt-2'>
                     <label className='text-sm text-white'>Deadline</label>
                     <CheckBox handleToggle={toggleHasDeadline} value={hasDeadline} />
                 </div>
                 {hasDeadline && (
-                    <div className='mt-2 flex flex-col gap-y-1'>
+                    <div className='flex flex-col mt-2 gap-y-1'>
                         <input ref={deadlineRef} type="date" className={`text-input ${errors?.deadline && 'outline outline-2 outline-red-600'}`} min={tomorrow} defaultValue={tomorrow} />
                         {errors?.deadline && (<span className='text-xs text-red-600'>{errors.deadline}</span>)}
                     </div>
                 )}
-                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                <div className='flex items-center justify-between col-span-2 mt-2'>
                     <label className='text-sm text-white'>Label</label>
                     <div className='w-1/2'>
                         <Dropdown options={labelsOptions} value={progressLabel} handleChange={handleChangeLabel} />
                     </div>
                 </div>
-                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                <div className='flex items-center justify-between col-span-2 mt-2'>
                     <label className='text-sm text-white'>Importance</label>
                     <div className='w-1/2'>
                         <Dropdown options={importanceOptions} value={progressImportance} handleChange={handleChangeImportance} />
                     </div>
                 </div>
-                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                <div className='flex items-center justify-between col-span-2 mt-2'>
                     <label className='text-sm text-white'>Theme</label>
                     <div
                         onClick={handleOpenThemeSelector}
                         className={`w-8 aspect-square border-2 border-gray-500 pg-bar-theme-${progressTheme} rounded-full`}></div>
                 </div>
 
-                <div className='mt-2 col-span-2 flex items-center justify-between'>
+                <div className='flex items-center justify-between col-span-2 mt-2'>
                     <label className='text-sm text-white'>Define Steps</label>
                     <CheckBox handleToggle={toggleWantsDefineSteps} value={wantsDefineSteps} />
                 </div>
 
                 {wantsDefineSteps ? (
 
-                    <div className='mt-4 flex flex-col gap-y-2'>
+                    <div className='flex flex-col mt-4 gap-y-2'>
 
-                        <div className='flex justify-between items-center'>
-                            <h2 className='text-base text-white font-bold'>Steps <span className='text-xs text-red-600'>{steps.length}</span></h2>
+                        <div className='flex items-center justify-between'>
+                            <h2 className='text-base font-bold text-white'>Steps <span className='text-xs text-red-600'>{steps.length}</span></h2>
                             <button
                                 onClick={addStep}
-                                className='px-3 py-1 text-sm text-white font-bold bg-emerald-600 rounded-full'>add</button>
+                                className='px-3 py-1 text-sm font-bold text-white rounded-full bg-emerald-600'>add</button>
                         </div>
 
 
                         <div className='flex flex-col gap-y-1'>
-                            <div className='col-span-2 flex flex-col gap-y-2'>
+                            <div className='flex flex-col col-span-2 gap-y-2'>
                                 {steps.map(st => (
                                     <div key={st._id} className='grid grid-cols-6 gap-x-2'>
                                         <input
                                             onChange={e => handleUpdateStep(st._id, e.target.value)}
                                             value={st.title}
                                             type="text" className={`col-span-5 text-input ${errors?.title && 'outline outline-2 outline-red-600'}`} placeholder='step title' />
-                                        <div className='col-span-1 flex justify-end mt-auto'>
+                                        <div className='flex justify-end col-span-1 mt-auto'>
                                             <button
                                                 onClick={() => removeStep(st._id)}
-                                                className='w-fit p-1 h-fit text-red-600 font-bold bg-red-100 rounded-full'>
+                                                className='p-1 font-bold text-red-600 bg-red-100 rounded-full w-fit h-fit'>
                                                 <div className='w-5'>
                                                     <XIcon />
                                                 </div>
@@ -296,7 +297,7 @@ function ProgressEditor() {
                         </div>
                     </div>
                 ) : (
-                    <div className='mt-2 flex flex-col gap-y-1'>
+                    <div className='flex flex-col mt-2 gap-y-1'>
                         <label className='text-sm text-white'>Steps</label>
                         <input type="number" value={stepsCount} onChange={e => setStepsCount(e.target.value)} className={`text-input ${errors?.steps && 'outline outline-2 outline-red-600'}`} placeholder='10' min={1} max={100} />
                         {errors?.steps && (<span className='text-xs text-red-600'>{errors.steps}</span>)}

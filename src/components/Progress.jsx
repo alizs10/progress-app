@@ -39,11 +39,16 @@ function Progress({ progress, index }) {
         setViewingProgressVis(true)
     }
 
-    let reversedSteps = [...progress.steps].reverse()
-    let passedSteps = reversedSteps.filter(st => st.status)
+    let stepsOrderByNumber = [...progress.steps].sort((a, b) => a.number - b.number)
+
+    // let stepsOrderByNumber = [...progress.steps].reverse()
+    let passedSteps = stepsOrderByNumber.filter(st => st.status)
+
+    console.log(passedSteps)
+
     let pg = Math.floor((passedSteps.length / progress.steps.length) * 100);
     let lastStep = passedSteps[passedSteps.length - 1]
-    let nextStep = reversedSteps[passedSteps.length]
+    let nextStep = stepsOrderByNumber[passedSteps.length]
 
     let progressLabel = labels.filter(lb => lb._id === progress.label)[0]
     let progressImportance = importanceValues.filter(imp => imp._id === progress.importance)[0]
@@ -84,18 +89,18 @@ function Progress({ progress, index }) {
                 <div style={{ width: `${pg}%` }} className={`transition-all duration-300 absolute inset-0 z-10 right-auto h-32 pg-bar-theme-${progress.theme} rounded-3xl`}></div>
 
 
-                <div className='absolute inset-0 z-20 p-3 flex flex-col gap-y-1 h-32'>
-                    <div className='flex justify-between items-start'>
+                <div className='absolute inset-0 z-20 flex flex-col h-32 p-3 gap-y-1'>
+                    <div className='flex items-start justify-between'>
                         <div className='flex flex-col gap-y-3'>
-                            <div className='flex gap-x-2 items-center'>
+                            <div className='flex items-center gap-x-2'>
                                 {progress.pin && (
-                                    <div className='w-8 p-1 bg-white aspect-square rounded-full flex justify-center items-center'>
+                                    <div className='flex items-center justify-center w-8 p-1 bg-white rounded-full aspect-square'>
                                         <div className='w-5 fill-black'>
                                             <PinIcon />
                                         </div>
                                     </div>
                                 )}
-                                <span className='font-bold text-2xl  line-clamp-1'>{progress.title}</span>
+                                <span className='text-2xl font-bold line-clamp-1'>{progress.title}</span>
                             </div>
                             <div className='flex flex-col gap-y-1'>
 
@@ -103,12 +108,12 @@ function Progress({ progress, index }) {
 
                                     {lastStep && (
 
-                                        <div className='flex gap-x-1 items-center'>
+                                        <div className='flex items-center gap-x-1'>
                                             <span className='w-[14px] text-emerald-700'>
                                                 <CheckIcon />
                                             </span>
                                             <span className='text-[10px]'>
-                                                {lastStep?.title}
+                                                {lastStep.title !== '' ? lastStep.title : `step ${lastStep.number}`}
                                             </span>
                                         </div>
 
@@ -117,17 +122,17 @@ function Progress({ progress, index }) {
                                         <span className='text-[10px]'>|</span>
                                     )}
                                     {nextStep && (
-                                        <div className='flex gap-x-1 items-center'>
+                                        <div className='flex items-center gap-x-1'>
                                             <span className='w-[14px] text-red-600'>
                                                 <ArrowUturnRightIcon />
                                             </span>
                                             <span className='text-[10px]'>
-                                                {nextStep?.title}
+                                                {nextStep.title !== '' ? nextStep.title : `step ${nextStep.number}`}
                                             </span>
                                         </div>
                                     )}
                                 </div>
-                                <div className='flex gap-x-1 items-center'>
+                                <div className='flex items-center gap-x-1'>
                                     <span className='w-[14px] clock'>
                                         <ClockIcon />
                                     </span>
@@ -139,13 +144,13 @@ function Progress({ progress, index }) {
 
                         </div>
                         <div className='flex flex-col gap-y-1'>
-                            <span className='font-bold text-5xl'>{pg}<span className='ml-1 text-[14px]'>%</span></span>
+                            <span className='text-5xl font-bold'>{pg}<span className='ml-1 text-[14px]'>%</span></span>
                             {passedSteps.length === progress.steps.length ? (
-                                <span className='text-xs ml-auto'>completed</span>
+                                <span className='ml-auto text-xs'>completed</span>
                             ) : (
-                                <span className='text-xs ml-auto'>{passedSteps.length}/{progress.steps.length}<span className='ml-1 text-[10px]'>steps</span></span>
+                                <span className='ml-auto text-xs'>{passedSteps.length}/{progress.steps.length}<span className='ml-1 text-[10px]'>steps</span></span>
                             )}
-                            <div className='ml-auto flex flex-nowrap gap-x-1'>
+                            <div className='flex ml-auto flex-nowrap gap-x-1'>
                                 <ProgressImportance importance={progressImportance} />
                                 <div className={`py-[1px] px-2 rounded-3xl bg-gray-500 text-[10px] text-white`}>{progressLabel.name}</div>
                             </div>
@@ -153,8 +158,8 @@ function Progress({ progress, index }) {
 
                     </div>
 
-                    <div className='flex flex-nowrap gap-x-1 mt-auto'>
-                        {reversedSteps.map(st => <div key={st._id} style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
+                    <div className='flex mt-auto flex-nowrap gap-x-1'>
+                        {stepsOrderByNumber.map(st => <div key={st._id} style={{ width: `${100 / progress.steps.length}%` }} className={`h-[2px] rounded-full ${st.status ? 'bg-black' : 'bg-gray-500'}`}></div>)}
                     </div>
 
 

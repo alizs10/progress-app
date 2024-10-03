@@ -7,44 +7,101 @@ const useProgressesStore = create((set) => ({
     toggleViewMode: payload => set((state) => ({ viewMode: state.viewMode === 1 ? 0 : 1 })),
 
     // 0 => undone, 1 => all, 2 => done
-    showProgressesType: 1,
+    showProgressesType: 0,
+
+    // data: [
+    //     {
+    //         _id: 1,
+    //         title: "Read Sofia's world book",
+    //         pin: true,
+    //         deadline: '2023-10-30',
+    //         theme: 4,
+    //         importance: 3,
+    //         label: 1,
+    //         steps: [
+    //             {
+    //                 _id: 12,
+    //                 title: 'forth step',
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 123,
+    //                 title: 'third step',
+    //                 status: true
+    //             },
+    //             {
+    //                 _id: 1234,
+    //                 title: 'second step',
+    //                 status: true
+    //             },
+    //             {
+    //                 _id: 1235,
+    //                 title: 'first step',
+    //                 status: true
+    //             },
+    //         ],
+    //         status: false
+    //     },
+    //     {
+    //         _id: 2,
+    //         title: "Workout",
+    //         pin: false,
+    //         deadline: '2023-12-30',
+    //         theme: 2,
+    //         importance: 1,
+    //         label: 1,
+    //         steps: [
+    //             {
+    //                 _id: 12,
+    //                 title: '',
+    //                 number: 1,
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 123,
+    //                 title: '',
+    //                 number: 2,
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 1234,
+    //                 title: '',
+    //                 number: 3,
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 1235,
+    //                 title: '',
+    //                 number: 4,
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 12354,
+    //                 title: '',
+    //                 number: 5,
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 12355,
+    //                 title: '',
+    //                 number: 6,
+    //                 status: false
+    //             },
+    //             {
+    //                 _id: 123562324234,
+    //                 title: '',
+    //                 number: 7,
+    //                 status: false
+    //             },
+    //         ],
+    //         status: false
+    //     },
+    // ],
 
     data: [
         {
-            _id: 1,
-            title: "Read Sofia's world book",
-            pin: true,
-            deadline: '2023-10-30',
-            theme: 4,
-            importance: 3,
-            label: 1,
-            steps: [
-                {
-                    _id: 12,
-                    title: 'forth step',
-                    status: false
-                },
-                {
-                    _id: 123,
-                    title: 'third step',
-                    status: true
-                },
-                {
-                    _id: 1234,
-                    title: 'second step',
-                    status: true
-                },
-                {
-                    _id: 1235,
-                    title: 'first step',
-                    status: true
-                },
-            ],
-            status: false
-        },
-        {
             _id: 2,
-            title: "Be Healthy",
+            title: "Workout",
             pin: false,
             deadline: '2023-12-30',
             theme: 2,
@@ -53,29 +110,50 @@ const useProgressesStore = create((set) => ({
             steps: [
                 {
                     _id: 12,
-                    title: 'forth step',
+                    title: '',
+                    number: 1,
                     status: false
                 },
                 {
                     _id: 123,
-                    title: 'third step',
+                    title: '',
+                    number: 2,
                     status: false
                 },
                 {
                     _id: 1234,
-                    title: 'second step',
+                    title: '',
+                    number: 3,
                     status: false
                 },
                 {
                     _id: 1235,
-                    title: 'first step',
-                    status: true
+                    title: '',
+                    number: 4,
+                    status: false
+                },
+                {
+                    _id: 12354,
+                    title: '',
+                    number: 5,
+                    status: false
+                },
+                {
+                    _id: 12355,
+                    title: '',
+                    number: 6,
+                    status: false
+                },
+                {
+                    _id: 123562324234,
+                    title: '',
+                    number: 7,
+                    status: false
                 },
             ],
             status: false
-        },
+        }
     ],
-
     progresses: [],
 
     addProgress: payload => set((state) => ({ data: [payload, ...state.data] })),
@@ -138,7 +216,8 @@ const useProgressesStore = create((set) => ({
         let progressesIns = [...state.progresses];
         let pgIndex = progressesIns.findIndex(pg => pg._id === pgId)
         let updatableProgress = progressesIns[pgIndex]
-        let steps = [...progressesIns[pgIndex].steps].reverse()
+
+        let steps = [...updatableProgress.steps].sort((a, b) => a.number - b.number)
         let passedSteps = steps.filter(st => st.status)
         let nextStep = steps[passedSteps.length]
         let nextStepIndex = steps.findIndex(st => st._id === nextStep._id)
@@ -169,7 +248,7 @@ const useProgressesStore = create((set) => ({
         let progressesIns = [...state.progresses];
         let pgIndex = progressesIns.findIndex(pg => pg._id === pgId)
         let updatableProgress = progressesIns[pgIndex]
-        let steps = [...progressesIns[pgIndex].steps].reverse()
+        let steps = [...updatableProgress.steps].sort((a, b) => a.number - b.number)
         let passedSteps = steps.filter(st => st.status)
         let lastPassedStep = passedSteps[passedSteps.length - 1]
         let lastPassedStepIndex = steps.findIndex(st => st._id === lastPassedStep._id)

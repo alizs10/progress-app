@@ -72,7 +72,7 @@ function NewProgressWindow({ handleClose }) {
         }
 
         while (newPg.steps.length < stepsRef.current.value) {
-            newPg.steps.push({ _id: newPg._id + newPg.steps.length + 1, title: 'step ' + parseInt(stepsRef.current.value - newPg.steps.length), status: false })
+            newPg.steps.push({ _id: newPg._id + newPg.steps.length + 1, title: '', number: parseInt(stepsRef.current.value - newPg.steps.length), status: false })
         }
 
         let { hasError, errors: validationErrors } = zValidate(progressSchema, newPg)
@@ -135,9 +135,9 @@ function NewProgressWindow({ handleClose }) {
                 transition={{ bounce: 'none', duration: '.3' }}
                 onClick={e => e.stopPropagation()}
                 className='flex flex-col gap-y-4 rounded-xl overflow-hidden shadow-md shadow-black w-[80vw] bg-slate-800 max-w-[480px]'>
-                <div className='p-5 pb-0 flex justify-between items-center'>
-                    <h1 className='text-white text-xl font-bold'>New Progress</h1>
-                    <div className='w-fit cursor-pointer bg-red-600 rounded-full p-1'>
+                <div className='flex items-center justify-between p-5 pb-0'>
+                    <h1 className='text-xl font-bold text-white'>New Progress</h1>
+                    <div className='p-1 bg-red-600 rounded-full cursor-pointer w-fit'>
                         <div
                             onClick={handleClose}
                             className='w-5 text-white'>
@@ -146,41 +146,41 @@ function NewProgressWindow({ handleClose }) {
                     </div>
                 </div>
 
-                <div className='p-5 grid grid-cols-2 gap-y-2'>
-                    <div className='col-span-2 flex flex-col gap-y-1'>
+                <div className='grid grid-cols-2 p-5 gap-y-2'>
+                    <div className='flex flex-col col-span-2 gap-y-1'>
                         <label className='text-sm text-white'>Title</label>
                         <input ref={titleRef} type="text" className={`text-input ${errors?.title && 'outline outline-2 outline-red-600'}`} placeholder='Progress title' />
                         {errors?.title && (<span className='text-xs text-red-600'>{errors.title}</span>)}
                     </div>
-                    <div className='col-span-2 flex flex-col gap-y-1'>
+                    <div className='flex flex-col col-span-2 gap-y-1'>
                         <label className='text-sm text-white'>Steps</label>
                         <input ref={stepsRef} type="number" className={`text-input ${errors?.steps && 'outline outline-2 outline-red-600'}`} placeholder='10' defaultValue={1} min={1} max={100} />
                         {errors?.steps && (<span className='text-xs text-red-600'>{errors.steps}</span>)}
                     </div>
-                    <div className='mt-2 col-span-2 flex items-center justify-between'>
+                    <div className='flex items-center justify-between col-span-2 mt-2'>
                         <label className='text-sm text-white'>Label</label>
                         <div className='w-1/2'>
                             <Dropdown options={labelsOptions} value={progressLabel} handleChange={handleChangeLabel} />
                         </div>
                     </div>
-                    <div className='mt-2 col-span-2 flex items-center justify-between'>
+                    <div className='flex items-center justify-between col-span-2 mt-2'>
                         <label className='text-sm text-white'>Importance</label>
                         <div className='w-1/2'>
                             <Dropdown options={importanceOptions} value={progressImportance} handleChange={handleChangeImportance} />
                         </div>
                     </div>
-                    <div className='mt-2 col-span-2 flex items-center justify-between'>
+                    <div className='flex items-center justify-between col-span-2 mt-2'>
                         <label className='text-sm text-white'>Deadline</label>
                         <CheckBox handleToggle={toggleHasDeadline} value={hasDeadline} />
                     </div>
                     {hasDeadline && (
-                        <div className='col-span-2 flex flex-col gap-y-1'>
+                        <div className='flex flex-col col-span-2 gap-y-1'>
                             <label className='text-sm text-white'>Deadline</label>
                             <input ref={deadlineRef} type="date" className={`text-input ${errors?.deadline && 'outline outline-2 outline-red-600'}`} min={tomorrow} defaultValue={tomorrow} />
                             {errors?.deadline && (<span className='text-xs text-red-600'>{errors.deadline}</span>)}
                         </div>
                     )}
-                    <div className='mt-2 col-span-2 flex items-center justify-between'>
+                    <div className='flex items-center justify-between col-span-2 mt-2'>
                         <label className='text-sm text-white'>Theme</label>
                         <div
                             onClick={handleOpenThemeSelector}
@@ -188,8 +188,8 @@ function NewProgressWindow({ handleClose }) {
                     </div>
 
 
-                    <div className='col-span-2 text-white text-xs flex items-center'>
-                        <span className='w-5 text-gray-200 mr-2'>
+                    <div className='flex items-center col-span-2 text-xs text-white'>
+                        <span className='w-5 mr-2 text-gray-200'>
                             <InfoIcon />
                         </span>
                         <span>define steps later in progress editor if you want.</span>
@@ -200,7 +200,7 @@ function NewProgressWindow({ handleClose }) {
 
                 <button
                     onClick={handleCreateNewProgress}
-                    className='mt-auto bg-emerald-600 text-white text-lg py-2'>
+                    className='py-2 mt-auto text-lg text-white bg-emerald-600'>
                     Create
                 </button>
 
