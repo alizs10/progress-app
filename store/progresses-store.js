@@ -99,60 +99,60 @@ const useProgressesStore = create((set) => ({
     // ],
 
     data: [
-        {
-            _id: 2,
-            title: "Workout",
-            pin: false,
-            deadline: '2023-12-30',
-            theme: 2,
-            importance: 1,
-            label: 1,
-            steps: [
-                {
-                    _id: 12,
-                    title: '',
-                    number: 1,
-                    status: false
-                },
-                {
-                    _id: 123,
-                    title: '',
-                    number: 2,
-                    status: false
-                },
-                {
-                    _id: 1234,
-                    title: '',
-                    number: 3,
-                    status: false
-                },
-                {
-                    _id: 1235,
-                    title: '',
-                    number: 4,
-                    status: false
-                },
-                {
-                    _id: 12354,
-                    title: '',
-                    number: 5,
-                    status: false
-                },
-                {
-                    _id: 12355,
-                    title: '',
-                    number: 6,
-                    status: false
-                },
-                {
-                    _id: 123562324234,
-                    title: '',
-                    number: 7,
-                    status: false
-                },
-            ],
-            status: false
-        }
+        // {
+        //     _id: 2,
+        //     title: "Workout",
+        //     pin: false,
+        //     deadline: '2023-12-30',
+        //     theme: 2,
+        //     importance: 1,
+        //     label: 1,
+        //     steps: [
+        //         {
+        //             _id: 12,
+        //             title: '',
+        //             number: 1,
+        //             status: false
+        //         },
+        //         {
+        //             _id: 123,
+        //             title: '',
+        //             number: 2,
+        //             status: false
+        //         },
+        //         {
+        //             _id: 1234,
+        //             title: '',
+        //             number: 3,
+        //             status: false
+        //         },
+        //         {
+        //             _id: 1235,
+        //             title: '',
+        //             number: 4,
+        //             status: false
+        //         },
+        //         {
+        //             _id: 12354,
+        //             title: '',
+        //             number: 5,
+        //             status: false
+        //         },
+        //         {
+        //             _id: 12355,
+        //             title: '',
+        //             number: 6,
+        //             status: false
+        //         },
+        //         {
+        //             _id: 123562324234,
+        //             title: '',
+        //             number: 7,
+        //             status: false
+        //         },
+        //     ],
+        //     status: false
+        // }
     ],
     progresses: [],
 
