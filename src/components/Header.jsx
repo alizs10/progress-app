@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import RewardIcon from './icons/RewardIcon'
 import useAppStore from '../../store/app-store'
-import BarsIcon from './icons/BarsIcon'
-import UserProfileIcon from './icons/UserProfileIcon'
 import { AnimatePresence } from 'framer-motion'
 import Menu from './Menu'
 import Settings from './Settings'
 import About from './About'
 import ProfilePopup from './ProfilePopup'
+import { Crosshair, MenuIcon, User } from 'lucide-react'
 
 function Header() {
 
@@ -31,23 +29,24 @@ function Header() {
 
 
     return (
-        <div className='h-12 relative flex justify-between items-center p-3 m-3 bg-slate-800 rounded-xl shadow-sm shadow-black'>
-            <div className="flex gap-x-1 items-center">
-                <button onClick={toggleMenu} className="flex justify-center items-center p-[5px] text-white rounded-full transition-all duration-300 hover:bg-gray-600">
-                    <div className="w-5 h-5">
-                        <BarsIcon />
-                    </div>
+        <div className='relative grid items-center h-12 grid-cols-5 m-3 overflow-hidden rounded-full bg-slate-800'>
+            <div className="flex items-center h-full col-span-4 gap-x-1">
+                <button onClick={toggleMenu} className="flex items-center justify-center px-5 py-3 text-white transition-all duration-300 rounded-full hover:bg-gray-600">
+                    <MenuIcon className={"size-5"} />
                 </button>
-                <h1 className='text-xl font-bold text-white'>Progresses</h1>
+
+                <input
+                    type="text"
+                    placeholder="Search progresses"
+                    className="w-full h-full text-white placeholder-gray-400 bg-transparent focus:outline-none"
+                />
             </div>
-            <div className="flex gap-x-2 items-center">
-                <button onClick={openRewards} className='fill-yellow-400'>
-                    <RewardIcon />
+            <div className="flex items-center justify-end col-span-1 px-5 py-3 gap-x-2">
+                <button onClick={openRewards} className='text-yellow-400'>
+                    <Crosshair className='size-5' />
                 </button>
-                <button onClick={() => setProfilePopupVis(true)} className='flex justify-center items-center text-white'>
-                    <span className='w-7'>
-                        <UserProfileIcon />
-                    </span>
+                <button onClick={() => setProfilePopupVis(true)} className='flex items-center justify-center text-white'>
+                    <User className='size-5' />
                 </button>
             </div>
             <AnimatePresence>
@@ -70,9 +69,6 @@ function Header() {
                     </div>
                 )}
             </AnimatePresence>
-
-
-
 
             <AnimatePresence>
                 {settingsVis && (

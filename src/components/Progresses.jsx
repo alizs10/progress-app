@@ -11,6 +11,8 @@ import ProgressViewer from './ProgressViewer'
 import LabelsBar from './LabelsBar'
 import NewLabelWindow from './NewLabelWindow'
 import { AnimatePresence } from 'framer-motion'
+import { Dot, Grid, LayoutGrid, StretchHorizontal } from 'lucide-react'
+import Labels from './lables/Labels'
 
 function Progresses() {
 
@@ -50,89 +52,108 @@ function Progresses() {
     const [newLabelWindowVis, setNewLabelWindowVis] = useState(false)
 
     return (
-        <div className='p-3 pt-0'>
+        <div className='mx-3 mt-6'>
 
-            <LabelsBar setNewLabelWindowVis={setNewLabelWindowVis} />
-            <AnimatePresence>
-                {newLabelWindowVis && (<NewLabelWindow handleClose={() => setNewLabelWindowVis(false)} />)}
-            </AnimatePresence>
+            <Labels
+                newLabelWindowVis={newLabelWindowVis}
+                setNewLabelWindowVis={setNewLabelWindowVis}
+            />
 
-            <AnimatePresence>
-                {editingProgressVis && (
-                    <ProgressEditor />
-                )}
-            </AnimatePresence>
-            <AnimatePresence>
-                {viewingProgressVis && (
-                    <ProgressViewer />
-                )}
-            </AnimatePresence>
+            {progresses.length === 0 ? (
+                <div className='flex items-center justify-center p-10 text-xl text-gray-500'>
+                    Add your first progress
+                </div>
+            ) : (
+                <>
+
+                    <AnimatePresence>
+                        {editingProgressVis && (
+                            <ProgressEditor />
+                        )}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {viewingProgressVis && (
+                            <ProgressViewer />
+                        )}
+                    </AnimatePresence>
 
 
 
-            <div className='mx-3 flex justify-between items-start'>
-                <span className='text-gray-300 text-sm'>{progressesTypeStr} <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>
-                <button onClick={toggleViewMode} className='text-gray-500 text-xs fill-white flex justify-center items-center'>
-                    {viewMode === 0 ? (
-                        <GridIcons />
-                    ) : (
-                        <RowsIcon />
-                    )}
-                </button>
-            </div>
-            <AnimatePresence>
-                {focusMode && (<FocusMode />)}
-            </AnimatePresence>
-            <AnimatePresence>
-                {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
-            </AnimatePresence>
-
-            <AnimatePresence>
-                {pinnedProgresses.length > 0 && (
-
-                    <div className='mt-4 mx-3 flex flex-col gap-y-2'>
-                        <span className='text-gray-300 text-sm'>Pinned <span className='text-red-600 text-[12px]'>({pinnedProgresses.length})</span></span>
-                        <div className='grid grid-cols-2 gap-3'>
-                            {pinnedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
-                        </div>
+                    <div className='flex items-start justify-between mx-3'>
+                        <span className='flex flex-row items-center text-sm text-gray-300'>
+                            <Dot className='size-5' />
+                            {progressesTypeStr}
+                            <span className='text-red-600 text-[12px]'>({progresses.length})</span></span>
+                        <button onClick={toggleViewMode} className='flex items-center justify-center text-xs text-gray-500 fill-white'>
+                            {viewMode === 0 ? (
+                                <LayoutGrid className='size-5' />
+                            ) : (
+                                <StretchHorizontal className='size-5' />
+                            )}
+                        </button>
                     </div>
-                )}
-            </AnimatePresence>
-            <AnimatePresence>
-                {showProgressesType === 2 && completedProgresses.length > 0 && (
+                    <AnimatePresence>
+                        {focusMode && (<FocusMode />)}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {deleteConfirmationVis && <DeleteProgressConfirmationWindow progress={progressInFocus} />}
+                    </AnimatePresence>
 
-                    <div className='mt-4 mx-3 flex flex-col gap-y-2'>
-                        <div className='grid grid-cols-2 gap-3'>
-                            {completedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
-                        </div>
-                    </div>
-                )}
-            </AnimatePresence>
-            <AnimatePresence>
-                {showProgressesType !== 2 &&
-                    (
-                        <div className='mt-4 mx-3 flex flex-col gap-y-2'>
-                            <span className='text-gray-300 text-sm'>Others <span className='text-red-600 text-[12px]'>({otherProgresses.length})</span></span>
-                            <div className='grid grid-cols-2 gap-3'>
-                                <AnimatePresence>
-                                    {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
-                                </AnimatePresence>
+                    <AnimatePresence>
+                        {pinnedProgresses.length > 0 && (
+
+                            <div className='flex flex-col mx-3 mt-4 gap-y-2'>
+                                <span className='text-sm text-gray-300'>
+                                    <Dot className='size-5' />
+                                    Pinned <span className='text-red-600 text-[12px]'>({pinnedProgresses.length})</span></span>
+                                <div className='grid grid-cols-2 gap-3'>
+                                    {pinnedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                                </div>
                             </div>
-                        </div>
-                    )}
-            </AnimatePresence>
+                        )}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {showProgressesType === 2 && completedProgresses.length > 0 && (
 
-            <AnimatePresence>
-                {showProgressesType === 1 && (
+                            <div className='flex flex-col mx-3 mt-4 gap-y-2'>
+                                <div className='grid grid-cols-2 gap-3'>
+                                    {completedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                                </div>
+                            </div>
+                        )}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {showProgressesType !== 2 &&
+                            (
+                                <div className='flex flex-col mx-3 mt-4 gap-y-2'>
+                                    <span className='flex flex-row items-center text-sm text-gray-300'>
+                                        <Dot className='size-5' />
+                                        Others <span className='text-red-600 text-[12px]'>({otherProgresses.length})</span></span>
+                                    <div className='grid grid-cols-2 gap-3'>
+                                        <AnimatePresence>
+                                            {otherProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                                        </AnimatePresence>
+                                    </div>
+                                </div>
+                            )}
+                    </AnimatePresence>
 
-                    <div className='mt-4 mx-3 flex flex-col gap-y-2'>
-                        <span className='text-gray-300 text-sm'>Completed <span className='text-red-600 text-[12px]'>({completedProgresses.length})</span></span>
-                        <div className='grid grid-cols-2 gap-3'>
-                            {completedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
-                        </div>
-                    </div>
-                )}
-            </AnimatePresence>
+                    <AnimatePresence>
+                        {showProgressesType === 1 && (
+
+                            <div className='flex flex-col mx-3 mt-4 gap-y-2'>
+                                <span className='text-sm text-gray-300'>Completed <span className='text-red-600 text-[12px]'>({completedProgresses.length})</span></span>
+                                <div className='grid grid-cols-2 gap-3'>
+                                    {completedProgresses.map((pg, index) => viewMode === 1 ? <MiniProgress key={pg._id} index={index} progress={pg} /> : <Progress key={pg._id} index={index} progress={pg} />)}
+                                </div>
+                            </div>
+                        )}
+                    </AnimatePresence>
+
+                </>
+            )}
+
+
 
         </div>
     )
